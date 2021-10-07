@@ -1,22 +1,20 @@
-import React from "react";
+import { Component } from "react";
 import ProfilePic from "./profilepic";
-import Uploader from "./uploader";
+// import Uploader from "./uploader";
 import { Link } from "react-router-dom";
 
-export default class App extends React.Component {
+export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
         this.clickHandler = this.clickHandler.bind(this);
     }
     componentDidMount() {
-        fetch("/user.json"())
+        fetch("/user.json")
             .then((res) => res.json())
             .then((data) =>
                 this.setState({
-                    userId: data.userId,
-                    first: data.first,
-                    last: data.last,
+                    userid: data.userid,
                 })
             );
     }
@@ -27,7 +25,8 @@ export default class App extends React.Component {
 
     render() {
         if (!this.state.userId) {
-            return null; // or <div>Loading...</div>
+            console.log("Loading in", this.state.userId);
+            return <div>Loading...</div>; // or null
         }
         return (
             <>
@@ -36,14 +35,17 @@ export default class App extends React.Component {
                     Hola {this.state.first} {this.state.last}{" "}
                     {this.state.userId}
                 </p>
-                <img sr="logo.png" alt="logo" />
+                <img src="kazamiga-rb.png" alt="logo" />
                 <ProfilePic
                     imageUrl={this.state.imageUrl}
                     first={this.state.first}
                     last={this.state.last}
-                    clickHandler={this..clickHandler}
+                    clickHandler={this.clickHandler}
                 />
-                {this.state.uploaderIsVisible && <Uploader />}
+                {/* {this.state.uploaderIsVisible && <Uploader />} */}
+                <Link to="/login">
+                    <button>Login</button>
+                </Link>
             </>
         );
     }

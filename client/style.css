@@ -33,9 +33,7 @@ h2 {
 img {
     width: 100%;
 }
-.imgLogo {
-    width: 50px;
-}
+
 input {
     display: flex;
     align-items: center;

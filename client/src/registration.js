@@ -2,8 +2,8 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 
 export class Registration extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             error: "",
         };
@@ -27,24 +27,23 @@ export class Registration extends Component {
 
     handleRegister(e) {
         e.preventDefault();
-        console.log("clicked on the button");
-        console.log("this.state", this.state);
+        // console.log("clicked on the button");
+        // console.log("this.state", this.state);
         fetch("/registration.json", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(this.state),
-        }).then((resp) =>
-            resp
-                .json()
-                .then((resp) => {
-                    console.log("POST /registrations.json:", resp);
-                })
-                .catch((err) => {
-                    console.log("err in POST /registration.json", err);
-                })
-        );
+        })
+            .then((resp) => resp.json())
+            .then((resp) => {
+                console.log("POST /registrations.json:", resp);
+                location.reload();
+            })
+            .catch((err) =>
+                console.log("error in catch-post-registration", err)
+            );
     }
 
     render() {
@@ -76,9 +75,6 @@ export class Registration extends Component {
                         placeholder="password"
                         onChange={this.handleChange}
                     ></input>
-                    {this.state.error && (
-                        <h2 className="h2InError">{this.state.error}</h2>
-                    )}
                     <button onClick={this.handleRegister}>Register</button>
                     <Link to="/login">
                         <button>Login</button>

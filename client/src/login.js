@@ -6,10 +6,20 @@ export class Login extends Component {
     //constructor
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            error: "Something went wrong",
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }
+
+    componentDidMount() {
+        console.log("LOGIN MOUNTED");
+        this.setState({
+            error: false,
+        });
+    }
+
     //handleChange
     handleChange({ target }) {
         console.log("Changed in Input field Login");
@@ -19,7 +29,9 @@ export class Login extends Component {
             {
                 [target.name]: target.value,
             },
-            () => console.log("registration StateUpdate in Login", this.state)
+            () => {
+                console.log("registration StateUpdate in Login", this.state);
+            }
         );
     }
     //handleLogin
@@ -29,21 +41,24 @@ export class Login extends Component {
         console.log("this.state in Login", this.state);
         fetch("/login.json", {
             method: "POST",
+            body: JSON.stringify(this.state),
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(this.state),
-        }).then((resp) =>
-            resp
-                .json()
-                .then((resp) => {
+        })
+            .then((resp) => resp.json())
+            .then((resp) => {
+                if (!resp.success) {
                     console.log("POST /login.json:", resp);
+                    this.setState({ error: "try again!" });
+                } else {
                     location.reload();
-                })
-                .catch((err) => {
-                    console.log("err in POST /login.json", err);
-                })
-        );
+                    console.log("else in handleLogin");
+                }
+            })
+            .catch((err) => {
+                console.log("err in POST /login.json", err);
+            });
     }
     render() {
         return (

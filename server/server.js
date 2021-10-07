@@ -34,6 +34,17 @@ app.get("/user/id.json", function (req, res) {
     // res.json({ userId: undefined });
 });
 
+app.get("/user.json", function (req, res) {
+    db.firstUser(req.session.usersId).then((result) => {
+        return res.json({
+            userId: req.session.userId,
+            first: result.rows[0].first,
+            last: result.rows[0].last,
+        });
+    });
+    res.redirect("/");
+});
+
 app.post("/registration.json", (req, res) => {
     console.log("registration:", req.body);
     hash(req.body.password)
@@ -61,7 +72,7 @@ app.post("/registration.json", (req, res) => {
                             req.session.noRegistration = false;
                             req.session.userId = result.rows[0].id;
                             console.log(req.session);
-                            return res.json({ success: true });
+                            res.redirect("/");
                         });
                     })
                     .catch((err) => {
@@ -87,15 +98,19 @@ app.post("/login.json", (req, res) => {
         let passwordInDB = result.rows[0].passHash;
         let passwordUserType = req.body.password;
 
-        compare(passwordUserType, passwordInDB).then((comparePassword) => {
-            if (comparePassword === true) {
-                req.session.userId = result.rows[0].id;
-                return res.json({ success: true });
-            } else {
-                req.session.userId = false;
-                return res.json({ success: false });
-            }
-        });
+        compare(passwordUserType, passwordInDB)
+            .then((comparePassword) => {
+                if (comparePassword === true) {
+                    req.session.userId = result.rows[0].id;
+                    res.redirect("/");
+                } else {
+                    req.session.userId = false;
+                    return res.json({ success: false });
+                }
+            })
+            .catch((err) => {
+                console.log("err in login", err);
+            });
         // comparePassword;
         // req.session.userId = result.rows[0].id;
     });

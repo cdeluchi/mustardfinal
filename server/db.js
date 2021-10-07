@@ -11,6 +11,10 @@ if (process.env.DATABASE_URL) {
     );
 }
 
+module.exports.firstUser = (id) => {
+    return db.query(`SELECT * FROM users WHERE id = $1`, [id]);
+};
+
 module.exports.addRegister = (first, last, email, password) => {
     console.log("firstName");
     const q = `INSERT INTO users (first, last, email, password)
