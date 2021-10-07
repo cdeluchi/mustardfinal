@@ -1,10 +1,11 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export class Registration extends Component {
     constructor() {
         super();
         this.state = {
-            error: "Something went wrong, try again",
+            error: "",
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
@@ -13,7 +14,7 @@ export class Registration extends Component {
         console.log("componentDidMount");
     }
     handleChange({ target }) {
-        console.log("Changed in Input field");
+        console.log("Changed in Input field Registration");
         // console.log("target", target.name);
         // console.log("target", target.value);
         this.setState(
@@ -79,11 +80,10 @@ export class Registration extends Component {
                         <h2 className="h2InError">{this.state.error}</h2>
                     )}
                     <button onClick={this.handleRegister}>Register</button>
+                    <Link to="/login">
+                        <button>Login</button>
+                    </Link>
                 </form>
-                <h2>
-                    Already a member?
-                    <a href="/">Log In</a>
-                </h2>
             </section>
         );
     }

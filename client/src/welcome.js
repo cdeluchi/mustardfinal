@@ -1,13 +1,24 @@
+import { Component } from "react";
 import { Registration } from "./registration.js";
+import { Login } from "./login.js";
+import { BrowserRouter, Route } from "react-router-dom";
 
-export default function Welcome() {
-    return (
-        <>
-            <div className="bodyInWelcome">
-                <h1>Welcome to this social network without name</h1>
-                <img src="/socialNW.png" alt="img" />
-                <Registration />
-            </div>
-        </>
-    );
+export class Welcome extends Component {
+    render() {
+        return (
+            <BrowserRouter>
+                <section id="welcome">
+                    <div className="bodyInWelcome">
+                        <h1>WHITE FLOCKE ❄️ </h1>
+                    </div>
+                    <Route exact path="/">
+                        <Registration />
+                    </Route>
+                    <Route path="/login">
+                        <Login />
+                    </Route>
+                </section>
+            </BrowserRouter>
+        );
+    }
 }
