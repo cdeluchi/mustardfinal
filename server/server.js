@@ -3,7 +3,7 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
-const { hash } = require("./bc");
+const { hash, compare } = require("./bc");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses.js");
@@ -79,24 +79,26 @@ app.post("/registration.json", (req, res) => {
 
 //**  LOGIN ROUTE */
 app.post("/login.json", (req, res) => {
-    db.getRegister(req.body.email)
-        .then((result) => {
-            console.log("result in getRegister", result);
-            req.session.userId = result.rows[0].id;
-            return result.rows[0].passHash;
-        })
-        .then((password) => {
-            db.getRegister(req.body.password, password).then(
-                (comparePassword) => {
-                    if (comparePassword === true) {
-                        return res.json({ success: true });
-                    } else {
-                        req.session.userId = false;
-                        return res.json({ success: false });
-                    }
-                }
-            );
+    db.getRegister(req.body.email).then((result) => {
+        console.log("result in getRegister", result);
+        if (!result.rows[0]) {
+            return res.json({ success: false });
+        }
+        let passwordInDB = result.rows[0].passHash;
+        let passwordUserType = req.body.password;
+
+        compare(passwordUserType, passwordInDB).then((comparePassword) => {
+            if (comparePassword === true) {
+                req.session.userId = result.rows[0].id;
+                return res.json({ success: true });
+            } else {
+                req.session.userId = false;
+                return res.json({ success: false });
+            }
         });
+        // comparePassword;
+        // req.session.userId = result.rows[0].id;
+    });
 });
 
 // **** POST /password/reset/start

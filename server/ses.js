@@ -14,7 +14,7 @@ const ses = new aws.SES({
 });
 
 ses.sendEmail({
-    Source: "White Flocke <white.flocke@spiced.academy>",
+    Source: "White Flocke <white.flocke@spiced.academy>", //use the spiced email
     Destination: {
         ToAddresses: ["cdeluchi@gmail.com"],
     },
