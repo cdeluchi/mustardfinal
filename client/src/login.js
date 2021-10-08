@@ -81,6 +81,7 @@ export class Login extends Component {
                 {this.state.error && (
                     <h2 className="h2InError">{this.state.error}</h2>
                 )}
+
                 <Link to="/ressetPassword">
                     <button>Resset password</button>
                 </Link>

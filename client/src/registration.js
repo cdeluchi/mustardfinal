@@ -39,7 +39,13 @@ export class Registration extends Component {
             .then((resp) => resp.json())
             .then((resp) => {
                 console.log("POST /registrations.json:", resp);
-                location.reload();
+                if (!resp.success) {
+                    console.log("POST /login.json:", resp);
+                    this.setState({ error: "try again!" });
+                } else {
+                    location.reload();
+                    console.log("else in handleLogin");
+                }
             })
             .catch((err) =>
                 console.log("error in catch-post-registration", err)
@@ -48,38 +54,40 @@ export class Registration extends Component {
 
     render() {
         return (
-            <section>
+            <section className="bodyinregistration">
                 <h2>Be part:</h2>
-                <form>
-                    <input
-                        type="text"
-                        name="first"
-                        placeholder="first name"
-                        onChange={this.handleChange}
-                    ></input>
-                    <input
-                        type="text"
-                        name="last"
-                        placeholder="last name"
-                        onChange={this.handleChange}
-                    ></input>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="email"
-                        onChange={this.handleChange}
-                    ></input>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="password"
-                        onChange={this.handleChange}
-                    ></input>
-                    <button onClick={this.handleRegister}>Register</button>
-                    <Link to="/login">
-                        <button>Login</button>
-                    </Link>
-                </form>
+                <div>
+                    <form>
+                        <input
+                            type="text"
+                            name="first"
+                            placeholder="first name"
+                            onChange={this.handleChange}
+                        ></input>
+                        <input
+                            type="text"
+                            name="last"
+                            placeholder="last name"
+                            onChange={this.handleChange}
+                        ></input>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="email"
+                            onChange={this.handleChange}
+                        ></input>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                            onChange={this.handleChange}
+                        ></input>
+                        <button onClick={this.handleRegister}>Register</button>
+                        <Link to="/login">
+                            <button>Login</button>
+                        </Link>
+                    </form>
+                </div>
             </section>
         );
     }

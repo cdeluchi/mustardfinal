@@ -1,6 +1,11 @@
 export default function ({ imageUrl, first, last, clickHandler }) {
-    imageUrl = imageUrl || "default.jpg";
+    imageUrl = imageUrl || "defaultpic.png";
     return (
-        <img src={imageUrl} alt={`${first} ${last} `} onClick={clickHandler} />
+        <img
+            className="imgUploader"
+            src={imageUrl}
+            alt={`${first} ${last} `}
+            onClick={clickHandler}
+        />
     );
 }

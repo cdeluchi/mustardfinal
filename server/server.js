@@ -5,8 +5,12 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc");
 const db = require("./db");
-const cryptoRandomString = require("crypto-random-string");
-const ses = require("./ses.js");
+const { uploader } = require("./upload");
+const s3Path = "https://imgboardmustard.s3.amazonaws.com/";
+const s3 = require("./s3");
+
+// const cryptoRandomString = require("crypto-random-string");
+// const ses = require("./ses.js");
 
 app.use(compression());
 app.use(express.json());
@@ -35,16 +39,18 @@ app.get("/user/id.json", function (req, res) {
 });
 
 app.get("/user.json", function (req, res) {
-    db.firstUser(req.session.usersId).then((result) => {
+    // console.log("user.json in get", req.body);
+    db.firstUser(req.session.userId).then((result) => {
         return res.json({
             userId: req.session.userId,
+            // id: result.rows[0].id,
             first: result.rows[0].first,
             last: result.rows[0].last,
         });
     });
-    res.redirect("/");
 });
 
+//***REGISTRATION ROUTE */
 app.post("/registration.json", (req, res) => {
     console.log("registration:", req.body);
     hash(req.body.password)
@@ -72,7 +78,9 @@ app.post("/registration.json", (req, res) => {
                             req.session.noRegistration = false;
                             req.session.userId = result.rows[0].id;
                             console.log(req.session);
-                            res.redirect("/");
+                            return res.json({
+                                success: true,
+                            });
                         });
                     })
                     .catch((err) => {
@@ -88,7 +96,7 @@ app.post("/registration.json", (req, res) => {
         });
 });
 
-//**  LOGIN ROUTE */
+//****  LOGIN ROUTE */
 app.post("/login.json", (req, res) => {
     db.getRegister(req.body.email).then((result) => {
         console.log("result in getRegister", result);
@@ -116,6 +124,41 @@ app.post("/login.json", (req, res) => {
     });
 });
 
+// ****UPLOAD IMG
+// post("/", function (req, res) {
+//     console.log("uploadPic in ", req.body);
+//     const { userId } = req.body;
+//     console.log("req.body :>> ", userId);
+
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    let url = s3Path + req.file.filename;
+
+    if (req.file) {
+        db.getImg(url, req.session.userId).then((response) => {
+            console.log("response in saveImg", response);
+            res.json({ success: true, url: url });
+        });
+    } else {
+        res.json({
+            success: false,
+        });
+    }
+});
+
+// *** UPDATE BIO
+app.post("/", (req, res) => {
+    let userId = req.body;
+    let draftbio = draftbio;
+    db.updateBio(userId, draftbio).then((result) => {
+        console.log("draftBio here", result);
+        if (result.rows === 0) {
+            res.json({ success: false });
+        } else {
+            res.json({ success: true });
+        }
+    });
+});
+
 //****DO NOT TOUCH HERE*** */
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
@@ -128,3 +171,75 @@ app.listen(process.env.PORT || 3001, function () {
 //*** WHEN ERROR IN SERVER */ DO NOT PANIC!!!!
 //UnhandledPromiseRejectionWarning: Error: Illegal arguments: undefined, string
 // MEANS THAT THE INFO IN INPUT FIELD ARE  NOT VALIABLE
+
+// POST /password/reset/start
+// app.post("/password/reset", (req, res) => {
+//     console.log("req.body in password/resset", req.body);
+//     const email = req.body.email;
+//     const password = req.body.password;
+//     const updatePass = [];
+//     if (req.body.password != "") {
+//         hash(req.body.password).then((passHash) => {
+//             updatePass.push(db.getAddCode(req.body.password, passHash));
+//         });
+//     } else {
+//         console.log("else in password/reset");
+//         updatePass.push(db.updatePass(req.body.password));
+//         return res.json({ success: false });
+//     }
+//     updatePass.push(db.getAddCode(email, password, req.session.user.Id));
+// });
+
+// **** POST / SEND CODE
+// app.post("/", (req, res) => {
+//     console.log("req.body in post send code", req.body);
+//     const { email } = req.body;
+
+//     db.getRegister(email)
+//         .then((result) => {
+//             if (result.rows === 0) {
+//                 res.json({ success: false });
+//             } else {
+//                 const secretCode = cryptoRandomString({
+//                     length: 6,
+//                 });
+//                 console.log("result in getRegister", result);
+//                 db.addRegister(email, secretCode);
+//                 let email = email;
+//                 let subject = "reset the password";
+//                 let text = "insert the code";
+
+//                 ses.sentEmail(email, subject, text);
+//                 res.json({ success: true });
+//             }
+//         })
+//         .catch(function (err) {
+//             console.log("ERROR IN POST LOGIN:>> ", err);
+//             res.json({ success: false });
+//         });
+// });
+
+// *** ROUTE RESET PASSWORD
+// app.post("/", (req, res) => {
+//     console.log("req.body in reset passw", req.body);
+//     const { email, code, password } = req.body;
+//     db.getCheckCode(email).then((result) => {
+//         console.log("rows in code", result.rows[0].code);
+//         if (code == result.rows[0].code) {
+//             console.log("the code works");
+//             hash(password)
+//                 .then((passHash) => {
+//                     db.updatePass(email, passHash).then((result) => {
+//                         let id = result.rows[0].id;
+//                         req.session.userId = id;
+//                         req.session.login = true;
+//                         res.json({ success: true, userId: id });
+//                     });
+//                 })
+//                 .catch((err) => {
+//                     console.log("err in reset pass", err);
+//                     res.json({ success: false });
+//                 });
+//         }
+//     });
+// });

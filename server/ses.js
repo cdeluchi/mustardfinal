@@ -15,7 +15,7 @@ const ses = new aws.SES({
 
 exports.sendEmail = (toAddress, subject, text) => {
     ses.sendEmail({
-        Source: "Funky Chicken <funky.chicken@spiced.academy>",
+        Source: "Funky Chicken <brook.mouse@spicedling.email>",
         Destination: {
             ToAddresses: [toAddress],
         },

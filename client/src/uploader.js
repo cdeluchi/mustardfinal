@@ -3,12 +3,10 @@ import { Component } from "react";
 export class Uploader extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            file: null,
-        };
-        this.handleUploadPic = this.handleUploadPic.bind(this);
+        this.state = {};
+        this.handleUploadPic = this.handlerUploadPic.bind(this);
         this.fileSelectHandler = this.fileSelectHandler.bind(this);
-        this.clickUploader = this.clickUploader.bind(this);
+        // this.clickUploader = this.clickUploader.bind(this);
     }
     componentDidMount() {
         console.log("Mount Uploader");
@@ -16,7 +14,13 @@ export class Uploader extends Component {
             userId: this.props.userId,
         });
     }
+    // clickUploader() {
+    //     console.log("clickUploader");
+    //     this.setState({ uploaderIsVisible: false });
+    // }
+
     fileSelectHandler({ target }) {
+        console.log(" fileSelectHandler in ", target);
         this.setState(
             {
                 [target.name]: target.file[0],
@@ -28,16 +32,17 @@ export class Uploader extends Component {
     }
     handlerUploadPic(e) {
         e.preventDefault();
-        const filePic = new FormData();
-        filePic.append("file", this.state.file);
+        const fd = new FormData();
+        fd.append("file", this.state.file);
+        console.log("handlerUploadPic is running", this.state);
         fetch("/uploadPic", {
             method: "POST",
-            body: filePic,
+            body: fd,
         })
             .then((res) => res.json())
             .then((res) => {
                 if (res.success) {
-                    this.props.clickUploader(res.url);
+                    this.props.uploadImage(res.url);
                 } else {
                     this.setState({
                         error: "Something went wrong",
@@ -47,5 +52,25 @@ export class Uploader extends Component {
             .catch((err) => {
                 console.log("error in handlerUploadPic", err);
             });
+    }
+    render() {
+        return (
+            <>
+                <div className="uploaderModal">
+                    <form>
+                        <input
+                            type="file"
+                            className="inputfile"
+                            name="file"
+                            accept="image/*"
+                            onChange={this.fileSelectHandler}
+                        ></input>
+                        <button onClick={this.handlerUploadPic} type="submit">
+                            Upload the Image
+                        </button>
+                    </form>
+                </div>
+            </>
+        );
     }
 }
