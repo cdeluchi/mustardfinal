@@ -132,10 +132,8 @@ app.post("/login.json", (req, res) => {
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     let url = s3Path + req.file.filename;
-
     if (req.file) {
-        db.getImg(url, req.session.userId).then((response) => {
-            console.log("response in saveImg", response);
+        db.getImg(url, req.session.userId).then(() => {
             res.json({ success: true, url: url });
         });
     } else {
@@ -146,17 +144,34 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 // *** UPDATE BIO
-app.post("/", (req, res) => {
-    let userId = req.body;
-    let draftbio = draftbio;
-    db.updateBio(userId, draftbio).then((result) => {
-        console.log("draftBio here", result);
-        if (result.rows === 0) {
-            res.json({ success: false });
-        } else {
-            res.json({ success: true });
-        }
-    });
+
+app.get("/user.json", (req, res) => {
+    db.getBio(req.session.userId)
+        .then((result) => {
+            return res.json({
+                userId: req.session.userId,
+                first: result.rows[0].first,
+                last: result.rows[0].last,
+                url: result.rows[0].imgurl,
+                bio: result.rows[0].bio,
+            });
+        })
+        .catch((err) => {
+            console.log("error in getBio", err);
+            res.redirect("/");
+        });
+});
+
+// *** GET BIO
+app.post("/bio", (req, res) => {
+    console.log("bio in post", req.body);
+    db.updateBio(req.body.draftBio, req.session.userId)
+        .then(() => {
+            res.json({ bioUpdate: true, officialBio: req.body.draftBio });
+        })
+        .catch((err) => {
+            console.log("err in server/bio", err);
+        });
 });
 
 //****DO NOT TOUCH HERE*** */

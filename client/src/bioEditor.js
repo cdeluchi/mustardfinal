@@ -10,11 +10,11 @@ export class BioEditor extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // this.storeDraftBio = this.storeDraftBio.bind(this);
         this.handleShowBio = this.handleShowBio.bind(this);
         this.handleEditBio = this.handleEditBio.bind(this);
-        this.storeDraftBio = this.storeDraftBio.bind(this);
-        this.openTextArea = this.openTextArea.bind(this);
-        this.sendOfficialBio = this.sendOfficialBio.bind(this);
+        // this.openTextArea = this.openTextArea.bind(this);
+        // this.sendOfficialBio = this.sendOfficialBio.bind(this);
     }
 
     componentDidMount() {
@@ -35,51 +35,119 @@ export class BioEditor extends Component {
         console.log("this.state in handleChange", this.state.draftBio);
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        fetch("./bio.json", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.state),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.bioUpdate) {
+                    console.log("result in bioUpdate", result);
+                    this.setState({
+                        editTextArea: false,
+                        officialBio: result.officialBio,
+                    });
+                    this.props.setBio(this.state.draftBio);
+                } else {
+                    this.setState({
+                        error: "error in bioUpdate",
+                    });
+                }
+            })
+            .catch((err) => console.log("error in bioUpdate", err));
+    }
+
     render() {
+        // let elem = this.state.step;
+        //         if (elem == 1) {
         console.log("render in bioEditor");
+        let elem;
+        if (
+            this.state.showTextArea === true &&
+            this.state.editTextArea === false
+        ) {
+            elem = (
+                // insert the text area and butto to edit
+                <>
+                    <h2>{this.props.officialBio} </h2>
+                    <button onClick={this.handleEditBio}> EDIT </button>
+                </>
+            );
+        } else if (
+            this.state.showTextArea === true &&
+            this.state.editTextArea === true
+        ) {
+            // create a new argument to receive all the info from props officialBio ""
+            let val = this.props.officialBio || "";
+            console.log("value in else if", val);
+            //create a text area and button to submit the editBio
+            elem = (
+                <>
+                    <textarea onChange={this.handleChange}></textarea>
+                    <button onClick={this.handleSubmit}>Save Bio</button>
+                </>
+            );
+        } else {
+            let val = this.props.officialBio || "";
+            console.log("value in else", val);
+            elem = (
+                <>
+                    <a onClick={this.handleShowBio}>ADD BIO</a>;
+                </>
+            );
+        }
         return (
-            <div>
-                {this.state.bioOn && (
-                    <div>
-                        <div className="bioContainer">{this.props.bio}</div>
-
-                        <button
-                            onClick={this.openTextArea}
-                            className="buttonOpnTextArea"
-                        >
-                            UPDATE
-                        </button>
-                    </div>
-                )}
-
-                {this.state.showTextArea && (
-                    <div>
-                        {" "}
+            <>
+                <div>
+                    {this.state.bioOn && (
                         <div>
-                            <textarea
-                                className="text-area"
-                                name="text-area"
-                                onChange={this.storeDraftBio}
-                                placeholder={this.props.bio}
-                            ></textarea>{" "}
-                        </div>
-                        <div>
-                            <button
-                                onClick={this.sendOfficialBio}
-                                className="buttonEditBio"
-                            >
-                                SUBMIT
-                            </button>{" "}
+                            <div className="bioContainer">
+                                {this.props.officialBio}
+                            </div>
+
                             <button
                                 onClick={this.openTextArea}
-                                className="buttonEditBio"
+                                className="buttonOpnTextArea"
                             >
-                                CANCEL
+                                UPDATE
                             </button>
                         </div>
-                    </div>
-                )}
-            </div>
+                    )}
+
+                    {this.state.showTextArea && (
+                        <div>
+                            {" "}
+                            <div>
+                                <textarea
+                                    className="text-area"
+                                    name="text-area"
+                                    onChange={this.draftBio}
+                                    placeholder={this.props.officialBio}
+                                ></textarea>{" "}
+                            </div>
+                            <div>
+                                <button
+                                    onClick={this.officialBio}
+                                    className="buttonEditBio"
+                                >
+                                    SUBMIT
+                                </button>{" "}
+                                <button
+                                    onClick={this.openTextArea}
+                                    className="buttonEditBio"
+                                >
+                                    CANCEL
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </>
         );
     }
 }

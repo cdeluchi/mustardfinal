@@ -85,9 +85,21 @@ module.exports.updatePass = (email, password) => {
 // after updat table*******
 
 //  Get Bio
-module.exports.getBio = (id, bio) => {
-    console.log("userId in getBio", id);
-    const params = [id, bio];
+module.exports.getBio = (userId) => {
+    console.log("userId in getBio", userId);
+    const params = [userId];
+    const q = `
+    SELECT first, last, imgurl, bio
+    FROM users
+    WHERE id=$1
+     `;
+    return db.query(q, params);
+};
+
+// ** UPDATE BIO
+module.exports.updateBio = (bio, userId) => {
+    console.log("userId in updateBio", userId);
+    const params = [bio, userId];
     const q = `
     UPDATE users
     SET bio = $2
@@ -98,9 +110,9 @@ module.exports.getBio = (id, bio) => {
 };
 
 // Get Image URL Profile Pic
-module.exports.getImg = (url, id) => {
-    console.log("getImg db", id);
-    const params = [url, id];
+module.exports.getImg = (url, userId) => {
+    console.log("getImg db", userId);
+    const params = [url, userId];
     const q = `
     UPDATE users 
     SET imgUrl = $1

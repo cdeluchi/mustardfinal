@@ -4,8 +4,8 @@ export class Uploader extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.handleUploadPic = this.handlerUploadPic.bind(this);
-        this.fileSelectHandler = this.fileSelectHandler.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         // this.clickUploader = this.clickUploader.bind(this);
     }
     componentDidMount() {
@@ -19,18 +19,23 @@ export class Uploader extends Component {
     //     this.setState({ uploaderIsVisible: false });
     // }
 
-    fileSelectHandler({ target }) {
-        console.log(" fileSelectHandler in ", target);
-        this.setState(
-            {
-                [target.name]: target.file[0],
-            },
-            () => {
-                console.log("Uploader target");
-            }
-        );
+    handleChange({ target }) {
+        this.setState({
+            file: target.file[0],
+        });
     }
-    handlerUploadPic(e) {
+    // fileSelectHandler({ target }) {
+    //     console.log(" fileSelectHandler in ", target);
+    //     this.setState(
+    //         {
+    //             [target.name]: target.file[0],
+    //         },
+    //         () => {
+    //             console.log("Uploader target");
+    //         }
+    //     );
+    // }
+    handleClick(e) {
         e.preventDefault();
         const fd = new FormData();
         fd.append("file", this.state.file);
@@ -42,7 +47,7 @@ export class Uploader extends Component {
             .then((res) => res.json())
             .then((res) => {
                 if (res.success) {
-                    this.props.uploadImage(res.url);
+                    this.props.newImg(res.url);
                 } else {
                     this.setState({
                         error: "Something went wrong",
@@ -56,9 +61,14 @@ export class Uploader extends Component {
     render() {
         return (
             <>
+                
                 <div className="uploaderModal">
-                    <form>
+                    <div className="closeModal" onClick={this.props.close}>
+                        Close X
+                    </div>
+                    <form className="formModal">
                         <input
+                            id="fileUpload"
                             type="file"
                             className="inputfile"
                             name="file"

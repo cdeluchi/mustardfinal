@@ -1,5 +1,5 @@
 import ProfilePic from "./profilepic.js";
-import BioEditor from "./bioEditor";
+import { BioEditor } from "./bioEditor";
 
 export default function Profile({
     imgUrl,
