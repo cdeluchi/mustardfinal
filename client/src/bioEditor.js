@@ -4,9 +4,14 @@ export class BioEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showTextArea: false,
+            editTextArea: false,
             draftbio: "",
-            bioOn: true,
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShowBio = this.handleShowBio.bind(this);
+        this.handleEditBio = this.handleEditBio.bind(this);
         this.storeDraftBio = this.storeDraftBio.bind(this);
         this.openTextArea = this.openTextArea.bind(this);
         this.sendOfficialBio = this.sendOfficialBio.bind(this);
@@ -14,52 +19,20 @@ export class BioEditor extends Component {
 
     componentDidMount() {
         console.log("BIO MOUNT");
+        if (this.props.officialBio != null) {
+            this.setState({ showTextArea: true });
+        }
     }
 
-    storeDraftBio({ target }) {
-        console.log("storeDraftBio", target);
-        this.setState(
-            {
-                draftBio: target.value,
-            },
-            () => {
-                console.log("storeDraftBio", this.setState);
-            }
-        );
+    handleShowBio() {
+        this.setState({
+            showTextArea: true,
+        });
     }
 
-    sendOfficialBio() {
-        console.log("sendOfficialBio", this.state.draftbio);
-        fetch("/updateBio", {
-            method: "POST",
-            body: JSON.stringify(this.state),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((resp) => resp.json())
-            .then((resp) => {
-                if (resp.success) {
-                    console.log("resp.success in fetch", resp.success);
-                    this.setState((offState) => ({
-                        showTextArea: !offState.showTextArea,
-                        bioOn: !offState.bioOn,
-                    }));
-                } else {
-                    this.setState({
-                        error: "something went wrong",
-                    });
-                }
-            })
-            .catch((err) => console.log("error in sendOfficialBio", err));
-    }
-
-    openTextArea() {
-        console.log("openTextArea");
-        this.setState((offState) => ({
-            showTextArea: !offState.showTextArea,
-            bioOn: !offState.bioOn,
-        }));
+    handleChange({ target }) {
+        this.setState({ draftBio: target.value });
+        console.log("this.state in handleChange", this.state.draftBio);
     }
 
     render() {
@@ -128,3 +101,31 @@ export class BioEditor extends Component {
 //                 "Content-Type": "application/json",
 //             },
 //         })
+
+// mesmo principio do RESETPASSWROD
+
+// render() {
+//         let elem = this.state.step;
+//         if (elem == 1) {
+//             elem = (
+//                 <section>
+//                     <h2>resset Password</h2>
+//                     <h2>
+//                         Please enter the email address with which you registered
+//                     </h2>
+//                     <form>
+//                         <input
+//                             type="email"
+//                             name="email"
+//                             placeholder="email"
+//                             onChange={this.handleChange}
+//                             required
+//                         ></input>
+//                         {this.state.error && (
+//                             <h2 className="h2InError">{this.state.error}</h2>
+//                         )}
+//                         <button onClick={this.submitCode}>Submit</button>
+//                     </form>
+//                 </section>
+//             );
+//         } else if (elem == 2) {
