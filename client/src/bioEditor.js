@@ -12,7 +12,7 @@ export class BioEditor extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         // this.storeDraftBio = this.storeDraftBio.bind(this);
         this.handleShowBio = this.handleShowBio.bind(this);
-        this.handleEditBio = this.handleEditBio.bind(this);
+        // this.handleEditBio = this.handleEditBio.bind(this);
         // this.openTextArea = this.openTextArea.bind(this);
         // this.sendOfficialBio = this.sendOfficialBio.bind(this);
     }
@@ -75,7 +75,7 @@ export class BioEditor extends Component {
                 // insert the text area and butto to edit
                 <>
                     <h2>{this.props.officialBio} </h2>
-                    <button onClick={this.handleEditBio}> EDIT </button>
+                    <button onClick={this.handleShowBio}> EDIT </button>
                 </>
             );
         } else if (
@@ -83,8 +83,8 @@ export class BioEditor extends Component {
             this.state.editTextArea === true
         ) {
             // create a new argument to receive all the info from props officialBio ""
-            let val = this.props.officialBio || "";
-            console.log("value in else if", val);
+            let newval = this.props.officialBio || "";
+            console.log("value in else if", newval);
             //create a text area and button to submit the editBio
             elem = (
                 <>
@@ -104,7 +104,7 @@ export class BioEditor extends Component {
         return (
             <>
                 <div>
-                    {this.state.bioOn && (
+                    {this.state.officialBio && (
                         <div>
                             <div className="bioContainer">
                                 {this.props.officialBio}

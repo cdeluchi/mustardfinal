@@ -87,7 +87,7 @@ export default class App extends Component {
                     {/* <p>Want to change your Profile Pic?</p> */}
                     <ProfilePic
                         className="imgProfile"
-                        imgUrl={this.state.imgUrl}
+                        img={this.state.imageUrl}
                         first={this.state.first}
                         last={this.state.last}
                         clickHandler={() =>
