@@ -36,10 +36,11 @@ h2 {
 img {
     width: 100%;
 }
-.imgUploader {
+.profilePic {
     border-radius: 50px;
     border: 2px solid #ccc;
     width: 50px;
+    height: 50px;
     margin: 20px;
     object-fit: scale-down;
 }
@@ -96,4 +97,18 @@ button {
     background-color: white;
     border-radius: 5px;
 }
-/* CHANGE IMAGE MODAL */
+
+.bioEditor {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+    height: 150px;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin: 30px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+.profileBio {
+    display: flex;
+}

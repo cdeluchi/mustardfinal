@@ -89,7 +89,7 @@ module.exports.getBio = (userId) => {
     console.log("userId in getBio", userId);
     const params = [userId];
     const q = `
-    SELECT first, last, imgurl, bio
+    SELECT first, last, imgUrl, bio
     FROM users
     WHERE id=$1
      `;
@@ -116,7 +116,8 @@ module.exports.getImg = (url, userId) => {
     const q = `
     UPDATE users 
     SET imgUrl = $1
-    WHERE id = $2
+    WHERE Id = $2
+    RETURNING imgUrl
     `;
     return db.query(q, params);
 };

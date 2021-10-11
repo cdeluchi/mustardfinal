@@ -2,27 +2,25 @@ import ProfilePic from "./profilepic.js";
 import { BioEditor } from "./bioEditor";
 
 export default function Profile({
-    imgUrl,
+    imageUrl,
     first,
     last,
     officialBio,
     setBio,
     clickHandler,
 }) {
-    imgUrl = imgUrl || "default.png";
+    imageUrl = imageUrl || "default.png";
     return (
         <div>
-            <h2>Profile</h2>
-            <h2>
-                Hello {first} {last}
-            </h2>
             <ProfilePic
-                imgUrl={imgUrl}
+                imageUrl={imageUrl}
                 first={first}
                 last={last}
                 clickHandler={clickHandler}
             />
-            <BioEditor officialBio={officialBio} setBio={setBio} />
+            <div>
+                <BioEditor officialBio={officialBio} setBio={setBio} />
+            </div>
         </div>
     );
 }

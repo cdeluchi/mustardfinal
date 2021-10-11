@@ -41,11 +41,14 @@ app.get("/user/id.json", function (req, res) {
 app.get("/user.json", function (req, res) {
     // console.log("user.json in get", req.body);
     db.firstUser(req.session.userId).then((result) => {
+        console.log("result", result);
         return res.json({
             userId: req.session.userId,
             // id: result.rows[0].id,
             first: result.rows[0].first,
             last: result.rows[0].last,
+            url: result.rows[0].imgurl,
+            bio: result.rows[0].bio,
         });
     });
 });
@@ -131,11 +134,17 @@ app.post("/login.json", (req, res) => {
 //     console.log("req.body :>> ", userId);
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("post in upload", req.file);
     let url = s3Path + req.file.filename;
     if (req.file) {
-        db.getImg(url, req.session.userId).then(() => {
-            res.json({ success: true, url: url });
-        });
+        db.getImg(url, req.session.userId)
+            .then(() => {
+                console.log("url", url);
+                res.json({ success: true, url: url });
+            })
+            .catch((err) => {
+                console.log("error in upload", err);
+            });
     } else {
         res.json({
             success: false,
@@ -146,13 +155,14 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 // *** UPDATE BIO
 
 app.get("/user.json", (req, res) => {
+    console.log("log in get user", req.body);
     db.getBio(req.session.userId)
         .then((result) => {
             return res.json({
                 userId: req.session.userId,
                 first: result.rows[0].first,
                 last: result.rows[0].last,
-                url: result.rows[0].imgurl,
+                url: result.rows[0].imgUrl,
                 bio: result.rows[0].bio,
             });
         })
@@ -172,6 +182,11 @@ app.post("/bio", (req, res) => {
         .catch((err) => {
             console.log("err in server/bio", err);
         });
+});
+
+app.get("/logout", (req, res) => {
+    req.session.id = null;
+    res.redirect("/login");
 });
 
 //****DO NOT TOUCH HERE*** */

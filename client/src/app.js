@@ -1,9 +1,11 @@
 import { Component } from "react";
 import ProfilePic from "./profilepic";
 import { Uploader } from "./uploader";
-// import Profile from "./profile";
+import Profile from "./profile";
+// import { BrowserRouter, Route, Link } from "react-router-dom";
+
 // import ResetPassword from "./resetPassword";
-// import { Link } from "react-router-dom";
+// import { Link, BrowserRouter } from "react-router-dom";
 //render a profile.js
 
 export default class App extends Component {
@@ -11,26 +13,29 @@ export default class App extends Component {
         super(props);
         this.state = {
             uploaderIsVisible: false,
+            imageUrl: "",
             officialBio: "",
         };
-        this.clickHandler = this.clickHandler.bind(this);
+        // this.clickHandler = this.clickHandler.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
         this.setBio = this.setBio.bind(this);
         this.close = this.close.bind(this);
     }
     componentDidMount() {
+        console.log("app Mouted");
         fetch("/user.json")
             .then((res) => res.json())
-            .then((data) =>
+            .then((data) => {
+                console.log("setState", data);
                 this.setState({
                     userId: data.userId,
                     first: data.first,
                     last: data.last,
                     imageUrl: data.url,
                     officialBio: data.bio,
-                })
-            );
-        console.log("this setstate in compnentDidMount", this.setState);
+                });
+            });
+        console.log("this setState in compnentDidMount", this.setState);
     }
 
     // New Image
@@ -43,16 +48,16 @@ export default class App extends Component {
     // Upload Image
     uploadImage(newUrl) {
         console.log("uploadImage is runnig");
-        this.setState((defaultPic) => ({
-            uploaderIsVisible: !defaultPic.uploadImage,
+        this.setState({
+            uploaderIsVisible: !this.state.uploaderIsVisible,
             imageUrl: newUrl,
-        }));
+        });
     }
 
     // button click and close
-    clickHandler() {
-        this.setState({ uploaderIsVisible: false });
-    }
+    // clickHandler() {
+    //     this.setState({ uploaderIsVisible: false });
+    // }
     close() {
         this.setState({
             uploaderIsVisible: false,
@@ -65,6 +70,7 @@ export default class App extends Component {
 
     setBio(officialBio) {
         this.setState({ officialBio: officialBio });
+        console.log("setBio", this.state.officialBio);
     }
     // imageUrl() {
     //     this.setState({
@@ -87,7 +93,7 @@ export default class App extends Component {
                     {/* <p>Want to change your Profile Pic?</p> */}
                     <ProfilePic
                         className="imgProfile"
-                        img={this.state.imageUrl}
+                        imgUrl={this.state.imageUrl}
                         first={this.state.first}
                         last={this.state.last}
                         clickHandler={() =>
@@ -101,25 +107,25 @@ export default class App extends Component {
                     Hello {this.state.first} {this.state.last} grab a cup of
                     coffee and tell me somenthing nice
                 </h2>
-
-                {/* <Profile
-                    first={this.state.first}
-                    last={this.state.last}
-                    userId={this.state.userId}
-                    imageUrl={this.state.imageUrl}
-                    officialBio={this.state.officialBio}
-                    setBio={this.setBio}
-                    clickHandler={() =>
-                        this.setState({
-                            uploaderIsVisible: true,
-                        })
-                    }
-                /> */}
+                <div className="profileBio">
+                    <Profile
+                        userId={this.state.userId}
+                        first={this.state.first}
+                        last={this.state.last}
+                        imageUrl={this.state.url}
+                        officialBio={this.state.officialBio}
+                        setBio={this.setBio}
+                        clickHandler={() =>
+                            this.setState({
+                                uploaderIsVisible: true,
+                            })
+                        }
+                    />
+                </div>
                 {this.state.uploaderIsVisible && (
                     <Uploader
-                        imageUrl={this.imageUrl}
                         uploadImage={this.uploadImage}
-                        closeButton={this.closeButton}
+                        close={this.close}
                     />
                 )}
             </>

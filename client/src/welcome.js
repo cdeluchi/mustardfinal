@@ -3,7 +3,7 @@ import { Registration } from "./registration.js";
 import { Login } from "./login.js";
 import Reset from "./resetPassword";
 import { BrowserRouter, Route } from "react-router-dom";
-import { Uploader } from "./uploader";
+// import { Uploader } from "./uploader";
 
 export class Welcome extends Component {
     render() {
@@ -22,9 +22,6 @@ export class Welcome extends Component {
                     </Route>
                     <Route path="/resetPassword">
                         <Reset />
-                    </Route>
-                    <Route path="/uploader">
-                        <Uploader />
                     </Route>
                 </section>
             </BrowserRouter>
