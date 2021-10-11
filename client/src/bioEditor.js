@@ -9,12 +9,8 @@ export class BioEditor extends Component {
             draftbio: "",
         };
         this.handleChange = this.handleChange.bind(this);
-        // this.storeDraftBio = this.storeDraftBio.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleShowBio = this.handleShowBio.bind(this);
-        // this.handleEditBio = this.handleEditBio.bind(this)
-        // this.openTextArea = this.openTextArea.bind(this);
-        // this.sendOfficialBio = this.sendOfficialBio.bind(this);
     }
 
     componentDidMount() {
@@ -98,10 +94,7 @@ export class BioEditor extends Component {
         }
         return (
             <>
-                <div className="bioEditor">
-                    <p>Bio Editor</p>
-                    {elem}
-                </div>
+                <div className="bioEditor">{elem}</div>
             </>
         );
     }

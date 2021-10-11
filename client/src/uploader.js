@@ -56,9 +56,9 @@ export class Uploader extends React.Component {
 
         fd.append("id", id);
         fd.append("file", file);
-        console.log("FD: ", fd);
-        console.log("THIS STATE : ", this.state);
-        console.log("this.state on handleclick", id);
+        // console.log("FD: ", fd);
+        // console.log("THIS STATE : ", this.state);
+        // console.log("this.state on handleclick", id);
 
         fetch("/upload", {
             method: "POST",
@@ -67,11 +67,11 @@ export class Uploader extends React.Component {
             .then((resp) => resp.json())
             // console.log("json resp", resp.json());
             .then((data) => {
-                console.log("then rows", data);
+                // console.log("then rows", data);
                 const { url } = data;
                 if (data.success) {
                     this.props.uploadImage(url);
-                    console.log("this.state in handleclick: ", this.state);
+                    // console.log("this.state in handleclick: ", this.state);
                     // location.reload();
                 } else {
                     this.setState({
@@ -87,31 +87,6 @@ export class Uploader extends React.Component {
             });
     }
 
-    // handleClick(e) {
-    //     e.preventDefault();
-    //     const fd = new FormData();
-    //     fd.append("file", this.state.file);
-    //     console.log("handleClick is running", this.state);
-    //     fetch("/upload", {
-    //         method: "POST",
-    //         body: fd,
-    //     })
-    //         .then((res) => res.json())
-    //         .then((res) => {
-    //             console.log("POST /upload.json:", res);
-
-    //             if (res.success) {
-    //                 this.props.imgUrl(res.url);
-    //             } else {
-    //                 this.setState({
-    //                     error: "Something went wrong",
-    //                 });
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log("error in handleClick", err);
-    //         });
-    // }
     render() {
         return (
             <>

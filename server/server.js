@@ -6,7 +6,7 @@ const cookieSession = require("cookie-session");
 const { hash, compare } = require("./bc");
 const db = require("./db");
 const { uploader } = require("./upload");
-const s3Path = "https://imgboardmustard.s3.amazonaws.com/";
+const s3Path = "https://s3.amazonaws.com/spicedling/";
 const s3 = require("./s3");
 
 // const cryptoRandomString = require("crypto-random-string");
@@ -134,7 +134,7 @@ app.post("/login.json", (req, res) => {
 //     console.log("req.body :>> ", userId);
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("post in upload", req.file);
+    // console.log("post in upload", req.file);
     let url = s3Path + req.file.filename;
     if (req.file) {
         db.getImg(url, req.session.userId)
@@ -155,7 +155,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 // *** UPDATE BIO
 
 app.get("/user.json", (req, res) => {
-    console.log("log in get user", req.body);
+    // console.log("log in get user", req.body);
     db.getBio(req.session.userId)
         .then((result) => {
             return res.json({
@@ -184,6 +184,32 @@ app.post("/bio", (req, res) => {
         });
 });
 
+// *** FIND PEOPLE  ****
+app.get("/findPeople", (req, res) => {
+    console.log("log in get user");
+    db.getFindPeople()
+        .then((result) => {
+            return res.json(result);
+        })
+        .catch((err) => {
+            console.log("error in initialPeople", err);
+            res.sendStatus(500);
+        });
+});
+// FIND matchingPeople
+app.get("/matchingPeople/:search", (req, res) => {
+    console.log("log in get user", req.params);
+    db.getMatchingPeople(req.params.search)
+        .then((result) => {
+            return res.json(result);
+        })
+        .catch((err) => {
+            console.log("error in initialPeople", err);
+            res.sendStatus(500);
+        });
+});
+
+// *** LOGOUT **
 app.get("/logout", (req, res) => {
     req.session.id = null;
     res.redirect("/login");

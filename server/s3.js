@@ -1,12 +1,12 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
-let secrets;
 
+// the code below is not strictly necessary we're not deploying this
+// project but IF you want in the future this is already set up
+let secrets;
 if (process.env.NODE_ENV) {
-    // running in production
     secrets = process.env;
 } else {
-    // running locally
     secrets = require("./secrets");
 }
 
@@ -16,11 +16,12 @@ const s3 = new aws.S3({
 });
 
 module.exports.upload = (req, res, next) => {
+    console.log("req.body");
     if (!req.file) {
-        //NO FILE OR ERRO ON MULTER PROCESS
         return res.sendStatus(500);
     }
     const { filename, mimetype, size, path } = req.file;
+
     const promise = s3
         .putObject({
             Bucket: "spicedling",
@@ -33,14 +34,15 @@ module.exports.upload = (req, res, next) => {
         .promise();
     promise
         .then(() => {
-            // console.log("OUR IMAGE IS ON THE UNIVERSE");
+            console.log("******It worked!******");
             next();
-
             fs.unlink(path, () => {
-                // console.log("a string i did not understand");
+                console.log(
+                    "check if that image is still in the uploads folder."
+                );
             });
         })
         .catch((err) => {
-            console.log("err :>> ", err);
+            console.log("err in the cloud", err);
         });
 };

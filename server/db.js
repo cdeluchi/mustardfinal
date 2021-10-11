@@ -121,3 +121,24 @@ module.exports.getImg = (url, userId) => {
     `;
     return db.query(q, params);
 };
+
+module.exports.getFindPeople = () => {
+    console.log("getFindPeople");
+    const q = `
+    SELECT first, last, id, imageUrl FROM users
+    ORDER BY id DESC
+    LIMIT 3
+    `;
+    return db.query(q);
+};
+
+module.exports.getMatchingPeople = (search) => {
+    console.log("getFindPeople", search);
+    const params = [search + "%"];
+    const q = `
+    SELECT first, last, id, imageUrl  
+    FROM users 
+    WHERE first, last, id, imageUrl  
+    ILIKE $1`;
+    return db.query(q, params);
+};

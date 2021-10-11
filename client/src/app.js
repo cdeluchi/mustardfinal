@@ -1,8 +1,9 @@
 import { Component } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 import ProfilePic from "./profilepic";
 import { Uploader } from "./uploader";
 import Profile from "./profile";
-// import { BrowserRouter, Route, Link } from "react-router-dom";
+import FindPeople from "./findPeople";
 
 // import ResetPassword from "./resetPassword";
 // import { Link, BrowserRouter } from "react-router-dom";
@@ -54,19 +55,11 @@ export default class App extends Component {
         });
     }
 
-    // button click and close
-    // clickHandler() {
-    //     this.setState({ uploaderIsVisible: false });
-    // }
     close() {
         this.setState({
             uploaderIsVisible: false,
         });
     }
-    // setBio(officialBio) {
-    //     console.log("userBio in App is running");
-    //     this.setState({});
-    // }
 
     setBio(officialBio) {
         this.setState({ officialBio: officialBio });
@@ -86,33 +79,41 @@ export default class App extends Component {
         }
         return (
             <>
-                <img src="socialNW.png" alt="logo" />
+                <BrowserRouter>
+                    <div className="menu">
+                        <img src="socialNW.png" alt="logo" />
+                    </div>
+                    <div className="loggedcontainer">
+                        <img
+                            className="logo"
+                            src="kazamiga-rb.png"
+                            alt="logo"
+                        />
+                        {/* <p>Want to change your Profile Pic?</p> */}
 
-                <div className="loggedcontainer">
-                    <img className="logo" src="kazamiga-rb.png" alt="logo" />
-                    {/* <p>Want to change your Profile Pic?</p> */}
-                    <ProfilePic
-                        className="imgProfile"
-                        imgUrl={this.state.imageUrl}
-                        first={this.state.first}
-                        last={this.state.last}
-                        clickHandler={() =>
-                            this.setState({
-                                uploaderIsVisible: true,
-                            })
-                        }
-                    />
-                </div>
-                <h2>
-                    Hello {this.state.first} {this.state.last} grab a cup of
-                    coffee and tell me somenthing nice
-                </h2>
-                <div className="profileBio">
+                        <ProfilePic
+                            className="imgProfile"
+                            imageUrl={this.state.imageUrl}
+                            first={this.state.first}
+                            last={this.state.last}
+                            clickHandler={() =>
+                                this.setState({
+                                    uploaderIsVisible: true,
+                                })
+                            }
+                        />
+                    </div>
+                    <h2>
+                        Hello {this.state.first} {this.state.last} grab a cup of
+                        coffee and tell me somenthing nice
+                    </h2>
+
                     <Profile
+                        className="profileBio"
                         userId={this.state.userId}
                         first={this.state.first}
                         last={this.state.last}
-                        imageUrl={this.state.url}
+                        imageUrl={this.state.imageUrl}
                         officialBio={this.state.officialBio}
                         setBio={this.setBio}
                         clickHandler={() =>
@@ -121,13 +122,18 @@ export default class App extends Component {
                             })
                         }
                     />
-                </div>
-                {this.state.uploaderIsVisible && (
-                    <Uploader
-                        uploadImage={this.uploadImage}
-                        close={this.close}
-                    />
-                )}
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            uploadImage={this.uploadImage}
+                            close={this.close}
+                        />
+                    )}
+
+                    <div>
+                        <Route exact path="/" component={Profile} />
+                        <Route path="/findpeople" component={FindPeople} />
+                    </div>
+                </BrowserRouter>
             </>
         );
     }

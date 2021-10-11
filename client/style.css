@@ -28,19 +28,20 @@ h2 {
     color: #a94f2f;
 }
 .logo {
-    border-radius: 50px;
+    border-radius: 80px;
     border: 2px solid #ccc;
-    width: 50px;
+    width: 150px;
+    height: 150px;
     margin: 20px;
 }
 img {
     width: 100%;
 }
 .profilePic {
-    border-radius: 50px;
+    border-radius: 80px;
     border: 2px solid #ccc;
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    height: 150px;
     margin: 20px;
     object-fit: scale-down;
 }
@@ -111,4 +112,12 @@ button {
 }
 .profileBio {
     display: flex;
+    align-self: center;
+    justify-content: center;
+}
+
+.findPeopleContainer {
+    display: flex;
+    width: 100px;
+    height: 100px;
 }
