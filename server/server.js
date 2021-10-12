@@ -41,7 +41,7 @@ app.get("/user/id.json", function (req, res) {
 app.get("/user.json", function (req, res) {
     // console.log("user.json in get", req.body);
     db.firstUser(req.session.userId).then((result) => {
-        console.log("result", result);
+        // console.log("result", result);
         return res.json({
             userId: req.session.userId,
             // id: result.rows[0].id,
@@ -102,7 +102,7 @@ app.post("/registration.json", (req, res) => {
 //****  LOGIN ROUTE */
 app.post("/login.json", (req, res) => {
     db.getRegister(req.body.email).then((result) => {
-        console.log("result in getRegister", result);
+        // console.log("result in getRegister", result);
         if (!result.rows[0]) {
             return res.json({ success: false });
         }
@@ -209,6 +209,24 @@ app.get("/matchingPeople/:search", (req, res) => {
             res.sendStatus(500);
         });
 });
+
+// app.get("/user/:id.json", (req, res) => {
+//     console.log("user/:id");
+//     db.firstUser(req.result);
+//     return res
+//         .json({
+//             userId: req.session.userId,
+//             // id: result.rows[0].id,
+//             first: result.rows[0].first,
+//             last: result.rows[0].last,
+//             url: result.rows[0].imgurl,
+//             bio: result.rows[0].bio,
+//         })
+//         .catch((err) => {
+//             console.log("error in initialPeople", err);
+//             res.sendStatus(500);
+//         });
+// });
 
 // *** LOGOUT **
 app.get("/logout", (req, res) => {

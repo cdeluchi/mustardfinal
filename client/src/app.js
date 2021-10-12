@@ -4,6 +4,7 @@ import ProfilePic from "./profilepic";
 import { Uploader } from "./uploader";
 import Profile from "./profile";
 import FindPeople from "./findPeople";
+import OtherProfile from "./otherProfile";
 
 // import ResetPassword from "./resetPassword";
 // import { Link, BrowserRouter } from "react-router-dom";
@@ -141,6 +142,9 @@ export default class App extends Component {
                         {/* <Route exact path="/" component={Profile} /> */}
                         <Route path="/findusers" component={FindPeople} />
                     </div>
+                    <Route path="/user/:otherUserId">
+                        <OtherProfile />
+                    </Route>
                 </BrowserRouter>
             </>
         );

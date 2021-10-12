@@ -138,7 +138,7 @@ module.exports.getMatchingPeople = (search) => {
     const q = `
     SELECT first, last, id, imgurl  
     FROM users 
-    WHERE first, last, id, imgurl  
+    WHERE first 
     ILIKE $1`;
     return db.query(q, params);
 };

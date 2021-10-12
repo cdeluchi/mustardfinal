@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function findPeople(props) {
     // const [users, setUsers] = useState(["Alistair"]);
@@ -20,7 +20,7 @@ export default function findPeople(props) {
                 .then((res) => res.json())
                 .then(({ rows }) => {
                     console.log("rows in matchingpeople", rows);
-                    let finduser = rows[0].first;
+                    // let findAllUsers = rows.first;
                     setUsers(rows);
                 })
                 .catch(console.log);
@@ -74,15 +74,17 @@ export default function findPeople(props) {
                 />
             </div>
             {users &&
-                users.map((newusers, i) => (
+                users.map((findAllUsers, i) => (
                     <div key={i}>
-                        <img
-                            className="findprofile"
-                            src={newusers.imgurl}
-                        ></img>
-                        <h3>
-                            {newusers.first} {newusers.last}
-                        </h3>
+                        <Link to={`users/${users.id}`} key={i}>
+                            <img
+                                className="findprofile"
+                                src={findAllUsers.imgurl}
+                            ></img>
+                            <p>
+                                {findAllUsers.first} {findAllUsers.last}
+                            </p>
+                        </Link>
                     </div>
                 ))}
         </>
