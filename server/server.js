@@ -173,12 +173,13 @@ app.get("/user.json", (req, res) => {
 });
 
 // *** GET BIO
-app.post("/bio", (req, res) => {
-    console.log("bio in post", req.body);
+app.post("/bio.json", (req, res) => {
     db.updateBio(req.body.draftBio, req.session.userId)
         .then(() => {
+            console.log("updateBio");
             res.json({ bioUpdate: true, officialBio: req.body.draftBio });
         })
+
         .catch((err) => {
             console.log("err in server/bio", err);
         });
@@ -198,7 +199,7 @@ app.get("/findPeople", (req, res) => {
 });
 // FIND matchingPeople
 app.get("/matchingPeople/:search", (req, res) => {
-    console.log("log in get user", req.params);
+    console.log("matching people", req.params);
     db.getMatchingPeople(req.params.search)
         .then((result) => {
             return res.json(result);

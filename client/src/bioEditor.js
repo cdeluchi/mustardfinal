@@ -4,7 +4,7 @@ export class BioEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showTextArea: false,
+            // editTextArea: false,
             editTextArea: false,
             draftbio: "",
         };
@@ -15,15 +15,15 @@ export class BioEditor extends Component {
 
     componentDidMount() {
         console.log("BIO MOUNT");
-        if (this.props.officialBio != null) {
-            this.setState({ showTextArea: true });
-        }
     }
 
     handleShowBio() {
-        this.setState({
-            showTextArea: true,
-        });
+        // console.log("before handleShow", this.editTextArea);
+        console.log("before showbio", this.state.editTextArea);
+        this.setState((oldState) => ({
+            editTextArea: !oldState.editTextArea,
+        }));
+        console.log("after handle", this.state.editTextArea);
     }
 
     handleChange({ target }) {
@@ -31,8 +31,9 @@ export class BioEditor extends Component {
         console.log("this.state in handleChange", this.state.draftBio);
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    handleSubmit() {
+        console.log("handleSubmit");
+        // e.preventDefault();
         console.log("handleSubmit", this.state.draftBio);
         fetch("/bio.json", {
             method: "POST",
@@ -63,34 +64,32 @@ export class BioEditor extends Component {
         //         if (elem == 1) {
         console.log("render in bioEditor");
         let elem;
-        if (
-            this.state.showTextArea === true &&
-            this.state.editTextArea === false
-        ) {
+        if (this.state.editTextArea === false && this.props.officialBio) {
             elem = (
                 //button to EditBio
                 <>
                     <p>{this.props.officialBio}</p>
-                    <button onClick={this.handleEditBio}>edit bio</button>
+                    <button onClick={this.handleShowBio}>edit bio</button>
                 </>
             );
-        } else if (
-            this.state.showTextArea === true &&
-            this.state.editTextArea === true
-        ) {
+            console.log("elem in render");
+        } else if (this.state.editTextArea === true) {
             // create a new argument to receive all the info from props officialBio ""
             let newval = this.props.officialBio || "";
             elem = (
                 <>
                     <textarea
-                        value={newval}
+                        defaultValue={newval}
+                        name="text-area"
                         onChange={this.handleChange}
                     ></textarea>
                     <button onClick={this.handleSubmit}>save bio</button>
                 </>
             );
+            console.log("elem text area in render");
         } else {
             elem = <a onClick={this.handleShowBio}>add bio</a>;
+            console.log("handleShowBio");
         }
         return (
             <>

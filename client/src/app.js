@@ -89,6 +89,13 @@ export default class App extends Component {
                             src="kazamiga-rb.png"
                             alt="logo"
                         />
+                        <a
+                            href="/findusers"
+                            className="logo"
+                            src="findPeople.png"
+                            text="findusers"
+                        />
+
                         {/* <p>Want to change your Profile Pic?</p> */}
 
                         <ProfilePic
@@ -130,8 +137,9 @@ export default class App extends Component {
                     )}
 
                     <div>
-                        <Route exact path="/" component={Profile} />
-                        <Route path="/findpeople" component={FindPeople} />
+                        <a href="/findusers">find more people</a>
+                        {/* <Route exact path="/" component={Profile} /> */}
+                        <Route path="/findusers" component={FindPeople} />
                     </div>
                 </BrowserRouter>
             </>

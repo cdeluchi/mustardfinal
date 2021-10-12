@@ -102,8 +102,8 @@ module.exports.updateBio = (bio, userId) => {
     const params = [bio, userId];
     const q = `
     UPDATE users
-    SET bio = $2
-    WHERE id= $1 
+    SET bio = $1
+    WHERE id= $2
     RETURNING id
     `;
     return db.query(q, params);
@@ -125,7 +125,7 @@ module.exports.getImg = (url, userId) => {
 module.exports.getFindPeople = () => {
     console.log("getFindPeople");
     const q = `
-    SELECT first, last, id, imageUrl FROM users
+    SELECT first, last, id, imgurl FROM users
     ORDER BY id DESC
     LIMIT 3
     `;
@@ -136,9 +136,9 @@ module.exports.getMatchingPeople = (search) => {
     console.log("getFindPeople", search);
     const params = [search + "%"];
     const q = `
-    SELECT first, last, id, imageUrl  
+    SELECT first, last, id, imgurl  
     FROM users 
-    WHERE first, last, id, imageUrl  
+    WHERE first, last, id, imgurl  
     ILIKE $1`;
     return db.query(q, params);
 };

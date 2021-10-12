@@ -5,11 +5,35 @@ export default function findPeople(props) {
     // const [users, setUsers] = useState(["Alistair"]);
     // const [searchTerm, setSearchTerm] = useState("");
     // const [countries, setCountries] = useState();
+    const [users, setUsers] = useState([]);
     const [search, setSearch] = useState("");
-    const [users, setusers] = useState([]);
 
     useEffect(() => {
-        console.log("search", search);
+        console.log("props use Effect", props);
+        console.log("search use Effect", search);
+
+        if (search.length > 0) {
+            console.log("matching", search);
+            console.log("users", users);
+
+            fetch(`/matchingPeople/${search}`)
+                .then((res) => res.json())
+                .then(({ rows }) => {
+                    console.log("rows in matchingpeople", rows);
+                    let finduser = rows[0].first;
+                    setUsers(rows);
+                })
+                .catch(console.log);
+        } else {
+            console.log("latest 3 users", search);
+            fetch(`/findPeople/${users}`)
+                .then((res) => res.json())
+                .then(({ rows }) => {
+                    console.log("rows in else", rows);
+                    setUsers(rows);
+                })
+                .catch(console.log);
+        }
         //if search length > 0
         //then we want to make a fetch to db
         // and communicate with server
@@ -24,43 +48,53 @@ export default function findPeople(props) {
         //         setusers(results);
         //     })
         // .catch(console.log);
+
+        // const updatefindPeople = (e) => {
+        //     if (e.key === "Enter") {
+        //         setPeople([...people, e.target.value]);
+        //         e.target.value = "";
+        //     }
+        // };
+
         return () => {
-            console.log("return in useEffect");
+            console.log(`return in useEffect ${search}`);
         };
     }, [search]);
-
-    useEffect(() => {
-        console.log("props.first", props.first);
-        return () => {
-            console.log(`component is unmounting`);
-        };
-    }, []);
-
-    // const updatefindPeople = (e) => {
-    //     if (e.key === "Enter") {
-    //         setPeople([...people, e.target.value]);
-    //         e.target.value = "";
-    //     }
-    // };
-
     // render(){
     return (
         <>
             <div className="findPeopleContainer">
-                <h1> Find People {props.first} </h1>
+                <h1> Find People </h1>
                 <input
                     className="findPeopleInput"
                     type="text"
-                    name="name"
+                    placeholder="search here"
                     // onKeyDown={updatefindPeople}
                     onChange={(e) => setSearch(e.target.value)}
                 />
-                {/* <Link to={`people/${people.id}`}>find People</Link> */}
-                {/* {users?.map((users) => (
-                    <p key={users}>{users}</p>
-                ))} */}
             </div>
+            {users &&
+                users.map((newusers, i) => (
+                    <div key={i}>
+                        <img
+                            className="findprofile"
+                            src={newusers.imgurl}
+                        ></img>
+                        <h3>
+                            {newusers.first} {newusers.last}
+                        </h3>
+                    </div>
+                ))}
         </>
     );
 }
-//}
+
+{
+    /* {users &&
+    users.map((user, i) => (
+        <Link to={`users/${users.id}`} key={i}>
+            <p>{users.first}</p>
+            <img src={users.imgurl} />
+        </Link>
+    ))} */
+}
