@@ -86,7 +86,7 @@ module.exports.updatePass = (email, password) => {
 
 //  Get Bio
 module.exports.getBio = (userId) => {
-    console.log("userId in getBio", userId);
+    // console.log("userId in getBio", userId);
     const params = [userId];
     const q = `
     SELECT first, last, imgUrl, bio
@@ -143,11 +143,33 @@ module.exports.getMatchingPeople = (search) => {
     return db.query(q, params);
 };
 
-module.exports.friendship = (id) => {
+module.exports.makefriendship = (otherUserId, userId) => {
+    console.log("getFriendship", otherUserId, userId);
+    const params = [otherUserId, userId];
+    const q = `
+    SELECT * 
+    FROM friendships
+    WHERE (recipient_id = $1 AND sender_id = $2)
+    OR (recipient_id = $2 AND sender_id = $1);`;
+    return db.query(q, params);
+};
+
+module.exports.updatefriendship = (id) => {
     console.log("getFriendship", id);
     const params = [id];
     const q = `
-    SELECT * 
+    UPDATE * 
+    FROM friendships
+    WHERE (recipient_id = $1 AND sender_id = $2)
+    OR (recipient_id = $2 AND sender_id = $1);`;
+    return db.query(q, params);
+};
+
+module.exports.daletefriendship = (id) => {
+    console.log("getFriendship", id);
+    const params = [id];
+    const q = `
+    DELETE * 
     FROM friendships
     WHERE (recipient_id = $1 AND sender_id = $2)
     OR (recipient_id = $2 AND sender_id = $1);`;

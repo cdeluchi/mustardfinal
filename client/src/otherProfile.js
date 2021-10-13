@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
+import FriendshipButton from "./friendshipButton";
 
 export default function otherProfile(props) {
     console.log("otherProfile");
@@ -37,7 +38,7 @@ export default function otherProfile(props) {
         };
     }, []);
     return (
-        <div className="otherPeopleContainer">
+        <div className="profilePic">
             <h1>Welcome to {user.first} profile</h1>
             {user && (
                 <>
@@ -53,6 +54,7 @@ export default function otherProfile(props) {
                     <p>{error}</p>
                 </>
             )}
+            <FriendshipButton otherUserId={otherUserId} />
         </div>
     );
 }

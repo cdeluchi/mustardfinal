@@ -144,6 +144,10 @@ export default class App extends Component {
                                 })
                             }
                         />
+                        <h2>
+                            Hello {this.state.first} {this.state.last} grab a
+                            cup of coffee and tell me somenthing nice
+                        </h2>
                     </Route>
                     <Route path="/users/:otherUserId">
                         <OtherProfile />

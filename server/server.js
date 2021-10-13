@@ -209,7 +209,7 @@ app.get("/matchingPeople/:search", (req, res) => {
 // OTHER USERS
 
 app.get("/api/users/:userId", (req, res) => {
-    console.log("req profile for users ", req.params.userId);
+    // console.log("req profile for users ", req.params.userId);
     if (req.params.userId === req.session.userId) {
         res.redirect("/");
     }
@@ -229,9 +229,37 @@ app.get("/api/users/:userId", (req, res) => {
         });
 });
 
-// GET FRIENDSHIP
+// as a result when the DB is updated, the btn text should reflect this new status by changin its text
 
-// POST UPDATE
+// ROUTE MAKE FRIENDSHIP
+app.get("/makefriendship/:otherUserId", (req, res) => {
+    console.log("req profile for users ", req.params.otherUserId);
+    if (req.params.otherUserId === req.session.userId) {
+        res.redirect("/");
+    }
+    db.makefriendship(req.params.otherUserId, req.session.userId)
+        .then((result) => {
+            console.log("result", result.rows[0]);
+            return res.json({ data: result.rows[0] });
+        })
+        .catch((err) => {
+            console.log("error in friendship", err);
+            return res.json({ accepted: "undefined" });
+        });
+});
+// ROUTE UPDATE/DELETE FRIENDSHIP
+app.post("/updatefriendship/:otherUserId", (req, res) => {
+    const noFriends = req.session.userId;
+    const acceptedFriend = req.body;
+
+    console.log("updatefriendship");
+    console.log(req.body);
+
+    return res.json({ error: err }).catch((err) => {
+        console.log("error in friendship", err);
+        return res.json({ acceptedFriend: "undefined" });
+    });
+});
 
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
