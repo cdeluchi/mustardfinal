@@ -1,36 +1,59 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 
-export default function otherProfile() {
+export default function otherProfile(props) {
+    console.log("otherProfile");
     const [user, setUser] = useState({});
+    const [error, setError] = useState();
     const params = useParams();
     const { otherUserId } = useParams();
     const history = useHistory();
+
     useEffect(() => {
-        let abort = false;
-        console.log("otherProfile just rendered");
+        console.log("otherProfile just rendered", otherUserId);
+        fetch(`/api/users/${otherUserId}`)
+            // fetch(`/users/${otherUserId}.json`)
+            .then((res) => res.json())
+            .then((results) => {
+                console.log("results in useEffect", results);
+                if (
+                    results.errorMessage ==
+                    "this is the same profile, try again"
+                ) {
+                    history.push("/");
+                } else if (results) {
+                    setUser(results);
+                }
+            })
+            .catch((err) => {
+                console.log("error in OtherProfiles", err);
+                setError("user is not here");
+            });
         // we'll need to figure out which user profile we should show!
         // As our server should be given the otherUserId from the url in the browser
-        if (!abort) {
-            console.log("otherusersProfile");
-            fetch(`users/${otherUserId}`)
-                .then((res) => res.json())
-                .then((data) => setUser(data));
-        }
+
         return () => {
-            console.log("cleanup function running ");
-            abort = true;
+            console.log("cleanup function running");
         };
     }, []);
     return (
-        <>
-            <h1>Other Profile</h1>
-            <img src={user.url} alt={user.id} />
-            <p>{user.first}</p>
-            <p>{user.last}</p>
-            <p>{user.userId}</p>
-            <p>{user.bio}</p>
-        </>
+        <div className="otherPeopleContainer">
+            <h1>Welcome to {user.first} profile</h1>
+            {user && (
+                <>
+                    <h2>
+                        {user.first} {user.last}
+                    </h2>
+                    <img src={user.url}></img>
+                    <p>{user.bio}</p>
+                </>
+            )}
+            {error && (
+                <>
+                    <p>{error}</p>
+                </>
+            )}
+        </div>
     );
 }
 

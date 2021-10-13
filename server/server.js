@@ -31,7 +31,7 @@ app.use(
 );
 
 app.get("/user/id.json", function (req, res) {
-    console.log("client want to know if the user is registred");
+    // console.log("client want to know if the user is registred");
     res.json({
         userId: req.session.userId,
     });
@@ -128,10 +128,6 @@ app.post("/login.json", (req, res) => {
 });
 
 // ****UPLOAD IMG
-// post("/", function (req, res) {
-//     console.log("uploadPic in ", req.body);
-//     const { userId } = req.body;
-//     console.log("req.body :>> ", userId);
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     // console.log("post in upload", req.file);
@@ -187,7 +183,7 @@ app.post("/bio.json", (req, res) => {
 
 // *** FIND PEOPLE  ****
 app.get("/findPeople", (req, res) => {
-    console.log("log in get user");
+    // console.log("log in get user");
     db.getFindPeople()
         .then((result) => {
             return res.json(result);
@@ -210,23 +206,32 @@ app.get("/matchingPeople/:search", (req, res) => {
         });
 });
 
-// app.get("/user/:id.json", (req, res) => {
-//     console.log("user/:id");
-//     db.firstUser(req.result);
-//     return res
-//         .json({
-//             userId: req.session.userId,
-//             // id: result.rows[0].id,
-//             first: result.rows[0].first,
-//             last: result.rows[0].last,
-//             url: result.rows[0].imgurl,
-//             bio: result.rows[0].bio,
-//         })
-//         .catch((err) => {
-//             console.log("error in initialPeople", err);
-//             res.sendStatus(500);
-//         });
-// });
+// OTHER USERS
+
+app.get("/api/users/:userId", (req, res) => {
+    console.log("req profile for users ", req.params.userId);
+    if (req.params.userId === req.session.userId) {
+        res.redirect("/");
+    }
+    db.getBio(req.params.userId)
+        .then((result) => {
+            return res.json({
+                userId: req.session.userId,
+                first: result.rows[0].first,
+                last: result.rows[0].last,
+                url: result.rows[0].imgurl,
+                bio: result.rows[0].bio,
+            });
+        })
+        .catch((err) => {
+            console.log("error in user/id", err);
+            res.sendStatus(500);
+        });
+});
+
+// GET FRIENDSHIP
+
+// POST UPDATE
 
 // *** LOGOUT **
 app.get("/logout", (req, res) => {

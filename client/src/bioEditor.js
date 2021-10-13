@@ -14,27 +14,27 @@ export class BioEditor extends Component {
     }
 
     componentDidMount() {
-        console.log("BIO MOUNT");
+        // console.log("BIO MOUNT");
     }
 
     handleShowBio() {
         // console.log("before handleShow", this.editTextArea);
-        console.log("before showbio", this.state.editTextArea);
+        // console.log("before showbio", this.state.editTextArea);
         this.setState((oldState) => ({
             editTextArea: !oldState.editTextArea,
         }));
-        console.log("after handle", this.state.editTextArea);
+        // console.log("after handle", this.state.editTextArea);
     }
 
     handleChange({ target }) {
         this.setState({ draftBio: target.value });
-        console.log("this.state in handleChange", this.state.draftBio);
+        // console.log("this.state in handleChange", this.state.draftBio);
     }
 
     handleSubmit() {
-        console.log("handleSubmit");
+        // console.log("handleSubmit");
         // e.preventDefault();
-        console.log("handleSubmit", this.state.draftBio);
+        // console.log("handleSubmit", this.state.draftBio);
         fetch("/bio.json", {
             method: "POST",
             headers: {
@@ -62,7 +62,7 @@ export class BioEditor extends Component {
     render() {
         // let elem = this.state.step;
         //         if (elem == 1) {
-        console.log("render in bioEditor");
+        // console.log("render in bioEditor");
         let elem;
         if (this.state.editTextArea === false && this.props.officialBio) {
             elem = (
@@ -72,7 +72,7 @@ export class BioEditor extends Component {
                     <button onClick={this.handleShowBio}>edit bio</button>
                 </>
             );
-            console.log("elem in render");
+            // console.log("elem in render");
         } else if (this.state.editTextArea === true) {
             // create a new argument to receive all the info from props officialBio ""
             let newval = this.props.officialBio || "";

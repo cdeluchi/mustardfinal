@@ -1,5 +1,6 @@
 import ProfilePic from "./profilepic.js";
 import { BioEditor } from "./bioEditor";
+import { Link } from "react-router-dom";
 
 export default function Profile({
     imageUrl,

@@ -9,7 +9,7 @@ import OtherProfile from "./otherProfile";
 // import ResetPassword from "./resetPassword";
 // import { Link, BrowserRouter } from "react-router-dom";
 //render a profile.js
-
+// console.log("otherProfile in app");
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +28,7 @@ export default class App extends Component {
         fetch("/user.json")
             .then((res) => res.json())
             .then((data) => {
-                console.log("setState", data);
+                // console.log("setState", data);
                 this.setState({
                     userId: data.userId,
                     first: data.first,
@@ -37,7 +37,7 @@ export default class App extends Component {
                     officialBio: data.bio,
                 });
             });
-        console.log("this setState in compnentDidMount", this.setState);
+        // console.log("this setState in compnentDidMount", this.setState);
     }
 
     // New Image
@@ -75,7 +75,7 @@ export default class App extends Component {
 
     render() {
         if (!this.state.userId) {
-            console.log("Loading in", this.state.userId);
+            // console.log("Loading in", this.state.userId);
             return <div>Loading...</div>; // or null
         }
         return (
@@ -90,6 +90,7 @@ export default class App extends Component {
                             src="kazamiga-rb.png"
                             alt="logo"
                         />
+
                         <a
                             href="/findusers"
                             className="logo"
@@ -116,20 +117,6 @@ export default class App extends Component {
                         coffee and tell me somenthing nice
                     </h2>
 
-                    <Profile
-                        className="profileBio"
-                        userId={this.state.userId}
-                        first={this.state.first}
-                        last={this.state.last}
-                        imageUrl={this.state.imageUrl}
-                        officialBio={this.state.officialBio}
-                        setBio={this.setBio}
-                        clickHandler={() =>
-                            this.setState({
-                                uploaderIsVisible: true,
-                            })
-                        }
-                    />
                     {this.state.uploaderIsVisible && (
                         <Uploader
                             uploadImage={this.uploadImage}
@@ -142,7 +129,23 @@ export default class App extends Component {
                         {/* <Route exact path="/" component={Profile} /> */}
                         <Route path="/findusers" component={FindPeople} />
                     </div>
-                    <Route path="/user/:otherUserId">
+                    <Route exact path="/">
+                        <Profile
+                            className="profileBio"
+                            userId={this.state.userId}
+                            first={this.state.first}
+                            last={this.state.last}
+                            imageUrl={this.state.imageUrl}
+                            officialBio={this.state.officialBio}
+                            setBio={this.setBio}
+                            clickHandler={() =>
+                                this.setState({
+                                    uploaderIsVisible: true,
+                                })
+                            }
+                        />
+                    </Route>
+                    <Route path="/users/:otherUserId">
                         <OtherProfile />
                     </Route>
                 </BrowserRouter>

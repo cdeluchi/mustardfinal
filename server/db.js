@@ -12,7 +12,7 @@ if (process.env.DATABASE_URL) {
 }
 
 module.exports.firstUser = (id) => {
-    console.log("firstUser in db", id);
+    // console.log("firstUser in db", id);
     return db.query(
         `
     SELECT * 
@@ -123,7 +123,7 @@ module.exports.getImg = (url, userId) => {
 };
 
 module.exports.getFindPeople = () => {
-    console.log("getFindPeople");
+    // console.log("getFindPeople");
     const q = `
     SELECT first, last, id, imgurl FROM users
     ORDER BY id DESC
@@ -133,12 +133,23 @@ module.exports.getFindPeople = () => {
 };
 
 module.exports.getMatchingPeople = (search) => {
-    console.log("getFindPeople", search);
+    // console.log("getFindPeople", search);
     const params = [search + "%"];
     const q = `
     SELECT first, last, id, imgurl  
     FROM users 
     WHERE first 
     ILIKE $1`;
+    return db.query(q, params);
+};
+
+module.exports.friendship = (id) => {
+    console.log("getFriendship", id);
+    const params = [id];
+    const q = `
+    SELECT * 
+    FROM friendships
+    WHERE (recipient_id = $1 AND sender_id = $2)
+    OR (recipient_id = $2 AND sender_id = $1);`;
     return db.query(q, params);
 };
