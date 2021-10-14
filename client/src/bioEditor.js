@@ -79,6 +79,7 @@ export class BioEditor extends Component {
             elem = (
                 <>
                     <textarea
+                        className="textArea"
                         defaultValue={newval}
                         name="text-area"
                         onChange={this.handleChange}

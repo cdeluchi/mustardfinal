@@ -143,7 +143,7 @@ module.exports.getMatchingPeople = (search) => {
     return db.query(q, params);
 };
 
-module.exports.makefriendship = (otherUserId, userId) => {
+module.exports.getfriendship = (otherUserId, userId) => {
     console.log("getFriendship", otherUserId, userId);
     const params = [otherUserId, userId];
     const q = `
@@ -175,3 +175,44 @@ module.exports.daletefriendship = (id) => {
     OR (recipient_id = $2 AND sender_id = $1);`;
     return db.query(q, params);
 };
+
+// get in friendship
+// get("/:otherUserID", function (req, res) {
+//     let { otherUserID } = req.params;
+//     let { userID } = req.session;
+//     console.log("GET REQUEST ON /friendship : >>");
+//     db.checkFriendship(userID, otherUserID).then(({ rows }) => {
+//         console.log({ rows });
+//         if (rows.length == 0) {
+//             res.json({
+//                 step: 0,
+//             });
+//         } else if (userID == rows[0].sender_id && rows[0].accepted == false) {
+//             res.json({
+//                 step: 1,
+//                 accepted: false,
+//             });
+//         } else if (
+//             otherUserID == rows[0].sender_id &&
+//             rows[0].accepted == false
+//         ) {
+//             res.json({
+//                 step: 2,
+//                 accepted: false,
+//             });
+//         } else {
+//             res.json({
+//                 step: 3,
+//                 accepted: true,
+//             });
+//         }
+
+//         // if (userID == rows[0].sender_id) {
+//         // }
+//         // res.json({
+//         //     rows,
+//         // });
+
+//         //   rows: [ { id: 1, sender_id: 3, recipient_id: 202, accepted: false } ]
+//     });
+// });

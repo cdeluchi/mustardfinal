@@ -1,6 +1,6 @@
 import ProfilePic from "./profilepic.js";
 import { BioEditor } from "./bioEditor";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 export default function Profile({
     imageUrl,
@@ -12,7 +12,7 @@ export default function Profile({
 }) {
     imageUrl = imageUrl || "default.png";
     return (
-        <div>
+        <div className="profilecontainer">
             <ProfilePic
                 imageUrl={imageUrl}
                 first={first}
@@ -21,6 +21,9 @@ export default function Profile({
             />
             <div>
                 <BioEditor officialBio={officialBio} setBio={setBio} />
+            </div>
+            <div>
+                <button className="profilecontainer">find more people</button>
             </div>
         </div>
     );

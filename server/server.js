@@ -232,33 +232,38 @@ app.get("/api/users/:userId", (req, res) => {
 // as a result when the DB is updated, the btn text should reflect this new status by changin its text
 
 // ROUTE MAKE FRIENDSHIP
-app.get("/makefriendship/:otherUserId", (req, res) => {
-    console.log("req profile for users ", req.params.otherUserId);
-    if (req.params.otherUserId === req.session.userId) {
-        res.redirect("/");
-    }
-    db.makefriendship(req.params.otherUserId, req.session.userId)
+app.get("/getfriendship/:otherUserId", (req, res) => {
+    console.log("req profile for users ");
+    let params = req.params.otherUserId;
+    let session = req.session.userId;
+    db.getfriendship(params, session)
         .then((result) => {
-            console.log("result", result.rows[0]);
-            return res.json({ data: result.rows[0] });
+            console.log("result in getfriendship", result);
+            return res.json(result);
         })
         .catch((err) => {
-            console.log("error in friendship", err);
-            return res.json({ accepted: "undefined" });
+            console.log("error in get/friendship", err);
+            // return res.json({ accepted: "undefined" });
         });
 });
 // ROUTE UPDATE/DELETE FRIENDSHIP
-app.post("/updatefriendship/:otherUserId", (req, res) => {
-    const noFriends = req.session.userId;
-    const acceptedFriend = req.body;
-
-    console.log("updatefriendship");
-    console.log(req.body);
-
-    return res.json({ error: err }).catch((err) => {
-        console.log("error in friendship", err);
-        return res.json({ acceptedFriend: "undefined" });
-    });
+app.post("/getfriendship/:otherUserId", (req, res) => {
+    console.log("POST getfriendship");
+    console.log("req.body in POST Friendship", req.body);
+    console.log("req.session in POST Friendship", req.session);
+    db.getfriendship(req.params.otherUserId, req.session.userId)
+        .then(({ rows }) => {
+            console.log(rows[0]);
+            if (rows[0] == false) {
+                res.json({
+                    rows: false,
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("error in Post/friendship", err);
+            // return res.json({ accepted: "undefined" });
+        });
 });
 
 // *** LOGOUT **

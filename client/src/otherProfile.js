@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router";
 import FriendshipButton from "./friendshipButton";
 
 export default function otherProfile(props) {
-    console.log("otherProfile");
+    // console.log("otherProfile");
     const [user, setUser] = useState({});
     const [error, setError] = useState();
     const params = useParams();
@@ -11,7 +11,7 @@ export default function otherProfile(props) {
     const history = useHistory();
 
     useEffect(() => {
-        console.log("otherProfile just rendered", otherUserId);
+        // console.log("otherProfile just rendered", otherUserId);
         fetch(`/api/users/${otherUserId}`)
             // fetch(`/users/${otherUserId}.json`)
             .then((res) => res.json())
@@ -38,15 +38,18 @@ export default function otherProfile(props) {
         };
     }, []);
     return (
-        <div className="profilePic">
+        <div className="otherProfileContainer">
             <h1>Welcome to {user.first} profile</h1>
             {user && (
                 <>
+                    <img className="imgInOtherProfile" src={user.url}></img>
                     <h2>
                         {user.first} {user.last}
                     </h2>
-                    <img src={user.url}></img>
-                    <p>{user.bio}</p>
+                    <h2>
+                        {" "}
+                        something about me: <br /> {user.bio}
+                    </h2>
                 </>
             )}
             {error && (

@@ -43,7 +43,7 @@ export default function findPeople(props) {
     return (
         <>
             <div className="findPeopleContainer">
-                <h1> Find People </h1>
+                <p> Find People </p>
                 <input
                     className="findPeopleInput"
                     type="text"
@@ -52,20 +52,22 @@ export default function findPeople(props) {
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </div>
-            {users &&
-                users.map((findAllUsers, i) => (
-                    <div key={i}>
-                        <Link to={`/users/${findAllUsers.id}`} key={i}>
-                            <img
-                                className="findprofile"
-                                src={findAllUsers.imgurl}
-                            ></img>
-                            <p>
-                                {findAllUsers.first} {findAllUsers.last}
-                            </p>
-                        </Link>
-                    </div>
-                ))}
+            <div className="showFindPeople">
+                {users &&
+                    users.map((findAllUsers, i) => (
+                        <div key={i}>
+                            <Link to={`/users/${findAllUsers.id}`} key={i}>
+                                <img
+                                    className="findprofile"
+                                    src={findAllUsers.imgurl}
+                                ></img>
+                                <p>
+                                    {findAllUsers.first} {findAllUsers.last}
+                                </p>
+                            </Link>
+                        </div>
+                    ))}
+            </div>
         </>
     );
 }

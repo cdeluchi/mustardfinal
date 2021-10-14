@@ -125,7 +125,9 @@ export default class App extends Component {
                     )}
 
                     <div>
-                        <a href="/findusers">find more people</a>
+                        <a className="profilecontainer" href="/findusers">
+                            find more people
+                        </a>
                         {/* <Route exact path="/" component={Profile} /> */}
                         <Route path="/findusers" component={FindPeople} />
                     </div>
@@ -144,10 +146,6 @@ export default class App extends Component {
                                 })
                             }
                         />
-                        <h2>
-                            Hello {this.state.first} {this.state.last} grab a
-                            cup of coffee and tell me somenthing nice
-                        </h2>
                     </Route>
                     <Route path="/users/:otherUserId">
                         <OtherProfile />
