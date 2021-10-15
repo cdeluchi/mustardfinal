@@ -13,27 +13,30 @@ export default function FriendshipButton({ otherUserId }) {
     // const [error, setError] = useState();
 
     useEffect(() => {
-        console.log("FriendButton just rended");
+        // console.log("FriendButton just rended");
+        // console.log("FriendButton just rended", useState);
 
         // let abort = false;
-        fetch(`/getfriendship/${otherUserId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
+
+        console.log("otherUserId: ", otherUserId);
+        fetch(`/getfriendship/${otherUserId}`)
             .then((res) => res.json())
-            .then(({ data }) => {
-                console.log("results in FriendButton", data); // still undefined
-                if (!data) {
-                    setButtonText("addFriend");
-                    this.props.useState(this.useState);
-                } else if (!data.accepted && data.recipient_id == otherUserId) {
-                    setButtonText("cancelFriendship");
-                } else if (!data.accepted && data.sender_id == otherUserId) {
-                    setButtonText("acceptedFriendship");
-                } else if (data.accepted) {
-                    setButtonText("endedFriendship");
+            .then((data) => {
+                console.log("results in FriendButton", data);
+                if (!data.length) {
+                    setButtonText("add Friend");
+                } else if (
+                    data ||
+                    (!data.accepted && data.recipient_id == otherUserId)
+                ) {
+                    setButtonText("cancel Friend");
+                } else if (
+                    !data.accepted.length &&
+                    data.sender_id.length == otherUserId
+                ) {
+                    setButtonText("accepted Friend");
+                } else if (data.accepted.length) {
+                    setButtonText("ended Friend");
                 }
             })
             .catch((err) => {
@@ -46,7 +49,7 @@ export default function FriendshipButton({ otherUserId }) {
     }, []);
 
     const clickBtn = () => {
-        fetch(`/getfriendship/${otherUserId}`, {
+        fetch("/setFriendship", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -57,8 +60,8 @@ export default function FriendshipButton({ otherUserId }) {
             }),
         })
             .then((res) => res.json())
-            .then((response) => {
-                setButtonText(response.buttonText);
+            .then((data) => {
+                setButtonText(data.buttonText); //o botão deve ser alterado toda vez que o post request for alterado 
             })
             .catch(console.log);
     };

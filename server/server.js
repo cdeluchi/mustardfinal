@@ -234,36 +234,72 @@ app.get("/api/users/:userId", (req, res) => {
 // ROUTE MAKE FRIENDSHIP
 app.get("/getfriendship/:otherUserId", (req, res) => {
     console.log("req profile for users ");
-    let params = req.params.otherUserId;
-    let session = req.session.userId;
+    const params = req.params.otherUserId;
+    const session = req.session.userId;
+    console.log("getfriendship params", params);
+    console.log("getfriendship session", session);
     db.getfriendship(params, session)
-        .then((result) => {
-            console.log("result in getfriendship", result);
-            return res.json(result);
+        .then((results) => {
+            console.log("result in getfriendship", results.rows.sender_id);
+            res.json(results.rows);
         })
         .catch((err) => {
             console.log("error in get/friendship", err);
             // return res.json({ accepted: "undefined" });
         });
 });
-// ROUTE UPDATE/DELETE FRIENDSHIP
-app.post("/getfriendship/:otherUserId", (req, res) => {
+// ROUTE SET FRIENDSHIP
+app.post("/setFriendship", (req, res, accepted) => {
     console.log("POST getfriendship");
     console.log("req.body in POST Friendship", req.body);
     console.log("req.session in POST Friendship", req.session);
-    db.getfriendship(req.params.otherUserId, req.session.userId)
-        .then(({ rows }) => {
-            console.log(rows[0]);
-            if (rows[0] == false) {
-                res.json({
-                    rows: false,
-                });
-            }
-        })
-        .catch((err) => {
-            console.log("error in Post/friendship", err);
-            // return res.json({ accepted: "undefined" });
-        });
+    //criar if else aqui mesmo para que quando o btn for clicado ele deve mandar uma mensagem pro bot˜åo para alterar o texto
+    if (accepted == true) {
+        console.log("req.body.userId", req.body.userId);
+        db.setFriendship(req.body.otherUserId, req.session.userId)
+            .then((results) => {
+                console.log(results.rows);
+                if (results.rows == false) {
+                    res.json({
+                        results: false,
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log("error in Post/friendship", err);
+                // return res.json({ accepted: "undefined" });
+            });
+    } else if (accepted == false) {
+        console.log("req.body.userId", req.body.userId);
+        db.updateFriendship(req.body.otherUserId, req.session.userId)
+            .then((results) => {
+                console.log(results.rows);
+                if (results.rows == false) {
+                    res.json({
+                        results: false,
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log("error in Post/friendship", err);
+                // return res.json({ accepted: "undefined" });
+            });
+    } else if (accepted) {
+        console.log("req.body.userId", req.body.userId);
+        db.cancelFriendship(req.body.otherUserId, req.session.userId)
+            .then((results) => {
+                console.log(results.rows);
+                if (results.rows == false) {
+                    res.json({
+                        results: false,
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log("error in Post/friendship", err);
+                // return res.json({ accepted: "undefined" });
+            });
+    }
 });
 
 // *** LOGOUT **

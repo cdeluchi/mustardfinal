@@ -150,69 +150,81 @@ module.exports.getfriendship = (otherUserId, userId) => {
     SELECT * 
     FROM friendships
     WHERE (recipient_id = $1 AND sender_id = $2)
-    OR (recipient_id = $2 AND sender_id = $1);`;
+    OR (recipient_id = $2 AND sender_id = $1)
+    `;
     return db.query(q, params);
 };
 
-module.exports.updatefriendship = (id) => {
-    console.log("getFriendship", id);
-    const params = [id];
+module.exports.setFriendship = (otherUserId, userId) => {
+    console.log("setFriendship in DB", otherUserId, userId);
+
+    const params = [otherUserId, userId];
     const q = `
-    UPDATE * 
-    FROM friendships
-    WHERE (recipient_id = $1 AND sender_id = $2)
-    OR (recipient_id = $2 AND sender_id = $1);`;
+        INSERT INTO friendships
+        (sender_id, recipient_id)
+        VALUES ($1, $2)
+    `;
     return db.query(q, params);
 };
 
-module.exports.daletefriendship = (id) => {
-    console.log("getFriendship", id);
-    const params = [id];
+module.exports.updateFriendship = (otherUserId, userId, accepted) => {
+    console.log("updateFriendship in DB", otherUserId, userId, accepted);
+    const params = [otherUserId, userId, accepted];
     const q = `
-    DELETE * 
-    FROM friendships
-    WHERE (recipient_id = $1 AND sender_id = $2)
-    OR (recipient_id = $2 AND sender_id = $1);`;
+        UPDATE friendships
+        SET accepted = $3
+        WHERE (sender_id = $1 AND recipient_id= $2, accepted )
+    `;
     return db.query(q, params);
 };
 
-// get in friendship
-// get("/:otherUserID", function (req, res) {
-//     let { otherUserID } = req.params;
-//     let { userID } = req.session;
-//     console.log("GET REQUEST ON /friendship : >>");
-//     db.checkFriendship(userID, otherUserID).then(({ rows }) => {
-//         console.log({ rows });
-//         if (rows.length == 0) {
-//             res.json({
-//                 step: 0,
-//             });
-//         } else if (userID == rows[0].sender_id && rows[0].accepted == false) {
-//             res.json({
-//                 step: 1,
-//                 accepted: false,
-//             });
-//         } else if (
-//             otherUserID == rows[0].sender_id &&
-//             rows[0].accepted == false
-//         ) {
-//             res.json({
-//                 step: 2,
-//                 accepted: false,
-//             });
-//         } else {
-//             res.json({
-//                 step: 3,
-//                 accepted: true,
-//             });
-//         }
+module.exports.cancelFriendship = (otherUserId, userId) => {
+    console.log("cancelFriedship in DB", otherUserId, userId);
+    const params = [otherUserId, userId];
+    const q = `
+    DELETE FROM friendships 
+    WHERE (sender_id = $1 AND recipient_id = $2) 
+    OR (sender_id = $2 AND recipient_id = $1)`;
+    return db.query(q, params);
+};
 
-//         // if (userID == rows[0].sender_id) {
-//         // }
-//         // res.json({
-//         //     rows,
-//         // });
+module.exports.friends = (id, first, last, image, accepted) => {
+    console.log("getFriendship", id, first, last, image, accepted);
+    const params = [id, first, last, image, accepted];
+    const q = `
+    SELECT users.id, first, last, image, accepted
+    FROM friendships
+    JOIN users
+    ON (accepted = false AND recipient_id = $1 AND requester_id = users.id)
+    OR (accepted = true AND recipient_id = $1 AND requester_id = users.id)
+    OR (accepted = true AND requester_id = $1 AND recipient_id = users.id)
+`;
+    return db.query(q, params);
+};
 
-//         //   rows: [ { id: 1, sender_id: 3, recipient_id: 202, accepted: false } ]
-//     });
-// });
+module.exports.wannabes = (id, first, last, image, accepted) => {
+    console.log("getFriendship", id, first, last, image, accepted);
+    const params = [id, first, last, image, accepted];
+    const q = `
+    UPDATE users.id, first, last, image, accepted
+    FROM friendships
+    JOIN users
+    ON (accepted = false AND recipient_id = $1 AND requester_id = users.id)
+    OR (accepted = true AND recipient_id = $1 AND requester_id = users.id)
+    OR (accepted = true AND requester_id = $1 AND recipient_id = users.id)
+`;
+    return db.query(q, params);
+};
+module.exports.deletefriends = (id, first, last, image, accepted) => {
+    console.log("getFriendship", id, first, last, image, accepted);
+    const params = [id, first, last, image, accepted];
+    const q = `
+    DELETE users.id, first, last, image, accepted
+    FROM friendships
+    JOIN users
+    ON (accepted = false AND recipient_id = $1 AND requester_id = users.id)
+    OR (accepted = true AND recipient_id = $1 AND requester_id = users.id)
+    OR (accepted = true AND requester_id = $1 AND recipient_id = users.id)
+`;
+    return db.query(q, params);
+};
