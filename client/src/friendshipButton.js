@@ -61,7 +61,7 @@ export default function FriendshipButton({ otherUserId }) {
         })
             .then((res) => res.json())
             .then((data) => {
-                setButtonText(data.buttonText); //o botão deve ser alterado toda vez que o post request for alterado 
+                setButtonText(data.buttonText); //o botão deve ser alterado toda vez que o post request for alterado
             })
             .catch(console.log);
     };

@@ -249,28 +249,38 @@ app.get("/getfriendship/:otherUserId", (req, res) => {
         });
 });
 // ROUTE SET FRIENDSHIP
-app.post("/setFriendship", (req, res, accepted) => {
+app.post("/setFriendship", (req, res) => {
     console.log("POST getfriendship");
-    console.log("accepted in POST Friendship", req.body.accepted);
+    console.log("accepted in POST Friendship", req.body);
     console.log("req.session in POST Friendship", req.session);
-    const bodyAccep = req.body.accepted; //
+    const bodyAccep = req.body.buttonText; //
     const otherUser = req.body.otherUserId; //
     const sessionUser = req.session.userId; //
     let accepted;
     //criar if else aqui mesmo para que quando o btn for clicado ele deve mandar uma mensagem pro bot˜åo para alterar o texto
-    if (bodyAccep === "add friend") {
+    if (bodyAccep === "add Friend") {
         console.log("req.body.userId", req.body.userId);
         accepted = false;
-        db.setFriendship(sessionUser, otherUser, bodyAccep);
-    } else if (bodyAccep === "accept friend") {
-        accepted = true;
+        db.setFriendship(sessionUser, otherUser, bodyAccep)
+            .then(() => {
+                return res.json({ buttonText: "cancel Friend" });
+            })
+            .catch((err) => {
+                console.log("error in get/friendship", err);
+                return res.sendStatus(500);
+            });
+    } else if (bodyAccep === "accept Friend") {
         db.updateFriendship(sessionUser, otherUser, bodyAccep);
-    } else if (bodyAccep === "cancel friend" || bodyAccep == "end Friendship") {
-        db.cancelFriendship(sessionUser, otherUser);
+    } else if (bodyAccep === "cancel Friend" || bodyAccep == "end Friendship") {
+        db.cancelFriendship(sessionUser, otherUser)
+            .then(() => {
+                return res.json({ buttonText: "add Friend" });
+            })
+            .catch((err) => {
+                console.log("error in get/friendship", err);
+                return res.sendStatus(500);
+            });
     }
-    return res.json({ success: true }).catch((err) => {
-        console.log("error in post/friendship", err);
-    });
 });
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
