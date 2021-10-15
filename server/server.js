@@ -251,57 +251,27 @@ app.get("/getfriendship/:otherUserId", (req, res) => {
 // ROUTE SET FRIENDSHIP
 app.post("/setFriendship", (req, res, accepted) => {
     console.log("POST getfriendship");
-    console.log("req.body in POST Friendship", req.body);
+    console.log("accepted in POST Friendship", req.body.accepted);
     console.log("req.session in POST Friendship", req.session);
+    const bodyAccep = req.body.accepted; //
+    const otherUser = req.body.otherUserId; //
+    const sessionUser = req.session.userId; //
+    let accepted;
     //criar if else aqui mesmo para que quando o btn for clicado ele deve mandar uma mensagem pro bot˜åo para alterar o texto
-    if (accepted == true) {
+    if (bodyAccep === "add friend") {
         console.log("req.body.userId", req.body.userId);
-        db.setFriendship(req.body.otherUserId, req.session.userId)
-            .then((results) => {
-                console.log(results.rows);
-                if (results.rows == false) {
-                    res.json({
-                        results: false,
-                    });
-                }
-            })
-            .catch((err) => {
-                console.log("error in Post/friendship", err);
-                // return res.json({ accepted: "undefined" });
-            });
-    } else if (accepted == false) {
-        console.log("req.body.userId", req.body.userId);
-        db.updateFriendship(req.body.otherUserId, req.session.userId)
-            .then((results) => {
-                console.log(results.rows);
-                if (results.rows == false) {
-                    res.json({
-                        results: false,
-                    });
-                }
-            })
-            .catch((err) => {
-                console.log("error in Post/friendship", err);
-                // return res.json({ accepted: "undefined" });
-            });
-    } else if (accepted) {
-        console.log("req.body.userId", req.body.userId);
-        db.cancelFriendship(req.body.otherUserId, req.session.userId)
-            .then((results) => {
-                console.log(results.rows);
-                if (results.rows == false) {
-                    res.json({
-                        results: false,
-                    });
-                }
-            })
-            .catch((err) => {
-                console.log("error in Post/friendship", err);
-                // return res.json({ accepted: "undefined" });
-            });
+        accepted = false;
+        db.setFriendship(sessionUser, otherUser, bodyAccep);
+    } else if (bodyAccep === "accept friend") {
+        accepted = true;
+        db.updateFriendship(sessionUser, otherUser, bodyAccep);
+    } else if (bodyAccep === "cancel friend" || bodyAccep == "end Friendship") {
+        db.cancelFriendship(sessionUser, otherUser);
     }
+    return res.json({ success: true }).catch((err) => {
+        console.log("error in post/friendship", err);
+    });
 });
-
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
     req.session.id = null;

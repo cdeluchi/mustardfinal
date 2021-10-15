@@ -157,7 +157,6 @@ module.exports.getfriendship = (otherUserId, userId) => {
 
 module.exports.setFriendship = (otherUserId, userId) => {
     console.log("setFriendship in DB", otherUserId, userId);
-
     const params = [otherUserId, userId];
     const q = `
         INSERT INTO friendships
@@ -228,3 +227,46 @@ module.exports.deletefriends = (id, first, last, image, accepted) => {
 `;
     return db.query(q, params);
 };
+
+// app.get("/relation/:otherUserId", async (req, res) => {
+//     const viewer = req.session.userId;
+//     const other = req.params.otherUserId;
+//     const val = req.body.val;
+//     // console.log("viewer ", viewer, "other ", other);
+//     //what is relation between req.session.userId and req.params.otherUserId
+//     try {
+//         const result = await db.getRelation(viewer, other);
+//         return res.json({
+//             accepted: result.rows[0].accepted,
+//             sender: result.rows[0].sender_id,
+//         });
+//     } catch (err) {
+//         // console.log("error in getRelation ", err);
+//         return res.json({ accepted: "undefined" });
+//     }
+// });
+
+// app.post("/relation/", (req, res) => {
+//     const viewer = req.session.userId;
+//     const ops = req.body.operation.relation;
+//     const other = parseInt(req.body.other.otherUserId);
+//     let accepted;
+//     // console.log(req.body);
+//     // console.log(viewer, " want's to ", ops, accepted, " with ", other);
+
+//     // async in try-catch???????
+//     try {
+//         if (ops === "make friends") {
+//             accepted = false;
+//             db.setRelation(viewer, other, accepted);
+//         } else if (ops === "accept") {
+//             accepted = true;
+//             db.updateRelation(other, viewer, accepted); //turn around
+//         } else if (ops === "cancel" || ops === "unfriend") {
+//             db.dropRelation(viewer, other);
+//         }
+//         return res.json({ success: true });
+//     } catch (err) {
+//         return res.json({ error: err });
+//     }
+// });
