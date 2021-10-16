@@ -302,8 +302,23 @@ app.post("/setFriendship", (req, res) => {
             });
     }
 });
-
-app.get("/friends", (req, res) => {});
+// GET ALREADY FRIENDS
+app.get("/friends", (req, res) => {
+    console.log("Get in friends");
+    const params = req.params.otherUserId;
+    const session = req.session.userId;
+    console.log("friends params", params);
+    console.log("friends session", session);
+    db.alreadyFriends(params, session)
+        .then((results) => {
+            console.log("result in getfriendship", results.rows.sender_id);
+            res.json(results.rows);
+        })
+        .catch((err) => {
+            console.log("error in get/friendship", err);
+            // return res.json({ accepted: "undefined" });
+        });
+});
 
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
