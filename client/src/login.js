@@ -28,10 +28,11 @@ export class Login extends Component {
         this.setState(
             {
                 [target.name]: target.value,
-            },
-            () => {
-                console.log("registration StateUpdate in Login", this.state);
+                [target.name]: target.value,
             }
+            // () => {
+            //     console.log("registration StateUpdate in Login", this.state);
+            // }
         );
     }
     //handleLogin
@@ -41,18 +42,18 @@ export class Login extends Component {
         console.log("this.state in Login", this.state);
         fetch("/login.json", {
             method: "POST",
-            body: JSON.stringify(this.state),
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify(this.state),
         })
             .then((resp) => resp.json())
             .then((resp) => {
-                if (!resp.success) {
-                    console.log("POST /login.json:", resp);
-                    this.setState({ error: "try again!" });
-                } else {
-                    location.reload();
+                console.log("POST login", resp);
+                if (resp.login === true) {
+                    return location.redirect("/");
+                } else if (resp.login === false) {
+                    this.setState({ error: true });
                     console.log("else in handleLogin");
                 }
             })
@@ -79,7 +80,7 @@ export class Login extends Component {
                     <button onClick={this.handleLogin}>Login</button>
                 </form>
                 {this.state.error && (
-                    <h2 className="h2InError">{this.state.error}</h2>
+                    <h2 className="h2InError">{this.setState.error}</h2>
                 )}
 
                 <Link to="/ressetPassword">

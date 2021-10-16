@@ -22,9 +22,6 @@ export default function Profile({
             <div>
                 <BioEditor officialBio={officialBio} setBio={setBio} />
             </div>
-            <div>
-                <button className="profilecontainer">find more people</button>
-            </div>
         </div>
     );
 }

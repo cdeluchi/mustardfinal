@@ -3,7 +3,8 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
-const { hash, compare } = require("./bc");
+const { hash } = require("./bc");
+const bc = require("./bc.js");
 const db = require("./db");
 const { uploader } = require("./upload");
 const s3Path = "https://s3.amazonaws.com/spicedling/";
@@ -102,14 +103,14 @@ app.post("/registration.json", (req, res) => {
 //****  LOGIN ROUTE */
 app.post("/login.json", (req, res) => {
     db.getRegister(req.body.email).then((result) => {
-        // console.log("result in getRegister", result);
+        console.log("result in getRegister", result);
         if (!result.rows[0]) {
             return res.json({ success: false });
         }
         let passwordInDB = result.rows[0].passHash;
         let passwordUserType = req.body.password;
 
-        compare(passwordUserType, passwordInDB)
+        bc.compare(passwordUserType, passwordInDB)
             .then((comparePassword) => {
                 if (comparePassword === true) {
                     req.session.userId = result.rows[0].id;
@@ -126,6 +127,25 @@ app.post("/login.json", (req, res) => {
         // req.session.userId = result.rows[0].id;
     });
 });
+// app.post("/login.json", async (req, res) => {
+//     try {
+//         const result = await db.getRegister(req.body.email);
+//         req.session.userId = result.rows[0];
+//         const compareResult = await bc.compare(
+//             req.body.passHash,
+//             result.rows[0].passHash
+//         );
+//         if (compareResult === true) {
+//             return res.json({ login: true });
+//         } else {
+//             req.session.userId = null;
+//             return res.json({ login: false });
+//         }
+//     } catch (err) {
+//         console.log("error in getUser", err);
+//         res.json({ error: "login failed" });
+//     }
+// });
 
 // ****UPLOAD IMG
 
@@ -282,6 +302,9 @@ app.post("/setFriendship", (req, res) => {
             });
     }
 });
+
+app.get("/friends", (req, res) => {});
+
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
     req.session.id = null;

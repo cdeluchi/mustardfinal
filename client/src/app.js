@@ -1,15 +1,12 @@
 import { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import ProfilePic from "./profilepic";
+import Menu from "./menu";
 import { Uploader } from "./uploader";
 import Profile from "./profile";
 import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
-
-// import ResetPassword from "./resetPassword";
-// import { Link, BrowserRouter } from "react-router-dom";
-//render a profile.js
-// console.log("otherProfile in app");
+import Friends from "./friends";
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -91,12 +88,8 @@ export default class App extends Component {
                             alt="logo"
                         />
 
-                        <a
-                            href="/findusers"
-                            className="logo"
-                            src="findPeople.png"
-                            text="findusers"
-                        />
+                        <img className="logo" src="findPeople.png" alt="logo" />
+                        <Menu />
 
                         {/* <p>Want to change your Profile Pic?</p> */}
 
@@ -149,6 +142,20 @@ export default class App extends Component {
                     </Route>
                     <Route path="/users/:otherUserId">
                         <OtherProfile />
+                    </Route>
+                    <Route path="/friends">
+                        <Friends
+                            first={this.state.first}
+                            last={this.state.last}
+                            imageUrl={this.state.imageUrl}
+                            officialBio={this.state.officialBio}
+                            setBio={this.setBio}
+                            clickHandler={() =>
+                                this.setState({
+                                    uploaderIsVisible: true,
+                                })
+                            }
+                        ></Friends>
                     </Route>
                 </BrowserRouter>
             </>

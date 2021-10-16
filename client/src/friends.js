@@ -1,6 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { combineReducers } from "redux";
+import usersReducer from "./users/slice.js";
 
-export default function Friends(props) {
-    const dispatch = useDispatch();
-}
+const rootReducer = combineReducers({
+    users: usersReducer,
+});
+
+export default rootReducer;
