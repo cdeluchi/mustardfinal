@@ -187,43 +187,16 @@ module.exports.cancelFriendship = (otherUserId, userId) => {
     return db.query(q, params);
 };
 
-module.exports.alreadyFriends = (id, first, last, image, accepted) => {
-    console.log("alreadyFriends in db");
-    const params = [id, first, last, image, accepted];
+module.exports.alreadyFriends = (accepted) => {
+    console.log("alreadyFriends in db", accepted);
+    const params = [accepted];
     const q = `
-    SELECT users.id, first, last, image, accepted
+    SELECT users.id, first, last, imgurl, accepted
     FROM friendships
     JOIN users
-    ON (accepted = false AND recipient_id = $1 AND requester_id = users.id)
-    OR (accepted = true AND recipient_id = $1 AND requester_id = users.id)
-    OR (accepted = true AND requester_id = $1 AND recipient_id = users.id)
-`;
-    return db.query(q, params);
-};
-
-module.exports.wannabes = (id, first, last, image, accepted) => {
-    console.log("getFriendship", id, first, last, image, accepted);
-    const params = [id, first, last, image, accepted];
-    const q = `
-    UPDATE users.id, first, last, image, accepted
-    FROM friendships
-    JOIN users
-    ON (accepted = false AND recipient_id = $1 AND requester_id = users.id)
-    OR (accepted = true AND recipient_id = $1 AND requester_id = users.id)
-    OR (accepted = true AND requester_id = $1 AND recipient_id = users.id)
-`;
-    return db.query(q, params);
-};
-module.exports.deletefriends = (id, first, last, image, accepted) => {
-    console.log("getFriendship", id, first, last, image, accepted);
-    const params = [id, first, last, image, accepted];
-    const q = `
-    DELETE users.id, first, last, image, accepted
-    FROM friendships
-    JOIN users
-    ON (accepted = false AND recipient_id = $1 AND requester_id = users.id)
-    OR (accepted = true AND recipient_id = $1 AND requester_id = users.id)
-    OR (accepted = true AND requester_id = $1 AND recipient_id = users.id)
+    ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+    OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+    OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
 `;
     return db.query(q, params);
 };

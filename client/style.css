@@ -1,12 +1,16 @@
 * {
     box-sizing: border-box;
-    margin: 20px;
+    margin: 5px;
 }
-body {
+main {
     min-height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
         "Segoe UI Symbol";
+    border: 1px solid #bbc4c5;
+    max-width: 1000px;
+    height: 100%;
+    margin: auto;
 }
 bodyInWelcome {
     display: grid;
@@ -34,7 +38,6 @@ h2 {
     height: 80px;
     margin: 20px;
 }
-
 img {
     width: 100%;
 }
@@ -89,6 +92,12 @@ input {
 }
 button {
     margin: 10px 10px 10px 20px;
+    background-color: #cbe7f2;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    color: #7e8a8c;
 }
 
 .loggedcontainer {
@@ -119,7 +128,6 @@ button {
     display: flex;
     justify-content: space-between;
     width: 350px;
-    height: 150px;
     flex-wrap: wrap;
     align-content: flex-start;
     margin: 30px;
@@ -176,4 +184,26 @@ button {
     display: flex;
     justify-content: center;
     align-content: center;
+}
+.menuHome,
+.menuUsers,
+.menufriends,
+.menulogout {
+    border: #ccc;
+    width: 80px;
+    border-radius: 5px;
+    margin: 10px;
+    object-fit: cover;
+}
+.footer {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-left: 0;
+    border-top: 1px solid #ccc;
+    border-right: 0;
+    border-bottom: 0;
 }

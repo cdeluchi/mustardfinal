@@ -14,6 +14,7 @@ export default function Profile({
     return (
         <div className="profilecontainer">
             <ProfilePic
+                className="profilecontainer"
                 imageUrl={imageUrl}
                 first={first}
                 last={last}

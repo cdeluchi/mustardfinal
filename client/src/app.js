@@ -2,6 +2,7 @@ import { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import ProfilePic from "./profilepic";
 import Menu from "./menu";
+import Footer from "./footer";
 import { Uploader } from "./uploader";
 import Profile from "./profile";
 import FindPeople from "./findPeople";
@@ -78,8 +79,12 @@ export default class App extends Component {
         return (
             <>
                 <BrowserRouter>
-                    <div className="menu">
-                        <img src="socialNW.png" alt="logo" />
+                    <div className="imgCover">
+                        <img
+                            className="imgCover"
+                            src="socialNW.png"
+                            alt="logo"
+                        />
                     </div>
                     <div className="loggedcontainer">
                         <img
@@ -88,7 +93,7 @@ export default class App extends Component {
                             alt="logo"
                         />
 
-                        <img className="logo" src="findPeople.png" alt="logo" />
+                        {/* <img className="logo" src="findPeople.png" alt="logo" /> */}
                         <Menu />
 
                         {/* <p>Want to change your Profile Pic?</p> */}
@@ -106,8 +111,7 @@ export default class App extends Component {
                         />
                     </div>
                     <h2>
-                        Hello {this.state.first} {this.state.last} grab a cup of
-                        coffee and tell me somenthing nice
+                        Hello {this.state.first} {this.state.last}!
                     </h2>
 
                     {this.state.uploaderIsVisible && (
@@ -118,9 +122,6 @@ export default class App extends Component {
                     )}
 
                     <div>
-                        <a className="profilecontainer" href="/findusers">
-                            find more people
-                        </a>
                         {/* <Route exact path="/" component={Profile} /> */}
                         <Route path="/findusers" component={FindPeople} />
                     </div>
@@ -143,22 +144,25 @@ export default class App extends Component {
                     <Route path="/users/:otherUserId">
                         <OtherProfile />
                     </Route>
+
                     <Route path="/friends">
-                        <Friends
-                            first={this.state.first}
-                            last={this.state.last}
-                            imageUrl={this.state.imageUrl}
-                            officialBio={this.state.officialBio}
-                            setBio={this.setBio}
-                            clickHandler={() =>
-                                this.setState({
-                                    uploaderIsVisible: true,
-                                })
-                            }
-                        ></Friends>
+                        <Friends />
                     </Route>
+
+                    <Footer />
                 </BrowserRouter>
             </>
         );
     }
 }
+
+// first={this.state.first}
+//                             last={this.state.last}
+//                             imageUrl={this.state.imageUrl}
+//                             officialBio={this.state.officialBio}
+//                             setBio={this.setBio}
+//                             clickHandler={() =>
+//                                 this.setState({
+//                                     uploaderIsVisible: true,
+//                                 })
+//                             }

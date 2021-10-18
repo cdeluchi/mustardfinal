@@ -89,7 +89,7 @@ export class BioEditor extends Component {
             );
             console.log("elem text area in render");
         } else {
-            elem = <a onClick={this.handleShowBio}>add bio</a>;
+            elem = <button onClick={this.handleShowBio}>add bio</button>;
             console.log("handleShowBio");
         }
         return (

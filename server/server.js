@@ -9,9 +9,11 @@ const db = require("./db");
 const { uploader } = require("./upload");
 const s3Path = "https://s3.amazonaws.com/spicedling/";
 const s3 = require("./s3");
-
-// const cryptoRandomString = require("crypto-random-string");
-// const ses = require("./ses.js");
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
 
 app.use(compression());
 app.use(express.json());
@@ -303,22 +305,30 @@ app.post("/setFriendship", (req, res) => {
     }
 });
 // GET ALREADY FRIENDS
-app.get("/friends", (req, res) => {
-    console.log("Get in friends");
-    const params = req.params.otherUserId;
+app.get("/friends.json", (req, res) => {
+    console.log("GET/friends in SERVER", req.session);
     const session = req.session.userId;
-    console.log("friends params", params);
     console.log("friends session", session);
-    db.alreadyFriends(params, session)
-        .then((results) => {
-            console.log("result in getfriendship", results.rows.sender_id);
-            res.json(results.rows);
+    db.alreadyFriends(session)
+        .then((accepted) => {
+            console.log("result in GETfriends", accepted);
+            if (!session) {
+                res.json({ success: false });
+            } else {
+                res.json(accepted);
+            }
         })
         .catch((err) => {
             console.log("error in get/friendship", err);
             // return res.json({ accepted: "undefined" });
         });
 });
+
+// if (!session) {
+//     res.json({ success: false });
+// } else {
+//     res.json(results.rows);
+// }
 
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
@@ -331,9 +341,13 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
+
+// io.on("connection", (socket) => {
+// console.log(`socket user with Id ${socket.id} just add`);
+// });
 
 //*** WHEN ERROR IN SERVER */ DO NOT PANIC!!!!
 //UnhandledPromiseRejectionWarning: Error: Illegal arguments: undefined, string
