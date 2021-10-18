@@ -324,12 +324,6 @@ app.get("/friends.json", (req, res) => {
         });
 });
 
-// if (!session) {
-//     res.json({ success: false });
-// } else {
-//     res.json(results.rows);
-// }
-
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
     req.session.id = null;
