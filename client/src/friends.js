@@ -7,16 +7,14 @@ import { useEffect, useState } from "react";
 //and useEffect from react.
 
 import { useDispatch, useSelector } from "react-redux";
-import { makeFriends, noFriends } from "./redux/users/slice";
+import { friendsReducer, makeFriends, noFriends } from "./redux/users/slice";
 
 // Must export a function component because we want to use the
 // useDispatch and useSelector hooks
 
 export default function Friends(data) {
     console.log("default Function in Friends", data);
-    // const alreadyFriends = useSelector(
-    //     (state) => state.friends && state.friends.filter((users) => friends.hot)
-    // );
+
     const dispatch = useDispatch();
     const friends = useSelector(
         (state) =>
@@ -94,7 +92,7 @@ export default function Friends(data) {
                         friends.map((friends, i) => (
                             <p key={i}>
                                 <img
-                                    className="profilePicSmall"
+                                    className="profilePic"
                                     src={friends.imgurl}
                                     alt="myFriend"
                                 />

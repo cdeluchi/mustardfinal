@@ -311,7 +311,7 @@ app.get("/friends.json", (req, res) => {
     console.log("friends session", session);
     db.alreadyFriends(session)
         .then((accepted) => {
-            console.log("result in GETfriends", accepted);
+            console.log("accepted in GETfriends", accepted);
             if (!session) {
                 res.json({ success: false });
             } else {

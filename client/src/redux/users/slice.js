@@ -1,5 +1,6 @@
 export default function friendsReducer(state = null, action) {
-    console.log("friends in Slice reducer");
+    console.log("friends in action Slice reducer", action.type);
+    console.log("friends in data Slice reducer", state);
     if (action.type == "friends/addFriends") {
         state = action.payload.friends;
     } else if (action.type === "friends/cancelFriends") {
