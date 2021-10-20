@@ -4,9 +4,9 @@ export default function friendsReducer(state = null, action) {
 
     if (action.type == "friends/addFriends") {
         state = action.payload.friends;
-    } else if (action.type === "friends/cancelFriends") {
+    } else if (action.type === "friends/acceptedFriendship") {
         state = state.map((friends) => {
-            if (friends.userId == action.payload.myfriendId) {
+            if (friends.id == action.payload.id) {
                 return {
                     ...friends,
                     accepted: true,
@@ -15,6 +15,10 @@ export default function friendsReducer(state = null, action) {
                 return friends;
             }
         });
+    } else if (action.type === "friends/unfriendship") {
+        let newState = [...state];
+        newState = state.filter((friend) => friend.id != action.payload.id);
+        return newState;
     }
     return state;
 }
@@ -28,17 +32,17 @@ export function addFriends(friends) {
 }
 
 export function unfriendship(id) {
-    console.log("unfriend", id);
+    console.log("unfriendship", id);
     return {
-        type: "friend/unfriends",
+        type: "friends/unfriendship",
         payload: { id },
     };
 }
 
 export function acceptedFriendship(id) {
-    console.log("acceptedFriend", id);
+    console.log("acceptedFriendship", id);
     return {
-        type: "friend/acceptedFriend",
+        type: "friends/acceptedFriendship",
         payload: { id },
     };
 }

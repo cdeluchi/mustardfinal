@@ -19,6 +19,12 @@ export default function Menu() {
                     <img alt="myFriends" src="/myFriends.png" />
                 </a>
             </div>
+            <div className="menufriends">
+                {/* <Link to="/friends">Friends</Link> */}
+                <a href="/chat">
+                    <img alt="myChat" src="/chat.png" />
+                </a>
+            </div>
             <div className="menulogout">
                 <a href="/logout">
                     <img alt="logout" src="/logout.png" />

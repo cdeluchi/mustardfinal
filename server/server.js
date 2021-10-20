@@ -14,6 +14,8 @@ const io = require("socket.io")(server, {
     allowRequest: (req, callback) =>
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
+
+//try to use routes MIDDLEWARE
 //if you want to deploy to Heroku need to change this localhost too
 app.use(compression());
 app.use(express.json());
@@ -140,25 +142,6 @@ app.post("/login.json", (req, res) => {
         // req.session.userId = result.rows[0].id;
     });
 });
-// app.post("/login.json", async (req, res) => {
-//     try {
-//         const result = await db.getRegister(req.body.email);
-//         req.session.userId = result.rows[0];
-//         const compareResult = await bc.compare(
-//             req.body.passHash,
-//             result.rows[0].passHash
-//         );
-//         if (compareResult === true) {
-//             return res.json({ login: true });
-//         } else {
-//             req.session.userId = null;
-//             return res.json({ login: false });
-//         }
-//     } catch (err) {
-//         console.log("error in getUser", err);
-//         res.json({ error: "login failed" });
-//     }
-// });
 
 // ****UPLOAD IMG
 
@@ -266,7 +249,7 @@ app.get("/api/users/:userId", (req, res) => {
 
 // ROUTE MAKE FRIENDSHIP
 app.get("/getfriendship/:otherUserId", (req, res) => {
-    console.log("req profile for users ");
+    // console.log("req profile for users ");
     const params = req.params.otherUserId;
     const session = req.session.userId;
     console.log("getfriendship params", params);
@@ -283,16 +266,16 @@ app.get("/getfriendship/:otherUserId", (req, res) => {
 });
 // ROUTE SET FRIENDSHIP
 app.post("/setFriendship", (req, res) => {
-    console.log("POST getfriendship");
-    console.log("accepted in POST Friendship", req.body);
-    console.log("req.session in POST Friendship", req.session);
+    // console.log("POST getfriendship");
+    // console.log("accepted in POST Friendship", req.body);
+    // console.log("req.session in POST Friendship", req.session);
     const bodyAccep = req.body.buttonText; //
     const otherUser = req.body.otherUserId; //
     const sessionUser = req.session.userId; //
     let accepted;
     //criar if else aqui mesmo para que quando o btn for clicado ele deve mandar uma mensagem pro bot˜åo para alterar o texto
     if (bodyAccep === "add Friend") {
-        console.log("req.body.userId", req.body.userId);
+        // console.log("req.body.userId", req.body.userId);
         accepted = false;
         db.setFriendship(sessionUser, otherUser, bodyAccep)
             .then(() => {
@@ -323,7 +306,7 @@ app.post("/setFriendship", (req, res) => {
     }
 });
 
-// GET ALREADY FRIENDS
+// GET FRIENDSHIPs
 app.get("/friends.json", (req, res) => {
     console.log("GET/friends in SERVER", req.session);
     const session = req.session.userId;
@@ -343,10 +326,10 @@ app.get("/friends.json", (req, res) => {
 });
 
 app.post("/unfriend", (req, res) => {
-    console.log("unfriend");
+    console.log("unfriend in SERVER");
     db.cancelFriendship(req.body.id, req.session.userId)
-        .then((res) => {
-            console.log("resp", res);
+        .then((noFriend) => {
+            console.log("resp in unfriend SERVER", res.rows);
             res.json({ success: true });
         })
         .catch((err) => {
@@ -355,10 +338,10 @@ app.post("/unfriend", (req, res) => {
         });
 });
 app.post("/acceptedFriend", (req, res) => {
-    console.log("acceptedFriend");
-    db.updateFriendship(req.body.id, req.session.userId, true)
-        .then((res) => {
-            console.log("resp", res);
+    console.log("body", req.body);
+    console.log("acceptedFriend in SERVER");
+    db.updateFriendship(req.session.userId, req.body.other, true)
+        .then(() => {
             res.json({ success: true });
         })
         .catch((err) => {
@@ -382,6 +365,8 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
+// SOCKET IO   ROUTE
+// USE ASYNC IF WE CAN ******
 io.on("connection", async (socket) => {
     console.log(`socket user with Id ${socket.id} just add`);
 
@@ -390,93 +375,41 @@ io.on("connection", async (socket) => {
     if (!userId) {
         return socket.disconnect(true);
     }
-    // if the user makes it this point. they are logged in and successfully connect to secket
-    // this is a good place to get lastest 10 chat messages
-    // table with Id text sender_id created_at
-    //e join com outra table que tem img e name
+    /// if user makes it to this point in the code, then it means they're logged in
+    // & are successfully connected to sockets
 
-    // db.getLastTenMsgs().then((result) => {
-    //     console.log(result.rows);
+    // this is a good place to go get the last 10 chat messages
+    // we'll need to make a new table for chats
+    // your db query for getting the last 10 messages will need to be a JOIN
+    // you'll need info from both the users table and chats!
+    // i.e. user's first name, last name, image, and chat msg
+    // the most recent chat message should be displayed at the BOTTOM
 
-    //     io.sockets.emit("chatMessages", result.rows);
+    // db.getLastTenMsgs().then(({ rows }) => {
+    //     console.log(rows);
+    //     io.sockets.emit('mostRecentMsgs', rows);
+    // });
+
+    // ADDING A NEW MSG - let's listen for a new chat msg being sent from the client
+
     // });
     socket.on("my new chat message", (newMsg) => {
-        console.log("this message is coming from chat.js component:", newMsg);
+        console.log(
+            "This message is coming in from chat.js component: ",
+            newMsg
+        );
+        console.log(`user who sent the newMsg is ${userId}`);
+
+        // 1. do a db query to store the new chat message into the chat table!!
+        // 2. also do a db query to get info about the user (first name, last name, img) - will probably need to be a JOIN
+        // once you have your chat object, you'll want to EMIT it to EVERYONE so they can see it immediately.
+        io.sockets.emit("addChatMsg", newMsg);
     });
+
+    // 1st arg - ('my new chat message') - listens to the event that will be coming from chat.js
+    // 2nd arg - (newMsg) - is the info that comes along with the emit from chat.js
 });
 
 //*** WHEN ERROR IN SERVER */ DO NOT PANIC!!!!
 //UnhandledPromiseRejectionWarning: Error: Illegal arguments: undefined, string
 // MEANS THAT THE INFO IN INPUT FIELD ARE  NOT VALIABLE
-
-// POST /password/reset/start
-// app.post("/password/reset", (req, res) => {
-//     console.log("req.body in password/resset", req.body);
-//     const email = req.body.email;
-//     const password = req.body.password;
-//     const updatePass = [];
-//     if (req.body.password != "") {
-//         hash(req.body.password).then((passHash) => {
-//             updatePass.push(db.getAddCode(req.body.password, passHash));
-//         });
-//     } else {
-//         console.log("else in password/reset");
-//         updatePass.push(db.updatePass(req.body.password));
-//         return res.json({ success: false });
-//     }
-//     updatePass.push(db.getAddCode(email, password, req.session.user.Id));
-// });
-
-// **** POST / SEND CODE
-// app.post("/", (req, res) => {
-//     console.log("req.body in post send code", req.body);
-//     const { email } = req.body;
-
-//     db.getRegister(email)
-//         .then((result) => {
-//             if (result.rows === 0) {
-//                 res.json({ success: false });
-//             } else {
-//                 const secretCode = cryptoRandomString({
-//                     length: 6,
-//                 });
-//                 console.log("result in getRegister", result);
-//                 db.addRegister(email, secretCode);
-//                 let email = email;
-//                 let subject = "reset the password";
-//                 let text = "insert the code";
-
-//                 ses.sentEmail(email, subject, text);
-//                 res.json({ success: true });
-//             }
-//         })
-//         .catch(function (err) {
-//             console.log("ERROR IN POST LOGIN:>> ", err);
-//             res.json({ success: false });
-//         });
-// });
-
-// *** ROUTE RESET PASSWORD
-// app.post("/", (req, res) => {
-//     console.log("req.body in reset passw", req.body);
-//     const { email, code, password } = req.body;
-//     db.getCheckCode(email).then((result) => {
-//         console.log("rows in code", result.rows[0].code);
-//         if (code == result.rows[0].code) {
-//             console.log("the code works");
-//             hash(password)
-//                 .then((passHash) => {
-//                     db.updatePass(email, passHash).then((result) => {
-//                         let id = result.rows[0].id;
-//                         req.session.userId = id;
-//                         req.session.login = true;
-//                         res.json({ success: true, userId: id });
-//                     });
-//                 })
-//                 .catch((err) => {
-//                     console.log("err in reset pass", err);
-//                     res.json({ success: false });
-//                 });
-//         }
-//     });
-// });

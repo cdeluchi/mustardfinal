@@ -2,41 +2,54 @@ import { useEffect, useRef } from "react";
 import { socket } from "./socket";
 import { useSelector } from "react-redux";
 
-// add this component in reducer too
+// ******add this component in reducer too****
 
-export default function chat() {
-    const chatMessages = useSelector((state) => state && state.chatMessages);
-    console.log("chatMsg", chatMessages);
+export default function Chat() {
+    const elemRef = useRef();
+    const messages = useSelector((state) => state.messages);
+    // console.log("chat component", messages);
 
-    const keyCheck = (e) => {
-        console.log("chatmsg");
+    useEffect(() => {
+        console.log("chat hooks component has MOUNTED");
+        console.log("elem Ref is ==> ", elemRef);
 
+        console.log("scroll top: ", elemRef.current.scrollTop);
+        console.log("clientHeight: ", elemRef.current.clientHeight);
+        console.log("scrollHeight: ", elemRef.current.scrollHeight);
+        elemRef.current.scrollTop =
+            elemRef.current.scrollHeight - elemRef.current.clientHeight;
+    }, [messages]);
+
+    // ****use Async if we want...***
+    // const keyCheck = (e) => {
+    //     if (e.key === "Enter") {
+    //         e.preventDefault(); // this will prevent going to the next line
+    //         socket.emit("my new chat message", e.target.value);
+    //         e.target.value = ""; // clears input field after we click enter
+    //     }
+    // };
+
+    const keyCheck = async (e) => {
         if (e.key === "Enter") {
-            e.preventDefaut();
-            console.log("our mgs ===", e.target.value);
-            socket.emit("my new chat message", e.target.value);
+            e.preventDefault();
+            socket.emit("chatMessage", e.target.value);
+            console.log("our message is: ", e.target.value);
             e.target.value = "";
         }
     };
     return (
-        <div className="chatcontainer">
-            <p>Welcome to my chat</p>
-            <div className="msgcontainer">
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
-                <p>chat messages will be here</p>
+        <>
+            <h2>Welcome to Chat</h2>
+            <div className="chatcontainer" ref={elemRef}>
+                {messages?.map((message, i) => {
+                    return <p key={i}>{message.messages}</p>;
+                })}
             </div>
             <textarea
-                placeholder="add your msg"
+                className="textAreaInChat"
                 onKeyDown={keyCheck}
+                placeholder="add your message here"
             ></textarea>
-        </div>
+        </>
     );
 }

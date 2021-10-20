@@ -166,7 +166,7 @@ module.exports.setFriendship = (otherUserId, userId) => {
     return db.query(q, params);
 };
 
-module.exports.updateFriendship = (otherUserId, userId, accepted) => {
+module.exports.updateFriendship = (userId,otherUserId, accepted) => {
     console.log("updateFriendship in DB", otherUserId, userId, accepted);
     const params = [otherUserId, userId, accepted];
     const q = `
@@ -187,9 +187,9 @@ module.exports.cancelFriendship = (otherUserId, userId) => {
     return db.query(q, params);
 };
 
-module.exports.alreadyFriends = (accepted) => {
-    console.log("alreadyFriends in db", accepted);
-    const params = [accepted];
+module.exports.alreadyFriends = (userId) => {
+    console.log("alreadyFriends in db", userId);
+    const params = [userId];
     const q = `
     SELECT users.id, first, last, imgurl, accepted
     FROM friendships
@@ -200,9 +200,33 @@ module.exports.alreadyFriends = (accepted) => {
 `;
     return db.query(q, params);
 };
+
+// CHAT add message and get the lastest message sended
+// add message
+module.exports.addMessage = (sender_id, messages) => {
+    console.log("alreadyFriends in db", sender_id, messages);
+    const params = [sender_id, messages];
+    const q = `
+    INSERT INTO messages
+    (sender_id, message)
+    VALUES ($1, $2)
+`;
+    return db.query(q, params);
+};
+// lastest message
+module.exports.getLastTenMsg = () => {
+    const q = `
+    SELECT messages.id, sender_id, message, first, last, messages.created_at
+    FROM messages
+    JOIN users
+    ON sender_id = users.id
+    ORDER BY messages.id DESC
+    LIMIT 1
+`;
+    return db.query(q);
+};
+
 //TO FIX
-//LOGIN somehow my login isn't working anymore
-//BIO when the user create the bio it's not save on my db
 //BUTTON ACCEPT FRIENDSHIP
 //BUTTON DECLINE FRIENDSHIP
 //CONTINUE TO REQUIRE FRIENDSHIP

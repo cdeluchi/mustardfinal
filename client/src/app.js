@@ -84,8 +84,8 @@ export default class App extends Component {
                     <div className="imgCover">
                         <img
                             className="imgCover"
-                            src="socialNW.png"
-                            alt="logo"
+                            src="/socialNW.png"
+                            alt="coverProfile"
                         />
                     </div>
                     <div className="loggedcontainer">
@@ -94,12 +94,7 @@ export default class App extends Component {
                             src="/kazamiga-rb.png"
                             alt="logo"
                         />
-
-                        {/* <img className="logo" src="findPeople.png" alt="logo" /> */}
                         <Menu />
-
-                        {/* <p>Want to change your Profile Pic?</p> */}
-
                         <ProfilePic
                             className="imgProfile"
                             imageUrl={this.state.imageUrl}
@@ -124,7 +119,6 @@ export default class App extends Component {
                     )}
 
                     <div>
-                        {/* <Route exact path="/" component={Profile} /> */}
                         <Route path="/findusers" component={FindPeople} />
                     </div>
                     <Route exact path="/">
