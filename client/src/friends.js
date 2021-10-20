@@ -81,6 +81,8 @@ export default function Friends({ imgurl, first, last, clickHandler }) {
             .then((res) => {
                 if (res.success === true) {
                     dispatch(unfriendship(id));
+                } else if (res.success === false) {
+                    dispatch(unfriendship(id) === true);
                 }
             })
             .catch((err) => {
@@ -90,16 +92,7 @@ export default function Friends({ imgurl, first, last, clickHandler }) {
 
     return (
         <>
-            {/* <div className="friendsandWannabecontainer"> */}
             <h1>Mais que amigos, Friends</h1>
-
-            {/* <ProfilePic
-                        className="profilePic"
-                        imageUrl={imgurl}
-                        first={first}
-                        last={last}
-                        clickHandler={clickHandler}
-                    /> */}
             <p>My Friends:</p>
             <div myFriendsContainer>
                 {myFriends &&
@@ -112,10 +105,9 @@ export default function Friends({ imgurl, first, last, clickHandler }) {
                             />
                             {data.first}
                             {data.last}
+
                             <button
-                                onClick={() =>
-                                    handleAccFriendship(myFriends.id)
-                                }
+                                onClick={() => handleNoFriendship(wannaBe.id)}
                             >
                                 Unfriend
                             </button>
@@ -148,7 +140,6 @@ export default function Friends({ imgurl, first, last, clickHandler }) {
                         </p>
                     ))}
             </div>
-            {/* </div> */}
         </>
     );
 }

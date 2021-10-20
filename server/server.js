@@ -327,8 +327,8 @@ app.get("/friends.json", (req, res) => {
 
 app.post("/unfriend", (req, res) => {
     console.log("unfriend in SERVER");
-    db.cancelFriendship(req.body.id, req.session.userId)
-        .then((noFriend) => {
+    db.cancelFriendship(req.session.userId, req.body.other)
+        .then(() => {
             console.log("resp in unfriend SERVER", res.rows);
             res.json({ success: true });
         })
