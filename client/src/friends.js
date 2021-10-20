@@ -1,31 +1,35 @@
-// import Menu from "./menu";
-// import ProfilePic from "./profilepic";
-import { useEffect, useState } from "react";
+import ProfilePic from "./profilepic";
+import { useEffect } from "react";
 
 // Import useDispatch and useSelector from react-redux,
 // the actions you are going to dispatch from your slice.js,
 //and useEffect from react.
-
 import { useDispatch, useSelector } from "react-redux";
-import { friendsReducer, makeFriends, noFriends } from "./redux/users/slice";
+import {
+    acceptedFriendship, //receiveFriends
+    addFriends, //receiveFriends
+    unfriendship, //madeUnfriendFriend
+} from "./redux/users/slice";
 
 // Must export a function component because we want to use the
 // useDispatch and useSelector hooks
 
-export default function Friends(data) {
-    console.log("default Function in Friends", data);
+export default function Friends({ imgurl, first, last, clickHandler }) {
+    console.log("default Function in Friends");
 
     const dispatch = useDispatch();
-    const friends = useSelector(
+
+    const myFriends = useSelector(
         (state) =>
-            state.friends &&
-            state.friends.filter((friends) => friends.accepted == true)
+            state.data &&
+            state.data.filter((friends) => friends.accepted == true)
     );
+    console.log("Friends", myFriends);
 
     const wannaBe = useSelector(
         (state) =>
-            state.friends &&
-            state.friends.filter((friends) => friends.accepted == false)
+            state.data &&
+            state.data.filter((friends) => friends.accepted == false)
     );
 
     useEffect(() => {
@@ -35,80 +39,97 @@ export default function Friends(data) {
             .then((res) => res.json())
             .then((data) => {
                 console.log("useEffect data in Friends.json", data);
-                dispatch(makeFriends(data));
+                dispatch(addFriends(data));
             });
     }, []);
 
-    const acceptedFriends = (friendsId) => {
-        console.log("friendsId in acceptedFriends", friendsId);
-        fetch("/setFriendship", {
+    const acceptedFriendship = (id) => {
+        fetch("/acceptedFriend", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 operation: "accept",
-                other: friendsId,
+                other: id,
             }),
-        })
-            .then((resp) => {
-                if (resp.success === true) {
-                    dispatch(acceptedFriends(friendsId));
-                }
-            })
-            .catch((err) => {
-                console.log("err in POST acceptFriendship", err);
-            });
+        }).then((res) =>
+            res
+                .json()
+                .then((res) => {
+                    if (res.success === true) {
+                        // dispatch(acceptedFriendship(id));
+                    }
+                })
+                .catch((err) => {
+                    console.log("err in POST /acceptedFriend", err);
+                })
+        );
     };
 
-    const noAcceptedFriends = (friendsId) => {
-        console.log("friendsId in noAcceptedFriends", friendsId);
-        fetch("/setFriendship", {
+    const unfriendship = (id) => {
+        fetch("/unfriend", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                operation: "noAccept",
-                other: friendsId,
+                operation: "cancel",
+                other: id,
             }),
-        })
-            .then((resp) => {
-                if (resp.success === true) {
-                    dispatch(noAcceptedFriends(friendsId));
-                }
-            })
-            .catch((err) => {
-                console.log("err in POST noAcceptFriendship", err);
-            });
+        }).then((res) =>
+            res
+                .json()
+                .then((res) => {
+                    if (res.success === true) {
+                        // dispatch(unfriendship(friends));
+                    }
+                })
+                .catch((err) => {
+                    console.log("error in post cancel friendship", err);
+                })
+        );
     };
+
     return (
         <>
-            <div className="friendsWannabeContainer">
+            <div className="friendsandWannabecontainer">
                 <h1>Mais que amigos, Friends</h1>
-                <div id="myFriends">
+                <div>
+                    <ProfilePic
+                        className="profilePic"
+                        imageUrl={imgurl}
+                        first={first}
+                        last={last}
+                        clickHandler={clickHandler}
+                    />
                     <p>My Friends:</p>
-                    {friends &&
-                        friends.map((friends, i) => (
+
+                    {myFriends &&
+                        myFriends.map((myFriends, i) => (
                             <p key={i}>
                                 <img
                                     className="profilePic"
-                                    src={friends.imgurl}
+                                    src={myFriends.imgurl}
                                     alt="myFriend"
                                 />
-                                {friends.first}
-                                {friends.last}
+                                {myFriends.first}
+                                {myFriends.last}
                                 <button
-                                    onClick={() => acceptedFriends(friends.id)}
+                                    onClick={() =>
+                                        dispatch(
+                                            acceptedFriendship(myFriends.id)
+                                        )
+                                    }
                                 >
-                                    cancel
+                                    Unfriend
                                 </button>
                             </p>
                         ))}
                 </div>
 
                 <div id="noFriends">
-                    <p>This is who want to be your friends:</p>
+                    <p>They want to be my friends:</p>
                     {wannaBe &&
                         wannaBe.map((wannaBe, i) => (
                             <p key={i}>
@@ -121,7 +142,7 @@ export default function Friends(data) {
                                 {wannaBe.last}
                                 <button
                                     onClick={() =>
-                                        noAcceptedFriends(wannaBe.id)
+                                        dispatch(unfriendship(wannaBe.id))
                                     }
                                 >
                                     accept
@@ -133,3 +154,55 @@ export default function Friends(data) {
         </>
     );
 }
+
+// const acceptedFriends = (friendsId) => {
+//     console.log("friendsId in acceptedFriends55", friendsId);
+//     fetch("/setFriendship", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//             operation: "accept",
+//             other: friendsId,
+//         }),
+//     }).then((resp) =>
+//         resp
+//             .json()
+//             .then((resp) => {
+//                 console.log("res in acceptedFriends", resp);
+//                 if (resp.success === true) {
+//                     dispatch(acceptedFriends(friendsId));
+//                 }
+//             })
+//             .catch((err) => {
+//                 console.log("err in POST acceptFriendship", err);
+//             })
+//     );
+// };
+
+// const noAcceptedFriends = (friends) => {
+//     console.log("friendsId in noAcceptedFriends", friends);
+//     fetch("/setFriendship", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//             operation: "noAccept",
+//             other: friends,
+//         }),
+//     }).then((resp) =>
+//         resp
+//             .json()
+//             .then((resp) => {
+//                 console.log("res im POST", resp);
+//                 if (resp.success === true) {
+//                     dispatch(noAcceptedFriends(friends));
+//                 }
+//             })
+//             .catch((err) => {
+//                 console.log("err in POST /declineProspect.json", err);
+//             })
+//     );
+// };

@@ -58,7 +58,7 @@ export default function findPeople(props) {
                         <div key={i}>
                             <Link to={`/users/${findAllUsers.id}`} key={i}>
                                 <img
-                                    className="findprofile"
+                                    className="profilePicFindPeople"
                                     src={findAllUsers.imgurl}
                                 ></img>
                                 <p>

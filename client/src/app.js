@@ -8,6 +8,8 @@ import Profile from "./profile";
 import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
 import Friends from "./friends";
+import Chat from "./chat";
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -89,7 +91,7 @@ export default class App extends Component {
                     <div className="loggedcontainer">
                         <img
                             className="logo"
-                            src="kazamiga-rb.png"
+                            src="/kazamiga-rb.png"
                             alt="logo"
                         />
 
@@ -148,7 +150,9 @@ export default class App extends Component {
                     <Route path="/friends">
                         <Friends />
                     </Route>
-
+                    <Route path="/chat">
+                        <Chat />
+                    </Route>
                     <Footer />
                 </BrowserRouter>
             </>

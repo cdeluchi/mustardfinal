@@ -6,13 +6,11 @@ export default function ({ imageUrl, first, last, clickHandler }) {
     // console.log("Imageurl", imageUrl);
 
     return (
-        <div className="profilePic">
-            <img
-                src={imageUrl}
-                alt={`${first} ${last} `}
-                onClick={clickHandler}
-            />
-            {/* <BioEditor /> */}
-        </div>
+        <img
+            className="profilePic"
+            src={imageUrl}
+            alt={`${first} ${last} `}
+            onClick={clickHandler}
+        />
     );
 }

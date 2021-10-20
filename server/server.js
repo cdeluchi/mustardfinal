@@ -14,24 +14,34 @@ const io = require("socket.io")(server, {
     allowRequest: (req, callback) =>
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
-
+//if you want to deploy to Heroku need to change this localhost too
 app.use(compression());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 //**COOKIE SESSION */
-let secrets;
-process.env.NODE_ENV === "production"
-    ? (secrets = process.env)
-    : (secrets = require("./secrets"));
+// let secrets;
+// process.env.NODE_ENV === "production"
+//     ? (secrets = process.env)
+//     : (secrets = require("./secrets"));
 
-app.use(
-    cookieSession({
-        secret: `${secrets.cookieSecret}`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true,
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: `${secrets.cookieSecret}`,
+//         maxAge: 1000 * 60 * 60 * 24 * 14,
+//         sameSite: true,
+//     })
+// );
+// if need to have the secret for deploy this
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.get("/user/id.json", function (req, res) {
     // console.log("client want to know if the user is registred");
@@ -103,6 +113,7 @@ app.post("/registration.json", (req, res) => {
 });
 
 //****  LOGIN ROUTE */
+
 app.post("/login.json", (req, res) => {
     db.getRegister(req.body.email).then((result) => {
         console.log("result in getRegister", result);
@@ -291,9 +302,16 @@ app.post("/setFriendship", (req, res) => {
                 console.log("error in get/friendship", err);
                 return res.sendStatus(500);
             });
-    } else if (bodyAccep === "accept Friend") {
-        db.updateFriendship(sessionUser, otherUser, bodyAccep);
-    } else if (bodyAccep === "cancel Friend" || bodyAccep == "end Friendship") {
+    } else if (bodyAccep === "ended Friend") {
+        db.updateFriendship(sessionUser, otherUser, bodyAccep)
+            .then(() => {
+                return res.json({ buttonText: "add Friend" });
+            })
+            .catch((err) => {
+                console.log("error in get/friendship", err);
+                return res.sendStatus(500);
+            });
+    } else if (bodyAccep === "cancel Friend" || bodyAccep == "ended Friend") {
         db.cancelFriendship(sessionUser, otherUser)
             .then(() => {
                 return res.json({ buttonText: "add Friend" });
@@ -304,6 +322,7 @@ app.post("/setFriendship", (req, res) => {
             });
     }
 });
+
 // GET ALREADY FRIENDS
 app.get("/friends.json", (req, res) => {
     console.log("GET/friends in SERVER", req.session);
@@ -311,7 +330,7 @@ app.get("/friends.json", (req, res) => {
     console.log("friends session", session);
     db.alreadyFriends(session)
         .then((accepted) => {
-            console.log("accepted in GETfriends", accepted);
+            console.log("accepted in GETfriends", accepted.rows);
             if (!session) {
                 res.json({ success: false });
             } else {
@@ -320,14 +339,38 @@ app.get("/friends.json", (req, res) => {
         })
         .catch((err) => {
             console.log("error in get/friendship", err);
-            // return res.json({ accepted: "undefined" });
+        });
+});
+
+app.post("/unfriend", (req, res) => {
+    console.log("unfriend");
+    db.cancelFriendship(req.body.id, req.session.userId)
+        .then((res) => {
+            console.log("resp", res);
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("error in post unfriend", err);
+            return res.sendStatus(500);
+        });
+});
+app.post("/acceptedFriend", (req, res) => {
+    console.log("acceptedFriend");
+    db.updateFriendship(req.body.id, req.session.userId, true)
+        .then((res) => {
+            console.log("resp", res);
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("error in post unfriend", err);
+            return res.sendStatus(500);
         });
 });
 
 // *** LOGOUT **
 app.get("/logout", (req, res) => {
-    req.session.id = null;
-    res.redirect("/login");
+    req.session = null;
+    res.redirect("/");
 });
 
 //****DO NOT TOUCH HERE*** */
@@ -339,9 +382,28 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
-// io.on("connection", (socket) => {
-// console.log(`socket user with Id ${socket.id} just add`);
-// });
+io.on("connection", async (socket) => {
+    console.log(`socket user with Id ${socket.id} just add`);
+
+    const userId = socket.request.session.userId;
+
+    if (!userId) {
+        return socket.disconnect(true);
+    }
+    // if the user makes it this point. they are logged in and successfully connect to secket
+    // this is a good place to get lastest 10 chat messages
+    // table with Id text sender_id created_at
+    //e join com outra table que tem img e name
+
+    // db.getLastTenMsgs().then((result) => {
+    //     console.log(result.rows);
+
+    //     io.sockets.emit("chatMessages", result.rows);
+    // });
+    socket.on("my new chat message", (newMsg) => {
+        console.log("this message is coming from chat.js component:", newMsg);
+    });
+});
 
 //*** WHEN ERROR IN SERVER */ DO NOT PANIC!!!!
 //UnhandledPromiseRejectionWarning: Error: Illegal arguments: undefined, string

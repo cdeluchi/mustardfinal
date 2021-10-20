@@ -32,7 +32,7 @@ h2 {
     color: #a94f2f;
 }
 .logo {
-    border-radius: 80px;
+    border-radius: 8px;
     border: 2px solid #ccc;
     width: 80px;
     height: 80px;
@@ -46,6 +46,15 @@ img {
     border: 2px solid #ccc;
     width: 80px;
     height: 80px;
+    margin: 20px;
+    object-fit: cover;
+}
+
+.profilePicFindPeople {
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    width: 100px;
+    height: 100px;
     margin: 20px;
     object-fit: cover;
 }
@@ -151,7 +160,7 @@ button {
 .showFindPeople {
     display: flex;
     align-self: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-direction: row;
     align-items: center;
     border: 2px solid #ccc;
@@ -159,6 +168,10 @@ button {
 
 .imgInOtherProfile {
     width: 30%;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    margin: 20px;
+    object-fit: cover;
 }
 .findPeopleContainer {
     display: flex;
@@ -206,4 +219,15 @@ button {
     border-top: 1px solid #ccc;
     border-right: 0;
     border-bottom: 0;
+}
+.chatcontainer {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.friendsandWannabecontainer {
+    display: flex;
+    flex-direction: column;
 }

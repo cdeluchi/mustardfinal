@@ -40,8 +40,8 @@ module.exports.addRegister = (first, last, email, password) => {
     return db.query(q, params);
 };
 
-module.exports.getRegister = (loginMail) => {
-    const params = [loginMail];
+module.exports.getRegister = (email) => {
+    const params = [email];
     const q = `
     SELECT id, password
     FROM users
@@ -172,7 +172,7 @@ module.exports.updateFriendship = (otherUserId, userId, accepted) => {
     const q = `
         UPDATE friendships
         SET accepted = $3
-        WHERE (sender_id = $1 AND recipient_id= $2, accepted )
+        WHERE (sender_id = $1 AND recipient_id= $2 )
     `;
     return db.query(q, params);
 };
@@ -200,3 +200,9 @@ module.exports.alreadyFriends = (accepted) => {
 `;
     return db.query(q, params);
 };
+//TO FIX
+//LOGIN somehow my login isn't working anymore
+//BIO when the user create the bio it's not save on my db
+//BUTTON ACCEPT FRIENDSHIP
+//BUTTON DECLINE FRIENDSHIP
+//CONTINUE TO REQUIRE FRIENDSHIP
