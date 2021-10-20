@@ -106,9 +106,7 @@ export default function Friends({ imgurl, first, last, clickHandler }) {
                             {data.first}
                             {data.last}
 
-                            <button
-                                onClick={() => handleNoFriendship(wannaBe.id)}
-                            >
+                            <button onClick={() => handleNoFriendship(data.id)}>
                                 Unfriend
                             </button>
                         </p>
