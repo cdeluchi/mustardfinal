@@ -166,7 +166,7 @@ module.exports.setFriendship = (otherUserId, userId) => {
     return db.query(q, params);
 };
 
-module.exports.updateFriendship = (userId,otherUserId, accepted) => {
+module.exports.updateFriendship = (userId, otherUserId, accepted) => {
     console.log("updateFriendship in DB", otherUserId, userId, accepted);
     const params = [otherUserId, userId, accepted];
     const q = `
@@ -203,30 +203,27 @@ module.exports.alreadyFriends = (userId) => {
 
 // CHAT add message and get the lastest message sended
 // add message
-module.exports.addMessage = (sender_id, messages) => {
-    console.log("alreadyFriends in db", sender_id, messages);
-    const params = [sender_id, messages];
+module.exports.addNewMessage = (sender_id, message) => {
+    console.log("addMessage in db", sender_id, message);
+    const params = [sender_id, message];
     const q = `
     INSERT INTO messages
     (sender_id, message)
-    VALUES ($1, $2)
+    VALUES ($1, $2) 
+    RETURNING *
 `;
     return db.query(q, params);
 };
 // lastest message
-module.exports.getLastTenMsg = () => {
+module.exports.lastTenMsg = () => {
+    console.log("lastTenMsg in db");
     const q = `
-    SELECT messages.id, sender_id, message, first, last, messages.created_at
+    SELECT messages.id, sender_id, imgurl, message, first, last, messages.created_at
     FROM messages
     JOIN users
     ON sender_id = users.id
     ORDER BY messages.id DESC
-    LIMIT 1
+    LIMIT 10
 `;
     return db.query(q);
 };
-
-//TO FIX
-//BUTTON ACCEPT FRIENDSHIP
-//BUTTON DECLINE FRIENDSHIP
-//CONTINUE TO REQUIRE FRIENDSHIP

@@ -1,34 +1,26 @@
 import { useEffect, useRef } from "react";
 import { socket } from "./socket";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 // ******add this component in reducer too****
 
 export default function Chat() {
     const elemRef = useRef();
     const messages = useSelector((state) => state.messages);
-    // console.log("chat component", messages);
+    console.log("chat component", messages);
 
     useEffect(() => {
         console.log("chat hooks component has MOUNTED");
         console.log("elem Ref is ==> ", elemRef);
-
-        console.log("scroll top: ", elemRef.current.scrollTop);
-        console.log("clientHeight: ", elemRef.current.clientHeight);
-        console.log("scrollHeight: ", elemRef.current.scrollHeight);
+        // console.log("scroll top: ", elemRef.current.scrollTop);
+        // console.log("clientHeight: ", elemRef.current.clientHeight);
+        // console.log("scrollHeight: ", elemRef.current.scrollHeight);
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;
     }, [messages]);
 
     // ****use Async if we want...***
-    // const keyCheck = (e) => {
-    //     if (e.key === "Enter") {
-    //         e.preventDefault(); // this will prevent going to the next line
-    //         socket.emit("my new chat message", e.target.value);
-    //         e.target.value = ""; // clears input field after we click enter
-    //     }
-    // };
-
     const keyCheck = async (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -39,11 +31,22 @@ export default function Chat() {
     };
     return (
         <>
-            <h2>Welcome to Chat</h2>
-            <div className="chatcontainer" ref={elemRef}>
-                {messages?.map((message, i) => {
-                    return <p key={i}>{message.messages}</p>;
-                })}
+            <h2>Welcome to the Chat</h2>
+            <div className=" chatcontainer " ref={elemRef}>
+                {messages &&
+                    messages.map((messages, i) => (
+                        <p key={i}>
+                            <img
+                                className="profilePic"
+                                src={messages.imgurl}
+                                alt="onlineChat"
+                            />
+                            {messages.first}
+                            {messages.last}
+                            <br />
+                            {messages.message}
+                        </p>
+                    ))}
             </div>
             <textarea
                 className="textAreaInChat"

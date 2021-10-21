@@ -1,27 +1,30 @@
 // one action creator to initially add to global state the 10 most recent messages
 
 export default function messagesReducer(state = null, action) {
-    if (action.type == "messages/latestTenMsgsReceived") {
-        return [...action.payload.messages];
-    } else if (action.type == "message/newMessagereceived") {
-        return [action.payload.message.newMsg, ...state];
+    console.log("message in action Slice", action);
+    console.log("message in data Slice", state);
+
+    if (action.type == "message/chatMessage") {
+        state = [...state, action.payload.message]; //bdquery
+    } else if (action.type == "messages/latestTenMsgs") {
+        state = action.payload.message;
     }
     return state;
 }
 
-// another action creator to add any new chat messages to the list
-
-export function chatMessageReceived(message) {
+export function chatMessage(message) {
+    console.log("chatMessage in SLICE");
     return {
-        type: "message/chatMessageReceived",
+        type: "message/chatMessage",
         payload: { message },
     };
 }
 // these actions creators need to be imported in socket.js and called in there!
 
-export function latestTenMsgsReceived(message) {
+export function latestTenMsgs(message) {
+    console.log("latestTenMsgs in SLICE");
     return {
-        type: "messages/latestTenMsgsReceived",
+        type: "messages/latestTenMsgs",
         payload: { message },
     };
 }

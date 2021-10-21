@@ -1,10 +1,7 @@
 import { io } from "socket.io-client";
 
 import { useDispatch } from "react-redux";
-import {
-    latestTenMsgsReceived,
-    chatMessageReceived,
-} from "./redux/messages/slice";
+import { latestTenMsgs, chatMessage } from "./redux/messages/slice";
 
 export let socket;
 // const dispatch = useDispatch();
@@ -14,14 +11,13 @@ export const init = (store) => {
         socket = io.connect();
     }
 
-    socket.on("latestTenMsgs", (data) => {
-        // console.log("latestTenMsgs", data);
-        store.dispatch(latestTenMsgsReceived(data));
+    socket.on("latestTenMsgs", (message) => {
+        console.log("latestTenMsgs", message);
+        store.dispatch(latestTenMsgs(message));
     });
-
-    socket.on("newMsg", (data) => {
-        // console.log("newMsg: ", data);
-        store.dispatch(chatMessageReceived(data));
+    socket.on("newMsg", (message) => {
+        console.log("newMsg: ", message);
+        store.dispatch(chatMessage(message));
     });
 };
 
