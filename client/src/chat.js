@@ -37,14 +37,14 @@ export default function Chat() {
                     messages.map((messages, i) => (
                         <p key={i}>
                             <img
-                                className="profilePic"
+                                className="profilePicInChat"
                                 src={messages.imgurl}
                                 alt="onlineChat"
                             />
                             {messages.first}
                             {messages.last}
                             <br />
-                            {messages.message}
+                            message: {messages.message}
                         </p>
                     ))}
             </div>
