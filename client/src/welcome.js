@@ -12,7 +12,7 @@ export class Welcome extends Component {
                 <img src="socialNW.png" alt="logo" />
                 <section id="welcome">
                     <div className="bodyInWelcome">
-                        <h1>SOCIAL NETWORK </h1>
+                        <h1>NamasGO</h1>
                     </div>
                     <Route exact path="/">
                         <Registration />

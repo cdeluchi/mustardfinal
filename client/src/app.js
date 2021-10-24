@@ -9,7 +9,20 @@ import FindPeople from "./findPeople";
 import OtherProfile from "./otherProfile";
 import Friends from "./friends";
 import Chat from "./chat";
+import Countdown from "./countdown";
+import Weather from "./weather";
+// import Map from "./map";
+// import { makeStyles } from "@mui/material";
+// import { CssBaseline } from "@mui/material";
 
+// const useStyles = makeStyles((theme) => ({
+//     root: {
+//         minHeight: "100vh",
+//         backgroundImage: `url(${process.env.public + "/socialNW"})`,
+//         backgroundRepeat: "no-repeat",
+//         backgroundSize: "cover",
+//     },
+// }));
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -66,12 +79,6 @@ export default class App extends Component {
         this.setState({ officialBio: officialBio });
         console.log("setBio", this.state.officialBio);
     }
-    // imageUrl() {
-    //     this.setState({
-    //         imageUrl: newUrl,
-    //         uploaderIsVisible: false,
-    //     });
-    // }
 
     render() {
         if (!this.state.userId) {
@@ -81,86 +88,79 @@ export default class App extends Component {
         return (
             <>
                 <BrowserRouter>
-                    <div className="imgCover">
-                        <img
-                            className="imgCover"
-                            src="/socialNW.png"
-                            alt="coverProfile"
-                        />
-                    </div>
-                    <div className="loggedcontainer">
-                        <img
-                            className="logo"
-                            src="/kazamiga-rb.png"
-                            alt="logo"
-                        />
+                    <div className="header">
                         <Menu />
-                        <ProfilePic
-                            className="imgProfile"
-                            imageUrl={this.state.imageUrl}
-                            first={this.state.first}
-                            last={this.state.last}
-                            clickHandler={() =>
-                                this.setState({
-                                    uploaderIsVisible: true,
-                                })
-                            }
-                        />
                     </div>
-                    <h2>
-                        Hello {this.state.first} {this.state.last}!
-                    </h2>
-
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            uploadImage={this.uploadImage}
-                            close={this.close}
-                        />
-                    )}
-
-                    <div>
-                        <Route path="/findusers" component={FindPeople} />
+                    <div className="content">
+                        <h2>
+                            {/* Hello {this.state.first} {this.state.last} */}
+                            <br />
+                            Welcome to NamasGO
+                        </h2>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. It has
+                            survived not only five centuries, but also the leap
+                            into electronic typesetting, remaining essentially
+                            unchanged. It was popularised in the 1960s with the
+                            release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing
+                            software like Aldus PageMaker including versions of
+                            Lorem Ipsum Lorem Ipsum is simply dummy text of the
+                            printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since
+                            the 1500s, when an unknown printer took a galley of
+                            type and scrambled it to make a type specimen book.
+                            It has survived not only five centuries, but also
+                            the leap into electronic typesetting, remaining
+                            essentially unchanged. It was popularised in the
+                            1960s with the release of Letraset sheets containing
+                            Lorem Ipsum passages, and more recently with desktop
+                            publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum
+                            <br />
+                            Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the
+                            industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book. It has
+                            survived not only five centuries, but also the leap
+                            into electronic typesetting, remaining essentially
+                            unchanged. It was popularised in the 1960s with the
+                            release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing
+                            software like Aldus PageMaker including versions of
+                            Lorem Ipsum Lorem Ipsum is simply dummy text of the
+                            printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since
+                            the 1500s, when an unknown printer took a galley of
+                            type and scrambled it to make a type specimen book.
+                            It has survived not only five centuries, but also
+                            the leap into electronic typesetting, remaining
+                            essentially unchanged. It was popularised in the
+                            1960s with the release of Letraset sheets containing
+                            Lorem Ipsum passages, and more recently with desktop
+                            publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum
+                        </p>
                     </div>
-                    <Route exact path="/">
-                        <Profile
-                            className="profileBio"
-                            userId={this.state.userId}
-                            first={this.state.first}
-                            last={this.state.last}
-                            imageUrl={this.state.imageUrl}
-                            officialBio={this.state.officialBio}
-                            setBio={this.setBio}
-                            clickHandler={() =>
-                                this.setState({
-                                    uploaderIsVisible: true,
-                                })
-                            }
-                        />
-                    </Route>
-                    <Route path="/users/:otherUserId">
-                        <OtherProfile />
-                    </Route>
+                    <div className="containerwrap">
+                        <Route exact path="/"></Route>
 
-                    <Route path="/friends">
-                        <Friends />
-                    </Route>
-                    <Route path="/chat">
+                        <Countdown countdownTimestampMs={1659983662000} />
+                        {/* <Map /> */}
+
+                        <Weather />
+                        <FindPeople />
+                        {/* <Friends /> */}
                         <Chat />
-                    </Route>
-                    <Footer />
+                        <Footer />
+                    </div>
                 </BrowserRouter>
             </>
         );
     }
 }
-
-// first={this.state.first}
-//                             last={this.state.last}
-//                             imageUrl={this.state.imageUrl}
-//                             officialBio={this.state.officialBio}
-//                             setBio={this.setBio}
-//                             clickHandler={() =>
-//                                 this.setState({
-//                                     uploaderIsVisible: true,
-//                                 })
-//                             }

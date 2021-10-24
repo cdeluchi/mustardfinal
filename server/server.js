@@ -116,31 +116,28 @@ app.post("/registration.json", (req, res) => {
 
 //****  LOGIN ROUTE */
 
-app.post("/login.json", (req, res) => {
-    db.getRegister(req.body.email).then((result) => {
-        console.log("result in getRegister", result);
-        if (!result.rows[0]) {
-            return res.json({ success: false });
-        }
-        let passwordInDB = result.rows[0].passHash;
-        let passwordUserType = req.body.password;
+app.post("/login", (req, res) => {
+    console.log("result in getRegister");
+    const { email, password } = req.body;
 
-        bc.compare(passwordUserType, passwordInDB)
-            .then((comparePassword) => {
-                if (comparePassword === true) {
-                    req.session.userId = result.rows[0].id;
-                    res.redirect("/");
-                } else {
-                    req.session.userId = false;
-                    return res.json({ success: false });
-                }
-            })
-            .catch((err) => {
-                console.log("err in login", err);
-            });
-        // comparePassword;
-        // req.session.userId = result.rows[0].id;
-    });
+    db.getRegister(email)
+        .then(function (result) {
+            if (result.rowCount === 0) {
+                res.json({ success: false });
+            } else {
+                bc.compare(password, result.rows[0].password).then((match) => {
+                    if (match) {
+                        req.session.userId = result.rows[0].id;
+                        req.session.loginDone = true;
+                        res.json({ success: true });
+                    }
+                });
+            }
+        })
+        .catch(function (err) {
+            "error in Post Login", err;
+            res.json({ success: false });
+        });
 });
 
 // ****UPLOAD IMG
@@ -368,7 +365,7 @@ server.listen(process.env.PORT || 3001, function () {
 // SOCKET IO   ROUTE
 // USE ASYNC IF WE CAN ******
 io.on("connection", async (socket) => {
-    console.log(`socket user with Id ${socket.id} just add`);
+    // console.log(`socket user with Id ${socket.id} just add`);
     const userId = socket.request.session.userId;
     if (!userId) {
         return socket.disconnect(true);
@@ -377,7 +374,7 @@ io.on("connection", async (socket) => {
     // use async if we can *******
     db.lastTenMsg(userId)
         .then((data) => {
-            console.log("lastTenMsg in SERVER", data.rows);
+            // console.log("lastTenMsg in SERVER", data.rows);
             io.emit("latestTenMsgs", data.rows.reverse());
         })
         .catch((err) => {
@@ -385,10 +382,10 @@ io.on("connection", async (socket) => {
         });
     // ADDING A NEW MSG - let's listen for a new chat msg being sent from the client });
     socket.on("chatMessage", (data) => {
-        console.log("This message is coming in from chat.js component: ", data);
-        console.log(`user who sent the newMsg is ${userId}`);
+        // console.log("This message is coming in from chat.js component: ", data);
+        // console.log(`user who sent the newMsg is ${userId}`);
         db.addNewMessage(userId, data).then(({ rows }) => {
-            console.log("addNewMessage in SERVER");
+            // console.log("addNewMessage in SERVER");
             io.emit("newMsg", rows[0]);
         });
     });

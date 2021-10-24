@@ -8,11 +8,11 @@ import { Link } from "react-router-dom";
 export default function Chat() {
     const elemRef = useRef();
     const messages = useSelector((state) => state.messages);
-    console.log("chat component", messages);
+    // console.log("chat component", messages);
 
     useEffect(() => {
-        console.log("chat hooks component has MOUNTED");
-        console.log("elem Ref is ==> ", elemRef);
+        // console.log("chat hooks component has MOUNTED");
+        // console.log("elem Ref is ==> ", elemRef);
         // console.log("scroll top: ", elemRef.current.scrollTop);
         // console.log("clientHeight: ", elemRef.current.clientHeight);
         // console.log("scrollHeight: ", elemRef.current.scrollHeight);
@@ -25,13 +25,13 @@ export default function Chat() {
         if (e.key === "Enter") {
             e.preventDefault();
             socket.emit("chatMessage", e.target.value);
-            console.log("our message is: ", e.target.value);
+            // console.log("our message is: ", e.target.value);
             e.target.value = "";
         }
     };
     return (
         <>
-            <h2>Welcome to the Chat</h2>
+            {/* <h2>Welcome to the Chat</h2> */}
             <div className=" chatcontainer " ref={elemRef}>
                 {messages &&
                     messages.map((messages, i) => (

@@ -1,28 +1,282 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 * {
     box-sizing: border-box;
-    margin: 5px;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto";
+    color: black;
 }
 main {
-    min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-        "Segoe UI Symbol";
-    border: 1px solid #bbc4c5;
-    max-width: 1000px;
+    display: flex;
     height: 100%;
-    margin: auto;
+    justify-content: center;
+    align-items: center;
+    /* background: linear-gradient(#ddd6f3, #faaca8); */
+    background-image: url(pordosol.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 100px;
 }
-bodyInWelcome {
-    display: grid;
-    grid-template-columns: 10% 85% 5%;
-}
-h1 {
-    text-align: center;
-    margin: 20px;
+.containerwrap {
+    position: relative;
+    width: 100%;
+    /* min-height: calc(100vh - 280px); */
+    min-height: 500px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 160px;
 }
 
+.header {
+    position: absolute;
+    top: 80px;
+    right: 120px;
+    left: 120px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    z-index: 1000;
+}
+
+.content {
+    position: absolute;
+    top: 240px;
+    right: 120px;
+    left: 120px;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.clock {
+    position: relative;
+    top: 253px;
+    right: 100px;
+    left: 752px;
+    width: 311px;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+.clock .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.clock .container span {
+    font-size: 1.5em;
+}
+.clock .container span:nth-child(odd) {
+    padding: 5px 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 25px rgba(255, 255, 255, 0.2);
+    margin: 0 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weatherContainer {
+    position: relative;
+    top: 272px;
+    right: 110px;
+    left: 756px;
+    width: 311px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgb(255 255 255 / 5%);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+.inputWeather {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.h2InWeather {
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+.findPeopleContainer {
+    position: relative;
+    top: 474px;
+    right: 110px;
+    left: 590px;
+    width: 331px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.findprofile {
+    width: 50%;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.showFindPeople {
+    position: relative;
+    top: 437px;
+    right: 120px;
+    left: 624px;
+    width: 331px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.chatcontainer {
+    border: 2px solid #ccc;
+    position: relative;
+    top: 62px;
+    right: 120px;
+    left: -16px;
+    width: 270.8px;
+    height: 300px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.textAreaInChat {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 56px;
+    right: 120px;
+    left: -11px;
+    width: 260px;
+    height: 40px;
+}
+
+.friendsandWannabecontainer {
+    display: grid;
+    flex-direction: column;
+}
+.wannaBeContainer {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.myFriendsContainer {
+    display: flex;
+}
+
+.profilePicInChat {
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    width: 30px;
+    height: 30px;
+    /* margin: 10px; */
+    object-fit: cover;
+}
+
+.footer {
+    top: 144px;
+    right: 110px;
+    left: 284px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-left: 0;
+    border-top: 1px solid #ccc;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.wannaBeContainer {
+    position: relative;
+    top: 112px;
+    right: 120px;
+    left: 204px;
+    width: 331px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* .map { 
+    position: absolute;
+    top: 190px;
+    right: 120px;
+    left: 120px;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+} */
+
+/* bodyInWelcome {
+    background-image: url(/client/public/socialNW.png);
+    display: grid;
+    grid-template-columns: 10% 85% 5%;
+} */
+/* h1 {
+    text-align: center;
+    margin: 20px;
+} */
+
 h2 {
-    margin: 20px 20px 10px;
+    margin: 0px 20px 10px;
     font-size: 20px;
     align-items: center;
     color: #7e8a8c;
@@ -41,6 +295,7 @@ h2 {
 img {
     width: 100%;
 }
+
 .profilePic {
     border-radius: 8px;
     border: 2px solid #ccc;
@@ -53,9 +308,9 @@ img {
 .profilePicFindPeople {
     border-radius: 8px;
     border: 2px solid #ccc;
-    width: 100px;
-    height: 100px;
-    margin: 20px;
+    width: 60px;
+    height: 70px;
+    margin: 10px;
     object-fit: cover;
 }
 /* .profilecontainer {
@@ -157,34 +412,13 @@ button {
     flex-direction: column;
     align-items: center;
 }
-.showFindPeople {
-    display: flex;
-    align-self: center;
-    justify-content: space-evenly;
-    flex-direction: row;
-    align-items: center;
-    border: 2px solid #ccc;
-}
 
 .imgInOtherProfile {
-    width: 30%;
+    width: 20%;
     border-radius: 8px;
     border: 2px solid #ccc;
     margin: 20px;
     object-fit: cover;
-}
-.findPeopleContainer {
-    display: flex;
-    width: 100px;
-    height: 100px;
-    align-items: center;
-    flex-wrap: nowrap;
-}
-
-.findprofile {
-    width: 50%;
-    border: 2px solid #ccc;
-    border-radius: 10px;
 }
 
 .profilecontainer {
@@ -206,58 +440,5 @@ button {
     width: 80px;
     border-radius: 5px;
     margin: 10px;
-    object-fit: cover;
-}
-.footer {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    border-left: 0;
-    border-top: 1px solid #ccc;
-    border-right: 0;
-    border-bottom: 0;
-}
-.chatcontainer {
-    border: 2px solid #ccc;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-    width: 80%;
-    height: 300px;
-    overflow-y: scroll;
-}
-
-.textAreaInChat {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 250px;
-    height: 80px;
-}
-
-.friendsandWannabecontainer {
-    display: grid;
-    flex-direction: column;
-}
-.wannaBeContainer {
-    display: flex;
-    flex-wrap: nowrap;
-}
-.myFriendsContainer {
-    display: flex;
-}
-
-.profilePicInChat {
-    border-radius: 8px;
-    border: 2px solid #ccc;
-    width: 30px;
-    height: 30px;
-    /* margin: 10px; */
     object-fit: cover;
 }

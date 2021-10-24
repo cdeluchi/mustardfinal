@@ -92,51 +92,59 @@ export default function Friends({ imgurl, first, last, clickHandler }) {
 
     return (
         <>
-            <h1>Mais que amigos, Friends</h1>
-            <p>My Friends:</p>
-            <div myFriendsContainer>
-                {myFriends &&
-                    myFriends.map((data, i) => (
-                        <p key={i}>
-                            <img
-                                className="profilePic"
-                                src={data.imgurl}
-                                alt="myFriend"
-                            />
-                            {data.first}
-                            {data.last}
+            <div className="myFriendsContainer">
+                <h1>Mais que amigos, Friends</h1>
+                <p>My Friends:</p>
+                <div>
+                    {myFriends &&
+                        myFriends.map((data, i) => (
+                            <p key={i}>
+                                <img
+                                    className="profilePic"
+                                    src={data.imgurl}
+                                    alt="myFriend"
+                                />
+                                {data.first}
+                                {data.last}
 
-                            <button onClick={() => handleNoFriendship(data.id)}>
-                                Unfriend
-                            </button>
-                        </p>
-                    ))}
-            </div>
+                                <button
+                                    onClick={() => handleNoFriendship(data.id)}
+                                >
+                                    Unfriend
+                                </button>
+                            </p>
+                        ))}
+                </div>
 
-            <p>They want to be my friends:</p>
-            <div className="wannaBeContainer">
-                {wannaBe &&
-                    wannaBe.map((wannaBe, i) => (
-                        <p key={i}>
-                            <img
-                                className="profilePic"
-                                src={wannaBe.imgurl}
-                                alt="wannaBeFriend"
-                            />
-                            {wannaBe.first}
-                            {wannaBe.last}
-                            <button
-                                onClick={() => handleAccFriendship(wannaBe.id)}
-                            >
-                                accept
-                            </button>
-                            <button
-                                onClick={() => handleNoFriendship(wannaBe.id)}
-                            >
-                                cancel
-                            </button>
-                        </p>
-                    ))}
+                <p>They want to be my friends:</p>
+                <div className="wannaBeContainer">
+                    {wannaBe &&
+                        wannaBe.map((wannaBe, i) => (
+                            <p key={i}>
+                                <img
+                                    className="profilePic"
+                                    src={wannaBe.imgurl}
+                                    alt="wannaBeFriend"
+                                />
+                                {wannaBe.first}
+                                {wannaBe.last}
+                                <button
+                                    onClick={() =>
+                                        handleAccFriendship(wannaBe.id)
+                                    }
+                                >
+                                    accept
+                                </button>
+                                <button
+                                    onClick={() =>
+                                        handleNoFriendship(wannaBe.id)
+                                    }
+                                >
+                                    cancel
+                                </button>
+                            </p>
+                        ))}
+                </div>
             </div>
         </>
     );

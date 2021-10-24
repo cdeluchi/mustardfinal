@@ -12,11 +12,11 @@ export const init = (store) => {
     }
 
     socket.on("latestTenMsgs", (message) => {
-        console.log("latestTenMsgs", message);
+        // console.log("latestTenMsgs", message);
         store.dispatch(latestTenMsgs(message));
     });
     socket.on("newMsg", (message) => {
-        console.log("newMsg: ", message);
+        // console.log("newMsg: ", message);
         store.dispatch(chatMessage(message));
     });
 };

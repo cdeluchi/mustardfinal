@@ -127,7 +127,7 @@ module.exports.getFindPeople = () => {
     const q = `
     SELECT first, last, id, imgurl FROM users
     ORDER BY id DESC
-    LIMIT 3
+    LIMIT 9
     `;
     return db.query(q);
 };
@@ -204,7 +204,7 @@ module.exports.alreadyFriends = (userId) => {
 // CHAT add message and get the lastest message sended
 // add message
 module.exports.addNewMessage = (sender_id, message) => {
-    console.log("addMessage in db", sender_id, message);
+    // console.log("addMessage in db", sender_id, message);
     const params = [sender_id, message];
     const q = `
     INSERT INTO messages
@@ -216,7 +216,7 @@ module.exports.addNewMessage = (sender_id, message) => {
 };
 // lastest message
 module.exports.lastTenMsg = () => {
-    console.log("lastTenMsg in db");
+    // console.log("lastTenMsg in db");
     const q = `
     SELECT messages.id, sender_id, imgurl, message, first, last, messages.created_at
     FROM messages

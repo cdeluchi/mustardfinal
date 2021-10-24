@@ -61,9 +61,9 @@ export default function findPeople(props) {
                                     className="profilePicFindPeople"
                                     src={findAllUsers.imgurl}
                                 ></img>
-                                <p>
+                                {/* <p className="pInShowFindPeople">
                                     {findAllUsers.first} {findAllUsers.last}
-                                </p>
+                                </p> */}
                             </Link>
                         </div>
                     ))}
