@@ -11,7 +11,8 @@ import Friends from "./friends";
 import Chat from "./chat";
 import Countdown from "./countdown";
 import Weather from "./weather";
-// import Map from "./map";
+import Events from "./events";
+import Map from "./map";
 // import { makeStyles } from "@mui/material";
 // import { CssBaseline } from "@mui/material";
 
@@ -96,67 +97,60 @@ export default class App extends Component {
                             {/* Hello {this.state.first} {this.state.last} */}
                             <br />
                             Welcome to NamasGO
+                            <br />
+                            Meditation on Twin Hearts
                         </h2>
                         <p>
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book. It has
-                            survived not only five centuries, but also the leap
-                            into electronic typesetting, remaining essentially
-                            unchanged. It was popularised in the 1960s with the
-                            release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing
-                            software like Aldus PageMaker including versions of
-                            Lorem Ipsum Lorem Ipsum is simply dummy text of the
-                            printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since
-                            the 1500s, when an unknown printer took a galley of
-                            type and scrambled it to make a type specimen book.
-                            It has survived not only five centuries, but also
-                            the leap into electronic typesetting, remaining
-                            essentially unchanged. It was popularised in the
-                            1960s with the release of Letraset sheets containing
-                            Lorem Ipsum passages, and more recently with desktop
-                            publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum
+                            Meditation on Twin Hearts is a simple yet powerful
+                            technique introduced by Master Choa Kok Sui for
+                            achieving cosmic consciousness or what we often call
+                            “illumination.” It is also a form of service to the
+                            world by increasing harmony and peace through
+                            becoming a channel to bless the earth with
+                            loving-kindness. In fact among all the techniques
+                            taught by Master Choa Kok Sui, perhaps none prompts
+                            as many glowing testimonials of personal healing and
+                            positive life transformation as the Meditation on
+                            Twin Hearts.
                             <br />
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book. It has
-                            survived not only five centuries, but also the leap
-                            into electronic typesetting, remaining essentially
-                            unchanged. It was popularised in the 1960s with the
-                            release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing
-                            software like Aldus PageMaker including versions of
-                            Lorem Ipsum Lorem Ipsum is simply dummy text of the
-                            printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since
-                            the 1500s, when an unknown printer took a galley of
-                            type and scrambled it to make a type specimen book.
-                            It has survived not only five centuries, but also
-                            the leap into electronic typesetting, remaining
-                            essentially unchanged. It was popularised in the
-                            1960s with the release of Letraset sheets containing
-                            Lorem Ipsum passages, and more recently with desktop
-                            publishing software like Aldus PageMaker including
-                            versions of Lorem Ipsum
+                            <br />
+                            Meditation on Twin Hearts is designed based on the
+                            principle that some of the major chakras such as the
+                            crown chakra are the entry points or gateways to
+                            certain levels of consciousness. Therefore to
+                            achieve illumination the crown chakra should be
+                            sufficiently activated. The crown chakra can only be
+                            activated when the heart chakra is first
+                            sufficiently activated.
+                            <br />
+                            <br />
+                            There are many ways of activating the heart and
+                            crown chakras, such as Hatha yoga, yogic breathing
+                            techniques, chanting mantras and visualization
+                            techniques. All of these techniques are effective
+                            but not fast enough. One of the most effective and
+                            fastest ways to activate these chakras is through
+                            the Meditation on Twin Hearts. It basically helps to
+                            transform the internal condition of the
+                            practitioner. When during meditation we transform
+                            despair into hope, doubt into faith and darkness
+                            into light, we will be filled internally with hope,
+                            faith and light. This in fact creates a healing and
+                            transforming effect.
                         </p>
                     </div>
                     <div className="containerwrap">
                         <Route exact path="/"></Route>
 
                         <Countdown countdownTimestampMs={1659983662000} />
-                        {/* <Map /> */}
-
+                        <Map />
                         <Weather />
-                        <FindPeople />
-                        {/* <Friends /> */}
-                        <Chat />
+                        <Events />
+                        <div className="socialcontainer">
+                            <FindPeople />
+                            {/* <Friends /> */}
+                            <Chat />
+                        </div>
                         <Footer />
                     </div>
                 </BrowserRouter>

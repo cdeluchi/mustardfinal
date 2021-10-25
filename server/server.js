@@ -335,8 +335,8 @@ app.post("/unfriend", (req, res) => {
         });
 });
 app.post("/acceptedFriend", (req, res) => {
-    console.log("body", req.body);
-    console.log("acceptedFriend in SERVER");
+    // console.log("body", req.body);
+    // console.log("acceptedFriend in SERVER");
     db.updateFriendship(req.session.userId, req.body.other, true)
         .then(() => {
             res.json({ success: true });
@@ -346,6 +346,28 @@ app.post("/acceptedFriend", (req, res) => {
             return res.sendStatus(500);
         });
 });
+
+app.get("/findEvents", (req, res) => {
+    console.log("log in get user");
+    db.getEvent()
+        .then((result) => {
+            return res.json(result);
+        })
+        .catch((err) => {
+            console.log("error in findEvents", err);
+            res.sendStatus(500);
+        });
+});
+
+// app.post("/api/places", async (request, response) => {
+//     try {
+//         const newPlace = await createPlace(request.body);
+//         response.json(newPlace);
+//     } catch (error) {
+//         console.log("[/api/places] error saving place", error, request.body);
+//         response.sendStatus(500);
+//     }
+// });
 
 // *** LOGOUT **
 app.get("/logout", (req, res) => {

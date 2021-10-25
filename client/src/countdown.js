@@ -23,21 +23,23 @@ const Countdown = ({ countdownTimestampMs }) => {
     }
 
     return (
-        <section>
-            <div className="clock">
-                <div className="container">
-                    {/* <h2>next event in</h2> */}
-                    <span className="days">{remainingTime.days}</span>
-                    <span className="days-text">:</span>
-                    <span className="hours">{remainingTime.hours}</span>
-                    <span className="hours-text">:</span>
-                    <span className="minutes">{remainingTime.minutes}</span>
-                    <span className="minutes-text">:</span>
-                    <span className="seconds">{remainingTime.seconds}</span>
-                    <span className="seconds-text"></span>
-                </div>
+        <div className="clock">
+            <div className="container">
+                {/* <h2>next event in</h2> */}
+                {/* <span className="days-text">days</span>
+                <span className="days">{remainingTime.days}</span> */}
+                {/* <span className="days-text">:</span> */}
+                <span className="hours">{remainingTime.hours}</span>
+                <span className="hours-text">hrs</span>
+                {/* <span className="hours-text">:</span> */}
+                <span className="minutes">{remainingTime.minutes}</span>
+                <span className="hours-text">min</span>
+                {/* <span className="minutes-text">:</span> */}
+
+                <span className="seconds">{remainingTime.seconds}</span>
+                <span className="seconds-text">sec</span>
             </div>
-        </section>
+        </div>
     );
 };
 export default Countdown;

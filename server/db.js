@@ -122,16 +122,6 @@ module.exports.getImg = (url, userId) => {
     return db.query(q, params);
 };
 
-module.exports.getFindPeople = () => {
-    // console.log("getFindPeople");
-    const q = `
-    SELECT first, last, id, imgurl FROM users
-    ORDER BY id DESC
-    LIMIT 9
-    `;
-    return db.query(q);
-};
-
 module.exports.getMatchingPeople = (search) => {
     // console.log("getFindPeople", search);
     const params = [search + "%"];
@@ -227,3 +217,29 @@ module.exports.lastTenMsg = () => {
 `;
     return db.query(q);
 };
+module.exports.getFindPeople = () => {
+    // console.log("getFindPeople");
+    const q = `
+    SELECT first, last, id, imgurl FROM users
+    ORDER BY id DESC
+    LIMIT 18
+    `;
+    return db.query(q);
+};
+
+module.exports.getEvent = () => {
+    console.log("getEvent inDB");
+    const q = `
+    SELECT place, events, id, created_at FROM events
+    ORDER BY id DESC
+    LIMIT 6
+    `;
+    return db.query(q);
+};
+// async function createPlace({ name, geoJSON }) {
+//     const result = await db.query(
+//         "INSERT INTO places (name, geoJSON) VALUES($1, ($2)::jsonb) RETURNING *",
+//         [name, JSON.stringify(geoJSON)]
+//     );
+//     return result.rows[0];
+// }

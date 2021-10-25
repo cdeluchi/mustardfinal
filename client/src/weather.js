@@ -33,7 +33,7 @@ export default function Weather() {
                     <h2 className="h2InWeather"></h2>{" "}
                 </div>
             ) : (
-                <div>
+                <div className="contentWeather">
                     <p>{weatherData.name}</p>
                     <p>{Math.round(weatherData.main.temp)}C</p>
                     <p>{weatherData.weather[0].main}</p>

@@ -1,43 +1,41 @@
-import { useState, useEffect } from "react";
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
-import * as parkDate from "./data/data.json";
-import GeocoderService from "@mapbox/mapbox-sdk/services/geocoding";
+import React, { useRef, useEffect, useState } from "react";
+import mapboxgl from "!mapbox-gl";
 
-const geocoder = GeocoderService({
-    accessToken:
-        pk.eyJ1IjoiY2RlbHVjaGkiLCJhIjoiY2t2NTFvMmlkMHR2eDJvbHVrZjJ0cXRpaCJ9
-            .Kd6iS1mJ6cCQiWuLmDjcIg,
-});
+mapboxgl.accessToken =
+    "pk.eyJ1IjoiY2RlbHVjaGkiLCJhIjoiY2t2NDNvYmp5MDluYTJubHd3Znl3MnB5bSJ9.d8I2mEIf8PP27UPD2XidZg";
 
-export default function Map() {
-    const lngLat = [13.383309, 52.516806];
-    const marker = new mapboxgl.Marker().setLngLat(lngLat).addTo(map);
-    const [viewport, setViewport] = useState({
-        container: "map",
-        style: "mapbox://styles/mapbox/streets-v11",
-        center: [13.383309, 52.516806],
-        zoom: 9,
-    });
-    const [selectedPark, setSelectedPark] = useState(null);
-    const query = "Berlin";
-    const response = await geocoder.forwardGeocode({ query, limit: 5 }).send();
+export default function App() {
+    const mapContainer = useRef(null);
+    const map = useRef(null);
+    const [lng, setLng] = useState(13.4);
+    const [lat, setLat] = useState(52.5);
+    const [zoom, setZoom] = useState(9);
 
     useEffect(() => {
-        const listener = (e) => {
-            if (e.key === "Escape") {
-                setSelectedPark(null);
-            }
-        };
-        window.addEventListener("keydown", listener);
+        if (map.current) return; // initialize map only once
+        map.current = new mapboxgl.Map({
+            container: mapContainer.current,
+            style: "mapbox://styles/mapbox/streets-v11",
+            center: [lng, lat],
+            zoom: zoom,
+        });
+    });
 
-        return () => {
-            window.removeEventListener("keydown", listener);
-        };
-    }, []);
+    useEffect(() => {
+        if (!map.current) return; // wait for map to initialize
+        map.current.on("move", () => {
+            setLng(map.current.getCenter().lng.toFixed(4));
+            setLat(map.current.getCenter().lat.toFixed(4));
+            setZoom(map.current.getZoom().toFixed(2));
+        });
+    });
 
     return (
         <div>
-            <div id="map">I am a map</div>
+            {/* <div className="sidebar">
+                Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+            </div> */}
+            <div ref={mapContainer} className="map-container" />
         </div>
     );
 }
