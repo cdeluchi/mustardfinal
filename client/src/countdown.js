@@ -26,8 +26,8 @@ const Countdown = ({ countdownTimestampMs }) => {
         <div className="clock">
             <div className="container">
                 {/* <h2>next event in</h2> */}
-                {/* <span className="days-text">days</span>
-                <span className="days">{remainingTime.days}</span> */}
+                {/* <span className="days">{remainingTime.days}</span>
+                <span className="days-text">days</span> */}
                 {/* <span className="days-text">:</span> */}
                 <span className="hours">{remainingTime.hours}</span>
                 <span className="hours-text">hrs</span>
@@ -43,3 +43,6 @@ const Countdown = ({ countdownTimestampMs }) => {
     );
 };
 export default Countdown;
+
+// connect the event to clock
+//when the event is done, another event  take place and the old one is replace

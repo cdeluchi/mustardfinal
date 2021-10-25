@@ -28,12 +28,11 @@ export default function Events(props) {
                         event.map((rows, i) => (
                             <div key={i}>
                                 <Link to={`/event/${rows.id}`} key={i}>
-                                    <span className="linkEvents">
-                                        {rows.events}
-                                    </span>
-                                    <span className="linkPlace">
-                                        {rows.place}
-                                    </span>
+                                    <a className="linkEvents">{rows.events}</a>
+                                    <br />
+                                    <a className="linkPlace">{rows.place}</a>
+                                    <br />
+                                    <br />
                                 </Link>
                             </div>
                         ))}
@@ -42,3 +41,4 @@ export default function Events(props) {
         </>
     );
 }
+//fixed the style and take create the modal at every event

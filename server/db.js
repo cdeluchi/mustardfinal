@@ -230,9 +230,9 @@ module.exports.getFindPeople = () => {
 module.exports.getEvent = () => {
     console.log("getEvent inDB");
     const q = `
-    SELECT place, events, id, created_at FROM events
+    SELECT place, events, id, event_date, event_time FROM events
     ORDER BY id DESC
-    LIMIT 6
+    LIMIT 4
     `;
     return db.query(q);
 };

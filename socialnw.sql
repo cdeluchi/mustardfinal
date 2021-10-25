@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS password_reset_codes;
 DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS events;
-DROP TABLE IF EXISTS events;
 
 
 CREATE TABLE users(
@@ -38,50 +37,73 @@ CREATE TABLE messages(
    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    );
 
-
+DROP TABLE IF EXISTS events;
 CREATE TABLE events(
     id SERIAL PRIMARY KEY,
     place TEXT,
     events TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    event_date DATE,
+    event_time TIME
 );
 
-INSERT INTO events (place, events) VALUES (
+
+INSERT INTO events (place, events, event_date, event_time) VALUES (
     'Schöneberg',
-    'Twin Hearts Meditation',
+    'Full Moon of Gemini | Festival of GoodWill',
+    '2021-10-28',
+    '17:30:22'
 );
-
-INSERT INTO events (place, events) VALUES (
+INSERT INTO events (place, events, event_date, event_time) VALUES (
     'Schöneberg',
-    'Soul Meditation Berlin'
+    'Decoding The Science of Twin Hearts Meditation',
+    '2021-10-28',
+    '17:35:22'
 );
-
-INSERT INTO events (place, events) VALUES (
+INSERT INTO events (place, events, event_date, event_time) VALUES (
     'Kreuzberg',
-    'Dyian Yoga Level I’'
+    'Do You Follow Your Inner Voice or Inner Noise?',
+    '2021-10-28',
+    '17:25:22'
 );
-
-INSERT INTO events (place, events) VALUES (
-    'Schöneberg',
-    'Stress and Burnout Prevention meditation'
-);
-
-INSERT INTO events (place, events) VALUES (
-    'Neuköln',
-    'Pranayama Joy of Breathing'
-);
-
-INSERT INTO events (place, events) VALUES (
-    'Prenzlauer berg',
-    'LOW a guided sonic meditation for Groups'
-);
-
-INSERT INTO events (place, events) VALUES (
-    'Schöneberg',
-    'Sleep Well Meditation'
-);
-
-INSERT INTO events (place, events) VALUES (
+INSERT INTO events (place, events, event_date, event_time) VALUES (
     'Kreuzberg',
-    'Own Your energy, Own Your Life'
+    'I am not a Buddhist. Can I Join the Vesak Meditation?!',
+    '2021-10-28',
+    '17:15:22'
+);
+INSERT INTO events (place, events, event_date, event_time) VALUES (
+    'Schoneberg',
+    'Meditation on Twin Hearts | Spiritual Technology, Par Excellence',
+    '2021-10-28',
+    '17:20:22'
+);
+INSERT INTO events (place, events, event_date, event_time) VALUES (
+    'Kreuzberg',
+    'Meditation, Service & Your Chakras',
+    '2021-10-28',
+    '17:10:22'
+);
+INSERT INTO events (place, events, event_date, event_time) VALUES (
+    'PrenzlauerBerg',
+    'How Meditation can be Relief at Times!',
+    '2021-10-28',
+    '17:05:22'
+);
+INSERT INTO events (place, events, event_date, event_time) VALUES (
+    'Kreuzberg',
+    'The Impact of GMCKS Teachings on Quality of Life',
+    '2021-10-28',
+    '17:45:22'
+);
+INSERT INTO events (place, events, event_date, event_time) VALUES (
+    'Charlottenburg',
+    'Getting Ready for the Wesak Meditation',
+    '2021-10-28',
+    '17:50:22'
+);
+INSERT INTO events (place, events, event_date, event_time) VALUES (
+    'Mitte',
+    'How to Meditate Even When You are Busy',
+    '2021-10-28',
+    '17:55:22'
 );

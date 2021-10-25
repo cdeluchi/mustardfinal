@@ -5,7 +5,7 @@ export default function Weather() {
     const [city, setCity] = useState("");
 
     const apiKey = "79891816e8335ce95961e618850f1e04";
-
+    const roundCelcius = ((weatherData - 32) * 5) / 9;
     const getWeather = (e) => {
         if (e.key == "Enter") {
             fetch(
@@ -35,7 +35,8 @@ export default function Weather() {
             ) : (
                 <div className="contentWeather">
                     <p>{weatherData.name}</p>
-                    <p>{Math.round(weatherData.main.temp)}C</p>
+                    <br />
+                    <p>{(Math.round(weatherData.main.temp - 32) * 5) / 9}C</p>
                     <p>{weatherData.weather[0].main}</p>
                 </div>
             )}
@@ -44,3 +45,6 @@ export default function Weather() {
         </div>
     );
 }
+
+//fix the map.random
+//fix show the data from weather

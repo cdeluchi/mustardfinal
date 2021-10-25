@@ -11,7 +11,7 @@ main {
     height: 100%;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(#ffafbd, #ffc3a0);
+    background: linear-gradient(#ffaf7b, #d76d77, #3a1c71);
     /* background-image: url(meditation.jpg); */
     background-repeat: no-repeat;
     background-size: cover;
@@ -22,6 +22,14 @@ main {
 .namasteImg {
     width: 600px;
     border-radius: 10px;
+}
+.linkEvents {
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+}
+.linkEvents a {
+    text-decoration: none;
 }
 .containerwrap {
     /* position: relative; */
@@ -38,7 +46,7 @@ main {
 
 .header {
     position: absolute;
-    top: 80px;
+    top: 20px;
     right: 120px;
     left: 120px;
     padding: 20px 50px;
@@ -54,7 +62,11 @@ main {
     border-left: 1px solid rgba(255, 255, 255, 0.5);
     z-index: 1000;
 }
-
+.headerImg {
+    width: 1100px;
+    height: 400px;
+    object-fit: cover;
+}
 .content {
     position: absolute;
     top: 290px;
@@ -77,9 +89,9 @@ main {
 
 .clock {
     position: relative;
-    top: 530px;
+    top: 930px;
     right: 100px;
-    left: 640px;
+    left: 720px;
     width: 330px;
     padding: 20px 50px;
     display: flex;
@@ -116,10 +128,10 @@ main {
 
 .weatherContainer {
     position: relative;
-    top: 600px;
+    top: 619px;
     right: 110px;
-    left: 656px;
-    width: 311px;
+    left: 723px;
+    width: 330px;
     padding: 10px 10px;
     display: flex;
     flex-direction: column;
@@ -135,6 +147,7 @@ main {
 }
 .contentWeather {
     display: flex;
+        flex-direction: column;
 }
 .inputWeather {
     display: flex;
@@ -248,19 +261,30 @@ main {
     border-bottom: 0;
 }
 .findEventsContainer {
-    top: 354px;
+    top: 433px;
     border-radius: 10px;
     right: 110px;
-    left: 193px;
+    left: 283px;
     display: flex;
     position: relative;
     justify-content: center;
     width: 430px;
     height: 323px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
 }
-.map-container {
-    top: 786px;
+.mapboxgl-control-container {
+    color: tomato;
+}
+.map {
+    top: 863.2px;
     right: 111px;
     left: -60px;
     display: flex;
@@ -268,7 +292,11 @@ main {
     justify-content: center;
     width: 330px;
     height: 322px;
-    border: 2px solid #ccc;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    object-fit: cover;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 .wannaBeContainer {
     position: relative;
@@ -370,15 +398,6 @@ input {
     align-items: center;
     justify-content: center;
     margin: 20px;
-}
-button {
-    margin: 10px 10px 10px 20px;
-    background-color: #cbe7f2;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 10px;
-    border: none;
-    color: #7e8a8c;
 }
 
 .loggedcontainer {

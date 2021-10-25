@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import mapboxgl from "!mapbox-gl";
 
 mapboxgl.accessToken =
@@ -10,6 +10,7 @@ export default function App() {
     const [lng, setLng] = useState(13.4);
     const [lat, setLat] = useState(52.5);
     const [zoom, setZoom] = useState(9);
+    // const [popup, setPopup] = useState;
 
     useEffect(() => {
         if (map.current) return; // initialize map only once
@@ -27,6 +28,7 @@ export default function App() {
             setLng(map.current.getCenter().lng.toFixed(4));
             setLat(map.current.getCenter().lat.toFixed(4));
             setZoom(map.current.getZoom().toFixed(2));
+            // setPopup(new mapboxgl.Popup().setHTML(“<h1>Hello World!</h1>)))
         });
     });
 
@@ -35,7 +37,11 @@ export default function App() {
             {/* <div className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div> */}
-            <div ref={mapContainer} className="map-container" />
+            <div ref={mapContainer} className="map" />
         </div>
     );
 }
+
+// fixed the city from berlin
+// add some pins at the map
+//add the events at the map
