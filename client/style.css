@@ -84,6 +84,10 @@ main {
     height: 400px;
     object-fit: cover;
 }
+.header-container {
+    overflow: hidden;
+}
+
 .content {
     position: absolute;
     top: 250px;
@@ -195,7 +199,7 @@ main {
     border: 2px solid #ccc;
     border-radius: 10px;
 }
-.socialcontainer {
+.social-container {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -211,7 +215,7 @@ main {
     width: 501px;
     padding: 10px 10px;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -224,13 +228,20 @@ main {
     left: -36px;
     width: 400.8px;
     height: 300px;
-    padding: 10px 10px;
+    padding: 50px;
     display: flex;
     align-items: center;
     overflow-y: scroll;
     flex-direction: column;
     justify-content: center;
     overflow-y: scroll;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgb(255 255 255 / 5%);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .textAreaInChat {
@@ -239,11 +250,12 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 304.1px;
+    top: 284px;
     right: 120px;
     left: -36px;
     width: 402px;
     height: 40px;
+    padding: 10px;
 }
 
 .friendsandWannabecontainer {

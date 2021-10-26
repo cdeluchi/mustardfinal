@@ -96,7 +96,7 @@ export default class App extends Component {
                             <Weather />
                             <Events />
                         </div>
-                        <div socialContainer>
+                        <div social-container>
                             <FindPeople />
                             <Chat />
                         </div>

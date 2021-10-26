@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { getRemainingTimeUntilMsTimestamp } from "./countdownTimer";
+// import Head from "next/head";
+// import CountDownTimer from "@inlightmedia/react-countdown-timer";
 
+const dates = {
+    day: "2021-10-28",
+    time: "17:00:20",
+};
 const defaultRemainingTime = {
     seconds: "00",
     minutes: "00",

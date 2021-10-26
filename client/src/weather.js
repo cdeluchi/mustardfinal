@@ -9,7 +9,7 @@ export default function Weather() {
     const getWeather = (e) => {
         if (e.key == "Enter") {
             fetch(
-                `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&APPID=${apiKey}`
+                `http://api.openweathermap.org/data/2.5/weather?q=berlin&units=imperial&APPID=79891816e8335ce95961e618850f1e04`
             )
                 .then((response) => response.json())
                 .then((data) => {

@@ -228,7 +228,7 @@ module.exports.getFindPeople = () => {
 };
 
 module.exports.getEvent = () => {
-    console.log("getEvent inDB");
+    // console.log("getEvent inDB");
     const q = `
     SELECT place, events, id, event_date, event_time FROM events
     ORDER BY id DESC

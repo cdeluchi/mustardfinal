@@ -1,6 +1,6 @@
 export default function Header() {
     return (
-        <div>
+        <div className="header-container">
             <h2>
                 {/* Hello {this.state.first} {this.state.last} */}
                 <br />

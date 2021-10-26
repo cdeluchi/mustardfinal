@@ -55,9 +55,9 @@ app.get("/user/id.json", function (req, res) {
 
 app.get("/user.json", function (req, res) {
     // console.log("user.json in get", req.body);
-    console.log("req.session in /user.json", req.session);
+    // console.log("req.session in /user.json", req.session);
     db.firstUser(req.session.userId).then((result) => {
-        console.log("result", result);
+        // console.log("result", result);
         return res.json({
             userId: req.session.userId,
             // id: result.rows[0].id,
@@ -71,7 +71,7 @@ app.get("/user.json", function (req, res) {
 
 //***REGISTRATION ROUTE */
 app.post("/registration.json", (req, res) => {
-    console.log("registration:", req.body);
+    // console.log("registration:", req.body);
     hash(req.body.password)
         .then((passHash) => {
             console.log("passHash", passHash);
@@ -118,7 +118,7 @@ app.post("/registration.json", (req, res) => {
 //****  LOGIN ROUTE */
 
 app.post("/login", (req, res) => {
-    console.log("result in getRegister");
+    // console.log("result in getRegister");
     const { email, password } = req.body;
 
     db.getRegister(email)
@@ -209,7 +209,7 @@ app.get("/findPeople", (req, res) => {
 });
 // FIND matchingPeople
 app.get("/matchingPeople/:search", (req, res) => {
-    console.log("matching people", req.params);
+    // console.log("matching people", req.params);
     db.getMatchingPeople(req.params.search)
         .then((result) => {
             return res.json(result);
@@ -250,11 +250,11 @@ app.get("/getfriendship/:otherUserId", (req, res) => {
     // console.log("req profile for users ");
     const params = req.params.otherUserId;
     const session = req.session.userId;
-    console.log("getfriendship params", params);
-    console.log("getfriendship session", session);
+    // console.log("getfriendship params", params);
+    // console.log("getfriendship session", session);
     db.getfriendship(params, session)
         .then((results) => {
-            console.log("result in getfriendship", results.rows.sender_id);
+            // console.log("result in getfriendship", results.rows.sender_id);
             res.json(results.rows);
         })
         .catch((err) => {
@@ -306,12 +306,12 @@ app.post("/setFriendship", (req, res) => {
 
 // GET FRIENDSHIPs
 app.get("/friends.json", (req, res) => {
-    console.log("GET/friends in SERVER", req.session);
+    // console.log("GET/friends in SERVER", req.session);
     const session = req.session.userId;
-    console.log("friends session", session);
+    // console.log("friends session", session);
     db.alreadyFriends(session)
         .then((accepted) => {
-            console.log("accepted in GETfriends", accepted.rows);
+            // console.log("accepted in GETfriends", accepted.rows);
             if (!session) {
                 res.json({ success: false });
             } else {
@@ -324,10 +324,10 @@ app.get("/friends.json", (req, res) => {
 });
 
 app.post("/unfriend", (req, res) => {
-    console.log("unfriend in SERVER");
+    // console.log("unfriend in SERVER");
     db.cancelFriendship(req.session.userId, req.body.other)
         .then(() => {
-            console.log("resp in unfriend SERVER", res.rows);
+            // console.log("resp in unfriend SERVER", res.rows);
             res.json({ success: true });
         })
         .catch((err) => {
