@@ -12,7 +12,7 @@ if (process.env.DATABASE_URL) {
 }
 
 module.exports.firstUser = (id) => {
-    // console.log("firstUser in db", id);
+    console.log("firstUser in db", id);
     return db.query(
         `
     SELECT * 
@@ -232,7 +232,7 @@ module.exports.getEvent = () => {
     const q = `
     SELECT place, events, id, event_date, event_time FROM events
     ORDER BY id DESC
-    LIMIT 4
+    LIMIT 3
     `;
     return db.query(q);
 };

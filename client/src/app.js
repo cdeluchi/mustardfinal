@@ -102,11 +102,11 @@ export default class App extends Component {
                         <Map />
                         <Weather />
                         <Events />
-                        <div className="socialcontainer">
-                            <FindPeople />
-                            {/* <Friends /> */}
-                            <Chat />
-                        </div>
+
+                        <FindPeople />
+                        {/* <Friends /> */}
+                        <Chat />
+
                         <Footer />
                     </div>
                 </BrowserRouter>

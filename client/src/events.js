@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 export default function Events(props) {
     console.log("default Function in Events");
@@ -27,13 +27,20 @@ export default function Events(props) {
                     {event &&
                         event.map((rows, i) => (
                             <div key={i}>
-                                <Link to={`/event/${rows.id}`} key={i}>
-                                    <a className="linkEvents">{rows.events}</a>
+                                <button
+                                    className="btnEvents"
+                                    to={`/event/${rows.id}`}
+                                    key={i}
+                                >
+                                    <a className="linkEvents">
+                                        {rows.events} -{" "}
+                                    </a>
                                     <br />
-                                    <a className="linkPlace">{rows.place}</a>
+                                    <br />
+                                    <a className="linkEvents">{rows.place}</a>
                                     <br />
                                     <br />
-                                </Link>
+                                </button>
                             </div>
                         ))}
                 </div>

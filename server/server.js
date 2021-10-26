@@ -55,8 +55,9 @@ app.get("/user/id.json", function (req, res) {
 
 app.get("/user.json", function (req, res) {
     // console.log("user.json in get", req.body);
+    console.log("req.session in /user.json", req.session);
     db.firstUser(req.session.userId).then((result) => {
-        // console.log("result", result);
+        console.log("result", result);
         return res.json({
             userId: req.session.userId,
             // id: result.rows[0].id,

@@ -9,7 +9,7 @@ export class Welcome extends Component {
     render() {
         return (
             <BrowserRouter>
-                <img src="socialNW.png" alt="logo" />
+                {/* <img src="socialNW.png" alt="logo" /> */}
                 <section id="welcome">
                     <div className="bodyInWelcome">
                         <h1>NamasGO</h1>

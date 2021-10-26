@@ -19,21 +19,32 @@ main {
     background-attachment: fixed;
     padding: 100px;
 }
+.btnEvents {
+    background-color: #f99e9e;
+    width: 290px;
+    display: flex;
+    margin: 10px;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 10px;
+    border-radius: 5px;
+    flex-direction: row;
+    border: 1px solid white;
+}
 .namasteImg {
     width: 600px;
     border-radius: 10px;
 }
 .linkEvents {
-    font-size: 20px;
+    font-size: 12px;
+    display: flex;
     text-decoration: none;
     color: white;
-}
-.linkEvents a {
-    text-decoration: none;
 }
 .containerwrap {
     /* position: relative; */
     width: 100%;
+    height: 1850px;
     /* min-height: calc(100vh - 280px); */
     min-height: 500px;
     background: rgba(255, 255, 255, 0.5);
@@ -69,7 +80,7 @@ main {
 }
 .content {
     position: absolute;
-    top: 290px;
+    top: 250px;
     right: 120px;
     left: 120px;
     padding: 20px 50px;
@@ -128,7 +139,7 @@ main {
 
 .weatherContainer {
     position: relative;
-    top: 619px;
+    top: 770px;
     right: 110px;
     left: 723px;
     width: 330px;
@@ -147,7 +158,7 @@ main {
 }
 .contentWeather {
     display: flex;
-        flex-direction: column;
+    flex-direction: column;
 }
 .inputWeather {
     display: flex;
@@ -181,12 +192,16 @@ main {
 .socialcontainer {
     display: flex;
     flex-direction: column;
+    position: relative;
+    top: 207px;
+    right: 80px;
+    left: -39px;
 }
 .showFindPeople {
     position: relative;
-    top: 437px;
+    top: 497px;
+    left: 460px;
     right: 120px;
-    left: 471px;
     width: 501px;
     padding: 10px 10px;
     display: flex;
@@ -198,10 +213,10 @@ main {
 .chatcontainer {
     border: 2px solid #ccc;
     position: relative;
-    top: 132px;
+    top: 202px;
     right: 120px;
-    left: 54px;
-    width: 270.8px;
+    left: -36px;
+    width: 400.8px;
     height: 300px;
     padding: 10px 10px;
     display: flex;
@@ -237,6 +252,7 @@ main {
 }
 
 .profilePicInChat {
+    display: flex;
     border-radius: 8px;
     border: 2px solid #ccc;
     width: 30px;
@@ -261,15 +277,15 @@ main {
     border-bottom: 0;
 }
 .findEventsContainer {
-    top: 433px;
+    top: 420px;
     border-radius: 10px;
     right: 110px;
-    left: 283px;
+    left: 723px;
     display: flex;
     position: relative;
-    justify-content: center;
-    width: 430px;
-    height: 323px;
+    justify-content: space-between;
+    width: 330px;
+    height: 213px;
     /* border: 1px solid white; */
     padding: 10px;
     background: rgba(255, 255, 255, 0.2);
@@ -284,21 +300,36 @@ main {
     color: tomato;
 }
 .map {
-    top: 863.2px;
-    right: 111px;
-    left: -60px;
-    display: flex;
     position: relative;
-    justify-content: center;
-    width: 330px;
-    height: 322px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    top: 880px;
+    right: 100px;
+    left: -80px;
+    width: 720px;
+    height: 430px;
     object-fit: cover;
-    flex-direction: row;
-    flex-wrap: wrap;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgb(255 255 255 / 5%);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
 }
-.wannaBeContainer {
+
+.profilePicFindPeople {
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    width: 60px;
+    height: 70px;
+    margin: 10px;
+    object-fit: cover;
+}
+/* .wannaBeContainer {
     position: relative;
     top: 112px;
     right: 120px;
@@ -308,18 +339,24 @@ main {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
-/* bodyInWelcome {
-    background-image: url(/client/public/socialNW.png);
-    display: grid;
-    grid-template-columns: 10% 85% 5%;
 } */
-/* h1 {
+
+.bodyInWelcome {
+    /* background-image: url(/client/public/socialNW.png); */
+    /* display: grid;
+    grid-template-columns: 10% 85% 5%; */
+}
+.bodyinregistration {
+    /* display: flex;
+    flex-direction: column; */
+}
+#weolcome {
+    /* display: flex; */
+}
+h1 {
     text-align: center;
     margin: 20px;
-} */
-
+}
 h2 {
     margin: 0px 20px 10px;
     font-size: 20px;
@@ -327,6 +364,9 @@ h2 {
     color: #7e8a8c;
     text-align: center;
 }
+/* 
+
+
 .h2InError {
     color: #a94f2f;
 }
@@ -473,7 +513,7 @@ input {
 .menufriends,
 .menulogout {
     border: #ccc;
-    width: 80px;
+    width: 20px;
     border-radius: 5px;
     margin: 10px;
     object-fit: cover;

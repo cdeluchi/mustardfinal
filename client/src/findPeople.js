@@ -42,7 +42,7 @@ export default function findPeople(props) {
     // render(){
     return (
         <>
-            <div className="findPeopleContainer">
+            {/* <div className="findPeopleContainer">
                 <p> Find People </p>
                 <input
                     className="findPeopleInput"
@@ -51,7 +51,7 @@ export default function findPeople(props) {
                     // onKeyDown={updatefindPeople}
                     onChange={(e) => setSearch(e.target.value)}
                 />
-            </div>
+            </div> */}
             <div className="showFindPeople">
                 {users &&
                     users.map((findAllUsers, i) => (
