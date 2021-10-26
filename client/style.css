@@ -19,6 +19,12 @@ main {
     background-attachment: fixed;
     padding: 100px;
 }
+.eventContainer {
+    display: grid;
+}
+.socialcontainer {
+    display: grid;
+}
 .btnEvents {
     background-color: #f99e9e;
     width: 290px;
@@ -44,7 +50,7 @@ main {
 .containerwrap {
     /* position: relative; */
     width: 100%;
-    height: 1850px;
+    height: 2050px;
     /* min-height: calc(100vh - 280px); */
     min-height: 500px;
     background: rgba(255, 255, 255, 0.5);
@@ -139,7 +145,7 @@ main {
 
 .weatherContainer {
     position: relative;
-    top: 770px;
+    top: 750px;
     right: 110px;
     left: 723px;
     width: 330px;
@@ -199,7 +205,7 @@ main {
 }
 .showFindPeople {
     position: relative;
-    top: 497px;
+    top: 627px;
     left: 460px;
     right: 120px;
     width: 501px;
@@ -213,7 +219,7 @@ main {
 .chatcontainer {
     border: 2px solid #ccc;
     position: relative;
-    top: 202px;
+    top: 316px;
     right: 120px;
     left: -36px;
     width: 400.8px;
@@ -229,13 +235,14 @@ main {
 
 .textAreaInChat {
     position: relative;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 126.1px;
+    top: 304.1px;
     right: 120px;
-    left: 53px;
-    width: 273px;
+    left: -36px;
+    width: 402px;
     height: 40px;
 }
 
@@ -262,7 +269,7 @@ main {
 }
 
 .footer {
-    top: 144px;
+    top: 324px;
     right: 110px;
     left: 284px;
     display: flex;
@@ -277,7 +284,7 @@ main {
     border-bottom: 0;
 }
 .findEventsContainer {
-    top: 420px;
+    top: 370px;
     border-radius: 10px;
     right: 110px;
     left: 723px;
@@ -297,7 +304,7 @@ main {
     border-left: 1px solid rgba(255, 255, 255, 0.5);
 }
 .mapboxgl-control-container {
-    color: tomato;
+    color: rgba(0, 0, 0, 0.5) !important;
 }
 .map {
     position: relative;
@@ -309,6 +316,7 @@ main {
     object-fit: cover;
     padding: 10px 10px;
     display: flex;
+    object-fit: cover;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -341,25 +349,13 @@ main {
     align-items: center;
 } */
 
-.bodyInWelcome {
-    /* background-image: url(/client/public/socialNW.png); */
-    /* display: grid;
-    grid-template-columns: 10% 85% 5%; */
-}
-.bodyinregistration {
-    /* display: flex;
-    flex-direction: column; */
-}
-#weolcome {
-    /* display: flex; */
-}
 h1 {
     text-align: center;
     margin: 20px;
 }
 h2 {
-    margin: 0px 20px 10px;
-    font-size: 20px;
+    margin: 0px 20px 30px;
+    font-size: 30px;
     align-items: center;
     color: #7e8a8c;
     text-align: center;

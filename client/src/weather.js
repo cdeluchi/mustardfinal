@@ -36,7 +36,7 @@ export default function Weather() {
                 <div className="contentWeather">
                     <p>{weatherData.name}</p>
                     <br />
-                    <p>{(Math.round(weatherData.main.temp - 32) * 5) / 9}C</p>
+                    <p>{(Math.round(weatherData.main.temp - 32) * 5) / 9} °C</p>
                     <p>{weatherData.weather[0].main}</p>
                 </div>
             )}

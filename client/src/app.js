@@ -17,14 +17,6 @@ import Header from "./header";
 // import { makeStyles } from "@mui/material";
 // import { CssBaseline } from "@mui/material";
 
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         minHeight: "100vh",
-//         backgroundImage: `url(${process.env.public + "/socialNW"})`,
-//         backgroundRepeat: "no-repeat",
-//         backgroundSize: "cover",
-//     },
-// }));
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -98,15 +90,16 @@ export default class App extends Component {
                     </div>
                     <Route exact path="/"></Route>
                     <div className="containerwrap">
-                        <Countdown countdownTimestampMs={1659983662000} />
-                        <Map />
-                        <Weather />
-                        <Events />
-
-                        <FindPeople />
-                        {/* <Friends /> */}
-                        <Chat />
-
+                        <div className="eventContainer">
+                            <Countdown countdownTimestampMs={1659983662000} />
+                            <Map />
+                            <Weather />
+                            <Events />
+                        </div>
+                        <div socialContainer>
+                            <FindPeople />
+                            <Chat />
+                        </div>
                         <Footer />
                     </div>
                 </BrowserRouter>

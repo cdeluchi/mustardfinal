@@ -19,6 +19,7 @@ export default function Events(props) {
             console.log(` ${search}`);
         };
     }, [search]);
+
     return (
         <>
             <div className="findEventsContainer">
@@ -31,6 +32,7 @@ export default function Events(props) {
                                     className="btnEvents"
                                     to={`/event/${rows.id}`}
                                     key={i}
+                                    // onClick={clickHandler}
                                 >
                                     <a className="linkEvents">
                                         {rows.events} -{" "}
