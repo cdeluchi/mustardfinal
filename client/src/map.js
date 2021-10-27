@@ -21,6 +21,11 @@ export default function App() {
             center: [lng, lat],
             zoom: zoom,
         });
+        const lngLat = [13.4, 52.5];
+        // marker creation and addition to the map
+        const marker = new mapboxgl.Marker()
+            .setLngLat(lngLat)
+            .addTo(map.current);
     });
 
     useEffect(() => {
@@ -36,7 +41,7 @@ export default function App() {
 
     return (
         <div>
-            <div ref={mapContainer} className="map" />
+            <div ref={mapContainer} className="map-container-notdefault" />
         </div>
     );
 }

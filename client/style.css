@@ -135,7 +135,7 @@ main {
     flex-direction: row;
 }
 .clock .container span {
-    font-size: 1.5em;
+    font-size: 2em;
 }
 .clock .container span:nth-child(odd) {
     padding: 5px 15px;
@@ -168,7 +168,7 @@ main {
 }
 .contentWeather {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 .inputWeather {
     display: flex;
@@ -318,7 +318,7 @@ main {
 .mapboxgl-control-container {
     color: rgba(0, 0, 0, 0.5) !important;
 }
-.map {
+.map-container-notdefault {
     position: relative;
     top: 880px;
     right: 100px;

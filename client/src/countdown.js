@@ -35,15 +35,15 @@ const Countdown = ({ countdownTimestampMs }) => {
                 {/* <span className="days">{remainingTime.days}</span>
                 <span className="days-text">days</span> */}
                 {/* <span className="days-text">:</span> */}
-                <span className="hours">{remainingTime.hours}</span>
-                <span className="hours-text">hrs</span>
+                <span className="textclock">{remainingTime.hours}</span>
+                <span className="textclock">hrs</span>
                 {/* <span className="hours-text">:</span> */}
-                <span className="minutes">{remainingTime.minutes}</span>
-                <span className="hours-text">min</span>
+                <span className="textclock">{remainingTime.minutes}</span>
+                <span className="textclock">min</span>
                 {/* <span className="minutes-text">:</span> */}
 
-                <span className="seconds">{remainingTime.seconds}</span>
-                <span className="seconds-text">sec</span>
+                <span className="textclock">{remainingTime.seconds}</span>
+                <span className="textclock">sec</span>
             </div>
         </div>
     );
