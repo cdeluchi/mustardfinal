@@ -143,7 +143,7 @@ main {
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 15px 25px rgba(255, 255, 255, 0.2);
     margin: 0 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -152,7 +152,8 @@ main {
     top: 750px;
     right: 110px;
     left: 723px;
-    width: 330px;
+    width: 335px;
+    height: 150px;
     padding: 10px 10px;
     display: flex;
     flex-direction: column;
@@ -225,13 +226,12 @@ main {
     position: relative;
     top: 316px;
     right: 120px;
-    left: -36px;
+    left: 24px;
     width: 400.8px;
     height: 300px;
     padding: 50px;
     display: flex;
     align-items: center;
-    overflow-y: scroll;
     flex-direction: column;
     justify-content: center;
     overflow-y: scroll;
@@ -244,6 +244,41 @@ main {
     border-left: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+.modal {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 200px;
+    border: solid 1px #ccc;
+    background-color: white;
+    border-radius: 5px;
+    width: 660px;
+    height: 400px;
+    top: 126px;
+    top: 1389px;
+    left: 600px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgb(255 255 255 / 5%);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    z-index: 1000;
+}
+.modal h1 {
+    color: red;
+}
+.modal h2 {
+    font-size: 20px;
+}
+.btn-handler-close{
+    
+}
 .textAreaInChat {
     position: relative;
     border-radius: 5px;
@@ -252,7 +287,7 @@ main {
     align-items: center;
     top: 284px;
     right: 120px;
-    left: -36px;
+    left: 24px;
     width: 402px;
     height: 40px;
     padding: 10px;
@@ -318,6 +353,13 @@ main {
 .mapboxgl-control-container {
     color: rgba(0, 0, 0, 0.5) !important;
 }
+.marker-container-notdefault {
+    position: absolute;
+}
+.pinImg {
+    width: 40px;
+    height: 40px;
+}
 .map-container-notdefault {
     position: relative;
     top: 880px;
@@ -325,10 +367,10 @@ main {
     left: -80px;
     width: 720px;
     height: 430px;
-    object-fit: cover;
     padding: 10px 10px;
     display: flex;
     object-fit: cover;
+    overflow: hidden;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -366,7 +408,7 @@ h1 {
     margin: 20px;
 }
 h2 {
-    margin: 0px 20px 30px;
+    margin: 0px 20px -10px;
     font-size: 30px;
     align-items: center;
     color: #7e8a8c;

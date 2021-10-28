@@ -1,47 +1,78 @@
-import { useRef, useEffect, useState } from "react";
-import mapboxgl from "!mapbox-gl";
-// import geoJson from "./data/data.json";
+// import * as React from "react";
+import { useState } from "react";
+// import { render } from "react-dom";
+// import { Marker } from "mapbox-gl";
+import ReactMapGL, { Marker } from "react-map-gl";
+// import MapGL from "react-map-gl";
+// import Marker from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
-mapboxgl.accessToken =
+const MAPBOX_TOKEN =
     "pk.eyJ1IjoiY2RlbHVjaGkiLCJhIjoiY2t2NDNvYmp5MDluYTJubHd3Znl3MnB5bSJ9.d8I2mEIf8PP27UPD2XidZg";
 
-export default function App() {
-    const mapContainer = useRef(null);
-    const map = useRef(null);
-    const [lng, setLng] = useState(13.4);
-    const [lat, setLat] = useState(52.5);
-    const [zoom, setZoom] = useState(9);
-    // const [popup, setPopup] = useState;
-
-    useEffect(() => {
-        if (map.current) return; // initialize map only once
-        map.current = new mapboxgl.Map({
-            container: mapContainer.current,
-            style: "mapbox://styles/mapbox/streets-v11",
-            center: [lng, lat],
-            zoom: zoom,
-        });
-        const lngLat = [13.4, 52.5];
-        // marker creation and addition to the map
-        const marker = new mapboxgl.Marker()
-            .setLngLat(lngLat)
-            .addTo(map.current);
+export default function Map() {
+    const [viewport, setViewport] = useState({
+        width: 720,
+        height: 450,
+        latitude: 52.515,
+        longitude: 13.403,
+        zoom: 11,
     });
 
-    useEffect(() => {
-        if (!map.current) return; // wait for map to initialize
-        map.current.on("move", () => {
-            setLng(map.current.getCenter().lng.toFixed(4));
-            setLat(map.current.getCenter().lat.toFixed(4));
-            setZoom(map.current.getZoom().toFixed(2));
-            // setPopup(new mapboxgl.Popup().setHTML("<h1>HelloWorld</hq>"));
-            // setPopup(new mapboxgl.Popup().setHTML(“<h1>Hello World!</h1>)))
-        });
-    });
-
+    // const charlottenburg = new charlottenburg.Marker({
+    //     color: "black",
+    //     rotation: 45,
+    // });
+    //     .setLngLat([13.3041, 52.5166])
+    //     .addTo(viewport);
+    // const mitte = new mitte.Marker({ color: "black", rotation: 45 })
+    //     .setLngLat([13.3603, 52.5373])
+    //     .addTo(viewport);
+    // const kreuzberg = new kreuzberg.Marker({ color: "black", rotation: 45 })
+    //     .setLngLat([13.4066, 52.4983])
+    //     .addTo(viewport);
     return (
-        <div>
-            <div ref={mapContainer} className="map-container-notdefault" />
+        <div className="map-container-notdefault">
+            <ReactMapGL
+                {...viewport}
+                mapStyle="mapbox://styles/mapbox/streets-v11"
+                onViewportChange={setViewport}
+                mapboxApiAccessToken={MAPBOX_TOKEN}
+            >
+                <Marker
+                    className="marker-container-notdefault"
+                    latitude={52.5166}
+                    longitude={13.3041}
+                    offsetLeft={-20}
+                    offsetTop={-10}
+                >
+                    <div>
+                        <img className="pinImg" src={"/pin.png"} alt="Logo" />
+                    </div>
+                </Marker>
+                <Marker
+                    className="marker-container-notdefault"
+                    latitude={52.5373}
+                    longitude={13.3603}
+                    offsetLeft={-20}
+                    offsetTop={-10}
+                >
+                    <div>
+                        <img className="pinImg" src={"/pin.png"} alt="Logo" />
+                    </div>
+                </Marker>
+                <Marker
+                    className="marker-container-notdefault"
+                    latitude={52.4983}
+                    longitude={13.4066}
+                    offsetLeft={-20}
+                    offsetTop={-10}
+                >
+                    <div>
+                        <img className="pinImg" src={"/pin.png"} alt="Logo" />
+                    </div>
+                </Marker>
+            </ReactMapGL>
         </div>
     );
 }

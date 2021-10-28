@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 
-export default function Events(props) {
+export default function Events({ handlerOpen, handlerClose }) {
     console.log("default Function in Events");
     const [event, setEvent] = useState([]);
     const [search, setSearch] = useState("");
@@ -31,8 +31,8 @@ export default function Events(props) {
                                 <button
                                     className="btnEvents"
                                     to={`/event/${rows.id}`}
+                                    onClick={handlerOpen}
                                     key={i}
-                                    // onClick={clickHandler}
                                 >
                                     <a className="linkEvents">
                                         {rows.events} -{" "}
@@ -45,6 +45,12 @@ export default function Events(props) {
                                 </button>
                             </div>
                         ))}
+                    {/* <button
+                        className="btn-handler-close"
+                        onClick={handlerClose}
+                    >
+                        X
+                    </button> */}
                 </div>
             </div>
         </>

@@ -1,17 +1,18 @@
 import { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import ProfilePic from "./profilepic";
+// import ProfilePic from "./profilepic";
 import Menu from "./menu";
 import Footer from "./footer";
-import { Uploader } from "./uploader";
-import Profile from "./profile";
+// import { Uploader } from "./uploader";
+// import Profile from "./profile";
 import FindPeople from "./findPeople";
-import OtherProfile from "./otherProfile";
-import Friends from "./friends";
+// import OtherProfile from "./otherProfile";
+// import Friends from "./friends";
 import Chat from "./chat";
 import Countdown from "./countdown";
 import Weather from "./weather";
 import Events from "./events";
+import EventsModal from "./modal";
 import Map from "./map";
 import Header from "./header";
 // import { makeStyles } from "@mui/material";
@@ -22,6 +23,7 @@ export default class App extends Component {
         super(props);
         this.state = {
             uploaderIsVisible: false,
+            modalEvent: false,
             imageUrl: "",
             officialBio: "",
         };
@@ -44,10 +46,11 @@ export default class App extends Component {
                     officialBio: data.bio,
                 });
             });
-        // console.log("this setState in compnentDidMount", this.setState);
     }
-
-    // New Image
+    componentWillUnmount() {
+        console.log("componentWillUnMount");
+        document.removeEventListener("mouseDown", this.modalEvent, false);
+    }
     newImg(newUrl) {
         this.setState({
             imageUrl: newUrl,
@@ -94,7 +97,19 @@ export default class App extends Component {
                             <Countdown countdownTimestampMs={1659983662000} />
                             <Map />
                             <Weather />
-                            <Events />
+                            <Events
+                                handlerOpen={() =>
+                                    this.setState({
+                                        modalEvent: true,
+                                    })
+                                }
+                                handlerClose={() =>
+                                    this.setState({
+                                        modalEventClose: false,
+                                    })
+                                }
+                            />
+                            {this.state.modalEvent && <EventsModal />}
                         </div>
                         <div social-container>
                             <FindPeople />
