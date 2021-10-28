@@ -24,6 +24,7 @@ export default class App extends Component {
         this.state = {
             uploaderIsVisible: false,
             modalEvent: false,
+            modalEventClose: false,
             imageUrl: "",
             officialBio: "",
         };
@@ -118,8 +119,8 @@ export default class App extends Component {
                             }
                         />
                         {this.state.modalEvent && <EventsModal />}
-                        {/* </div> */}
-                        {/* <div className="social-container"> */}
+                        {this.state.modalEventClose && <EventsModal />}
+
                         <FindPeople />
                         <Chat />
                         {/* </div> */}

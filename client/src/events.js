@@ -32,6 +32,7 @@ export default function Events({ handlerOpen, handlerClose }) {
                                     className="btnEvents"
                                     to={`/event/${rows.id}`}
                                     onClick={handlerOpen}
+                                    // onClick={handlerClose}
                                     key={i}
                                 >
                                     <a className="linkEvents">
@@ -43,6 +44,7 @@ export default function Events({ handlerOpen, handlerClose }) {
                                     <br />
                                     <br />
                                 </button>
+                                
                             </div>
                         ))}
                     {/* <button
