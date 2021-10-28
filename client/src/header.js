@@ -29,12 +29,7 @@ export default function Header() {
                 Twin Hearts.
                 <br />
                 <br />
-                Meditation on Twin Hearts is designed based on the principle
-                that some of the major chakras such as the crown chakra are the
-                entry points or gateways to certain levels of consciousness.
-                Therefore to achieve illumination the crown chakra should be
-                sufficiently activated. The crown chakra can only be activated
-                when the heart chakra is first sufficiently activated.
+                
             </p>
             {/* <Link to="/">Home</Link> */}
         </div>

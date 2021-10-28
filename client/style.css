@@ -22,9 +22,6 @@ main {
 .eventContainer {
     display: grid;
 }
-.socialcontainer {
-    display: grid;
-}
 .btnEvents {
     background-color: #f99e9e;
     width: 290px;
@@ -169,7 +166,7 @@ main {
 }
 .contentWeather {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 .inputWeather {
     display: flex;
@@ -204,7 +201,7 @@ main {
     display: flex;
     flex-direction: column;
     position: relative;
-    top: 207px;
+    top: 7px;
     right: 80px;
     left: -39px;
 }
@@ -276,8 +273,7 @@ main {
 .modal h2 {
     font-size: 20px;
 }
-.btn-handler-close{
-    
+.btn-handler-close {
 }
 .textAreaInChat {
     position: relative;

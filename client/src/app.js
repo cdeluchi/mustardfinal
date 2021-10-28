@@ -77,6 +77,14 @@ export default class App extends Component {
         console.log("setBio", this.state.officialBio);
     }
 
+    openModal() {
+        this.setState((prevState) => ({ modalEvent: !prevState.modalEvent }));
+    }
+    handlerClose(e) {
+        if (e.target.id === "modal") {
+            this.setState({ modalEvent: false });
+        }
+    }
     render() {
         if (!this.state.userId) {
             // console.log("Loading in", this.state.userId);
@@ -93,28 +101,28 @@ export default class App extends Component {
                     </div>
                     <Route exact path="/"></Route>
                     <div className="containerwrap">
-                        <div className="eventContainer">
-                            <Countdown countdownTimestampMs={1659983662000} />
-                            <Map />
-                            <Weather />
-                            <Events
-                                handlerOpen={() =>
-                                    this.setState({
-                                        modalEvent: true,
-                                    })
-                                }
-                                handlerClose={() =>
-                                    this.setState({
-                                        modalEventClose: false,
-                                    })
-                                }
-                            />
-                            {this.state.modalEvent && <EventsModal />}
-                        </div>
-                        <div social-container>
-                            <FindPeople />
-                            <Chat />
-                        </div>
+                        {/* <div className="eventContainer"> */}
+                        <Countdown countdownTimestampMs={1659983662000} />
+                        <Map />
+                        <Weather />
+                        <Events
+                            handlerOpen={() =>
+                                this.setState({
+                                    modalEvent: true,
+                                })
+                            }
+                            handlerClose={() =>
+                                this.setState({
+                                    modalEventClose: false,
+                                })
+                            }
+                        />
+                        {this.state.modalEvent && <EventsModal />}
+                        {/* </div> */}
+                        {/* <div className="social-container"> */}
+                        <FindPeople />
+                        <Chat />
+                        {/* </div> */}
                         <Footer />
                     </div>
                 </BrowserRouter>
